@@ -1,0 +1,7 @@
+# main environment
+django==4.0.5
+
+# dev dependecy
+black==22.6.0
+flake8==4.0.1
+isort==5.10.1
