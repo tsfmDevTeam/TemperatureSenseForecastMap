@@ -7,6 +7,9 @@ from src import geo_apis, wgbt
 class IndexView(TemplateView):
     template_name = "app/index.html"
 
+class BuffView(TemplateView):
+    template_name = "app/buff.html"
+
 
 class MapView(TemplateView):
     template_name = "app/Map.html"

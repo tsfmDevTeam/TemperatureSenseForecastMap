@@ -22,6 +22,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
@@ -57,13 +59,19 @@
 
 
 
-<form action="{% url "Map" %}" method="GET">
+<form action="{% url "BuffView" %}" method="GET">
 	
-	<label for="address">住所を指定：</label>
-	<input type="text" name="address" id="address" placeholder="例）[都道府県][市区町村][町名]" list="address_list">
-	<datalist id="address_list">
-	<option value="岐阜県"></option>
-	</datalist>
+	<select id="geoapi-prefectures" name="geoapi-prefectures">
+		<option value="都道府県を選択してください">都道府県を選択してください</option>
+	</select>
+	<select id="geoapi-cities" name="geoapi-cities">
+		<option value="市区町村名を選択してください">市区町村名を選択してください</option>
+	</select>
+	
+	<select id="geoapi-towns" name="geoapi-towns">
+		<option value="町域を選択してください">町域を選択してください</option>
+	</select>
+	
 	<button>まっぷを見る</button>
 	
 </form>
