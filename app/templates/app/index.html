@@ -80,7 +80,7 @@
       <h2 class="text-center mb-3"><i class="fas fa-thermometer-half mr-3"></i>clickした位置の暑さ状況を確認できるmapに移動します。</h2>
 
 
-        <form style="text-align: center;" action="{% url 'basyomap' %}" method="post" enctype="multipart/form-data">
+        <form style="text-align: center;" action="{% url 'Map' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <br>
         <label><strong>キーワード検索：</strong><input name="kensakumei" style="width: 70%" value="{{ request.GET.query }}" type="text"><button type="submit">検索する</button></label>
