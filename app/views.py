@@ -14,6 +14,20 @@ class IndexView(TemplateView):
 class MapView(TemplateView):
     template_name = "app/Map.html"
 
+    def basyomap(self):
+        kensakumei = request.POST.get("kensakumei")
+
+
+        return render(
+            request,
+            "app/detail.html",
+            {
+
+                #"lat": lat,
+                #"lon": lon,
+            },
+        )
+
     def basyodetail(request):
         lat = request.POST.get("lat")
         lon = request.POST.get("lng")

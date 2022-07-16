@@ -58,6 +58,10 @@
 
 
 <a href="{% url "Map" %}">まっぷ</a>
+<form class="" action="{% url 'basyomap' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<label style="margin-right : 30px; "><strong>名称キーワード検索：</strong><input name="kensakumei" style="width: 70%" value="{{ request.GET.query }}" type="text"><button type="submit">検索する</button></label>
+</form>
 
 
 
