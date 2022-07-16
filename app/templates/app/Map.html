@@ -41,9 +41,9 @@
                 #map_290f8bf58b504a9dbb050469d3255ec9 {
                     position: relative;
                     width: 100.0%;
-                    height: 91.0%;
+                    height: 100.0%;
                     left: 0.0%;
-                    top: -20px;
+                    top: 0%;
                 }
                 header{
                     position: relative;
@@ -58,52 +58,10 @@
 
  <form style="position: absolute;" class="" action="{% url "Mapdetail" %}" method="post" enctype="multipart/form-data">{% csrf_token %}
      <input id="lat" type="hidden" name="lat" value="" /><input id="lng" type="hidden" name="lng" value="" />
- <input class="btn btn-primary btn-lg" style=" z-index: 10000;position: relative; top: -9px; left: 50px; width: 210px" type="submit" name="button" value="この場所の情報を見る" onclick="return checkForm();">
+ <input class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" value="この場所の情報を見る" onclick="return checkForm();">
  </form>
             <div class="folium-map" id="map_290f8bf58b504a9dbb050469d3255ec9" ></div>
 
-<!-- footer -->
-<div  id="footer">
-
-    <!-- footer nav -->
-    <ul class="navbar-nav list-inline">
-        <li class="first">
-            <a href="">運営会社</a>
-        </li>
-        <li>
-            <a href="">関連会社</a>
-        </li>
-        <li>
-            <a href="">利用規約</a>
-        </li>
-        <li>
-            <a href="">社会貢献</a>
-        </li>
-        <li style="width:100px;">
-            <a href="">お問い合わせ</a>
-        </li
-    </ul>
-
-    <!-- clear fix -->
-    <div class="clearfix"></div>
-    <!-- sns icons -->
-    <ul class="sns-icon list-inline">
-        <li>
-            <i class="fa fa-twitter fa-3x"></i>
-        </li>
-        <li>
-            <i class="fa fa-facebook fa-3x"></i>
-        </li>
-        <li>
-            <i class="fa fa-github fa-3x"></i>
-        </li>
-    </ul>
-    <!-- copy right -->
-    <div class="copy">
-        <span>Copyright &#169; 2015 All Rights Reserved.</span>
-    </div>
-</div>
-<!-- end footer -->
 
 </body>
 <script>
