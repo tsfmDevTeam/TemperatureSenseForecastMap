@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/* 中デバイス（タブレット, 768px 未満）
+============================================== */
+@media screen and (max-width: 767.98px) {
+h2 { font-size: 1.2rem !important; }
+.logo { width: 75%; }
+.balloon, .balloon-s {
+	width: 120px;
+	height: 120px;
+	top: -60px;
+	left: 4px;
+	font-size: 14px;
+}
+}/* END */
+
+/* 極小デバイス（縦向きモバイル, 576px 以上）
+============================================== */
+@media screen and (min-width: 576px) {
+.catch-copy {
+	margin: 0 10px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	padding-top: 250px;
+	text-shadow: 3px 0px 2px #333, 0px 3px 2px #333, -1px 0px 2px #333, 0px -1px 2px #333;
+}    
+#Navbar ul li {
+	background-color: #fff;
+	border-radius: 50%;
+	display: table;
+	margin-right: 5px;
+}
+#Navbar ul li:last-child { margin-right: 0; }
+#Navbar ul li a {
+	text-align: center;
+	font-weight: bold;
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+	display: table-cell;
+	vertical-align: middle;
+	line-height: 1.36rem;
+}
+}/* END */
+
+/* 極小デバイス（縦向きモバイル, 576px 未満）
+============================================== */
+@media screen and (max-width: 575.98px) {
+#Navbar ul li a {
+	font-weight: bold;
+	color: #fff !important;
+}
+.catch-copy {
+    margin: 0 10px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    padding-top: 200px;
+    text-shadow: 3px 0px 2px #333, 0px 3px 2px #333, -1px 0px 2px #333, 0px -1px 2px #333;
+    font-size: 2rem !important;
+}
+}/* END */
