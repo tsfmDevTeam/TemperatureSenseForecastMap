@@ -8,7 +8,6 @@ import json
 import urllib
 from urllib import request
 import requests
-import request
 
 
 class IndexView(TemplateView):
