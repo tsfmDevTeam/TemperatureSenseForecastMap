@@ -20,15 +20,18 @@ class MapView(TemplateView):
 
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
-
-        return render(
-            request,
-            "app/detail.html",
-            {
-                "lat": lat,
-                "lon": lon,
-                "wgbt": wgbt_celsius,
-                "wgbt_indicator": wgbt_status,
-                "tikaku": tikaku,
-            },
-        )
+        print(tikaku)
+        if tikaku:
+            return render(
+                request,
+                "app/detail.html",
+                {
+                    "lat": lat,
+                    "lon": lon,
+                    "wgbt": wgbt_celsius,
+                    "wgbt_indicator": wgbt_status,
+                    "tikaku": tikaku,
+                },
+            )
+        else:
+            return render(request, "app/basyodetail_error.html")
