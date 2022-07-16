@@ -1,11 +1,8 @@
 import json
-from typing import Any, Union
 from urllib import request
 
-from django.shortcuts import render
 
-
-def find_near(ido: float, keido: float) -> Union[list[Any], Any]:
+def find_near(ido: float, keido: float) -> list[dict[str, str]]:
     """周辺住所の提示
 
     緯度と経度から，周辺の住所を割り出します。
@@ -36,7 +33,7 @@ def find_near(ido: float, keido: float) -> Union[list[Any], Any]:
                 )
             return tikaku
         except KeyError:
-            return render(request, "app/basyodetail_error.html")  # type:ignore
+            return []
 
 
 if __name__ == "__main__":
