@@ -11,7 +11,7 @@ class IndexView(TemplateView):
 class MapView(TemplateView):
     template_name = "app/Map.html"
 
-    def basyomap(self):
+    def basyomap(request):
         kensakumei = request.POST.get("kensakumei")
 
 
