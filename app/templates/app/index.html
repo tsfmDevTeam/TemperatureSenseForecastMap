@@ -83,7 +83,7 @@
         <form style="text-align: center;" action="{% url 'basyomap' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <br>
-        <label  "><strong>キーワード検索：</strong><input name="kensakumei" style="width: 70%" value="{{ request.GET.query }}" type="text"><button type="submit">検索する</button></label>
+        <label><strong>キーワード検索：</strong><input name="kensakumei" style="width: 70%" value="{{ request.GET.query }}" type="text"><button type="submit">検索する</button></label>
         <br>
             <small>※大まかな住所を入力すると、マップに遷移した際入力した地域がズームされます。</small>
         </form>
