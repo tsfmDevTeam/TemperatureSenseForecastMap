@@ -3,6 +3,7 @@ from app import views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('WF/', views.WFView.as_view(), name='WF'),
     path('Map/', views.MapView.as_view(), name='Map'),
     path('Mapdetail/', views.MapView.basyodetail, name='Mapdetail'),
 ]
