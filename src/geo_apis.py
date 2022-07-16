@@ -1,11 +1,20 @@
 import json
-from typing import Any, Union
 from urllib import request
 
-from django.shortcuts import render
 
+def find_near(ido: float, keido: float) -> list[dict[str, str]]:
+    """周辺住所の提示
 
-def find_near(ido: float, keido: float) -> Union[list[Any], Any]:
+    緯度と経度から，周辺の住所を割り出します。
+    該当する住所がない場合，エラーのHTMLを返します。
+
+    Args:
+        ido (float): 緯度
+        keido (float): 経度
+
+    Returns:
+        list[dict[str, str]]: 周辺住所（Dict)
+    """
     url = f"http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x={keido}&y={ido}"
 
     tikaku: list[dict[str, str]] = []
@@ -24,7 +33,7 @@ def find_near(ido: float, keido: float) -> Union[list[Any], Any]:
                 )
             return tikaku
         except KeyError:
-            return render(request, "app/basyodetail_error.html")  # type:ignore
+            return []
 
 
 if __name__ == "__main__":
