@@ -15,18 +15,13 @@
 <p>近隣地域</p>
 {% for i in tikaku %}
 
-    <tr>
-        <th>{{ i.yuubin }}</th>
-        <td data-label="住所" class="price">{{ i.juusyo }}</td>
-        <td data-label="緯度" class="price">{{ i.lat }}</td>
-        <td data-label="経度" class="price">{{ i.lng }}</td>
-    </tr>
+<tr>
+    <th>{{ i.yuubin }}</th>
+    <td data-label="住所" class="price">{{ i.juusyo }}</td>
+    <td data-label="緯度" class="price">{{ i.lat }}</td>
+    <td data-label="経度" class="price">{{ i.lng }}</td>
+</tr>
 
-    <br>
-
-
-
-
-
+<br>
 
 {% endfor %}
