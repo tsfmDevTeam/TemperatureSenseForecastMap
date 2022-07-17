@@ -9,7 +9,7 @@
 
 <p>1日の暑さ指数による注意度</p>
 {% for w_and_s in wgbt_and_status %}
-<p>{{ forloop.counter }}時間後:暑さ指数{{ w_and_s.WGBT }}-->{{ w_and_s.status }}</p>
+<p>{{ w_and_s.time }}:暑さ指数{{ w_and_s.WGBT }}-->{{ w_and_s.status }}</p>
 {% endfor %}
 
 <p>近隣地域</p>
