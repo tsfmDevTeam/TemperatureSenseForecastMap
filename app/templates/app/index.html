@@ -81,8 +81,8 @@
             <br>
           <br>
             <!-- top nav -->
-    <form action="{% url "BuffView" %}" method="GET">
-
+    <form class="" action="" method="post" enctype="multipart/form-data">
+{% csrf_token %}
 
         <select id="geoapi-prefectures" name="geoapi-prefectures">
             <option value="都道府県を選択してください">都道府県を選択してください</option>
@@ -95,9 +95,12 @@
             <option value="町域を選択してください">町域を選択してください</option>
         </select>
 
+        <button type="submit" name="button">マップを見る</button>
+
         <br>
 
 <small>※都道府県を選択するとそのマップの地点に移動します。</small>
+
     </form>
 
 <br>
