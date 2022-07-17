@@ -4,22 +4,18 @@ from urllib import request
 
 def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
     """WGBT温度の計算
-
     緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
         - 温度
         - 湿度
         - 直達日射量
         - 散乱日射量
         - 風速
-
         を取得します
         これらの値からWGBT温度を計算します
         (https://blog.obniz.com/news/obniz-wbgt-service.html)
-
     Args:
         - ido (float): 緯度
         - keido (float): 経度
-
     Returns:
         - wgbt (float): WGBT温度
     """
@@ -32,6 +28,9 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
 
     wgbts_list: list[float] = []
     time_list: list[str] = []
+    year = "2022-"
+    str1 = "-"
+    str2 = "T"
 
     with request.urlopen(url) as r:
         body = json.loads(r.read())
@@ -41,6 +40,11 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
 
         for index in range(index_now_time, index_now_time + 24):
             time = body["hourly"]["time"][index]
+
+            time = time.replace(year, "")
+            time = time.replace(str1, "月")
+            time = time.replace(str2, "日")
+
             time_list.append(time)
 
             temperature = body["hourly"]["temperature_2m"][index]
@@ -50,13 +54,13 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
             windspeed_10m = abs(body["hourly"]["windspeed_10m"][index] * 1000 / 3600)
 
             wgbt = (
-                0.735 * temperature
-                + 0.0374 * humidity
-                + 0.00292 * temperature * humidity
-                + 7.619 * (direct_radiation + diffuse_radiation)
-                - 4.557 * (direct_radiation + diffuse_radiation) ** 2
-                - 0.0572 * windspeed_10m
-                - 4.064
+                    0.735 * temperature
+                    + 0.0374 * humidity
+                    + 0.00292 * temperature * humidity
+                    + 7.619 * (direct_radiation + diffuse_radiation)
+                    - 4.557 * (direct_radiation + diffuse_radiation) ** 2
+                    - 0.0572 * windspeed_10m
+                    - 4.064
             )
             wgbts_list.append(round(wgbt, 3))
 
@@ -66,10 +70,8 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
 
 def wgbt_indicator(WBGT: float) -> str:
     """WGBT温度による熱中症リスクの診断
-
     Args:
         WBGT (float): WGBT温度
-
     Returns:
         message (str): 危険度合のメッセージ
     """

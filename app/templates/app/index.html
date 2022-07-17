@@ -30,6 +30,7 @@
 
 
 </head>
+
 <body id="page-top">
 <!----------------------------------------------->
 <header>
@@ -39,6 +40,7 @@
       <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
         <li class="nav-item"><a href="{% url 'Map' %}" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>マップ</a></li>
         <li class="nav-item"><a href="https://www.wbgt.env.go.jp/wbgt_lp.php" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>環境省HP</a></li>
+        <li class="nav-item"><a href="{% url 'WF' %}" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>天気予報</a></li>
       </ul>
       <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
         <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
@@ -94,6 +96,7 @@
         </select>
 
         <button type="submit" name="button">マップを見る</button>
+
         <br>
 
 <small>※都道府県を選択するとそのマップの地点に移動します。</small>
