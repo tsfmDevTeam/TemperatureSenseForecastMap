@@ -13,6 +13,8 @@ class BuffView(TemplateView):
 class IndexView(TemplateView):
     template_name = "app/index.html"
 
+class WFView(TemplateView):
+    template_name = "app/WF.html"
 
 class MapView(TemplateView):
     template_name = "app/Map.html"
