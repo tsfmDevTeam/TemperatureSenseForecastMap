@@ -2,18 +2,26 @@
 
 <p>経度{{ lon }}</p>
 
-<p>暑さ指数{{ wgbt }}</p>
+<p>暑さ指数{{ wgbt_now }}--->{{ wgbt_status_now }}</p>
 
-<p>{{ wgbt_indicator }}</p>
+<p>今日の最大暑さ指数{{ wgbt_max }}--->{{ wgbt_status_max }}</p>
+
+
+<p>1日の暑さ指数による注意度</p>
+{% for w_and_s in wgbt_and_status %}
+<p>{{ w_and_s.time }}:暑さ指数{{ w_and_s.WGBT }}-->{{ w_and_s.status }}</p>
+{% endfor %}
+
 <p>近隣地域</p>
 {% for i in tikaku %}
 
-    <tr>
-        <th>{{ i.yuubin }}</th>
-        <td data-label="住所" class="price">{{ i.juusyo }}</td>
-        <td data-label="緯度" class="price">{{ i.lat }}</td>
-        <td data-label="経度" class="price">{{ i.lng }}</td>
-    </tr>
-    <br>
+<tr>
+    <th>{{ i.yuubin }}</th>
+    <td data-label="住所" class="price">{{ i.juusyo }}</td>
+    <td data-label="緯度" class="price">{{ i.lat }}</td>
+    <td data-label="経度" class="price">{{ i.lng }}</td>
+</tr>
+
+<br>
 
 {% endfor %}
