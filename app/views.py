@@ -1,15 +1,27 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+
 from src import geo_apis, wgbt
+
+
+class BuffView(TemplateView):
+    template_name = "app/buff.html"
+
+
 class IndexView(TemplateView):
     template_name = "app/index.html"
+
+
 class MapView(TemplateView):
     template_name = "app/Map.html"
+
     def basyodetail(request):
         lat: float = request.POST.get("lat")
         lon: float = request.POST.get("lng")
+
         wgbt_celsius = wgbt.location2wgbt(ido=lat, keido=lon)
         wgbt_status = wgbt.wgbt_indicator(WBGT=wgbt_celsius)
+
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
         print(tikaku)
