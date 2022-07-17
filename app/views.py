@@ -34,6 +34,8 @@ class MapView(TemplateView):
         for WGBT, time in zip(wgbt_list, time_list):
             status = wgbt.wgbt_indicator(WBGT=WGBT)
             wgbt_and_status.append({"WGBT": WGBT, "status": status, "time": time})
+            if wgbt_max == WGBT:
+                max_time = time
 
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
@@ -48,7 +50,8 @@ class MapView(TemplateView):
                 "wgbt_max": wgbt_max,
                 "wgbt_status_now": wgbt_status_now,
                 "wgbt_status_max": wgbt_status_max,
-                "wgbt_and_status": wgbt_and_status[1:],
+                "wgbt_and_status": wgbt_and_status,
                 "tikaku": tikaku,
+                "max_time":max_time,
             },
         )
