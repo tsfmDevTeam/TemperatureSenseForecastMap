@@ -25,15 +25,18 @@
 <body id="page-top">
     <!----------------------------------------------->
     <header>
+
         <nav id="nav01">
             <div class="container navbar navbar-expand-lg navbar-light">
                 <a class="navbar-brand mr-auto" href="{% url 'index' %}"><img src="{% static 'img/log.png' %}"
                         alt="サイト名" height="50"></a>
                 <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
                     <li class="nav-item"><a href="#" class="nav-link p-2"><i
-                                class="fa fa-chevron-right mr-1 small"></i>LINK01</a></li>
+                                class="fa fa-chevron-right mr-1 small"></i>LINK01</a>
+                    </li>
                     <li class="nav-item"><a href="#" class="nav-link p-2"><i
-                                class="fa fa-chevron-right mr-1 small"></i>LINK02</a></li>
+                                class="fa fa-chevron-right mr-1 small"></i>LINK02</a>
+                    </li>
                 </ul>
                 <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
                     <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
@@ -56,66 +59,31 @@
   <div class="heading">指定地域の暑さ指数</div>
 </div>
 -->
-            <h1 class="cp_h1title" style="text-align:center;">指定地域の暑さ指数</h1>
+            <h1 class="cp_h1title" style="text-align:center;">指定地域にエラーが発生しました</h1>
             <!----------------------------------------------->
             <hr>
-
-            <!----------------------------------------------->
-            <section class="mb-5">
-                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">緯度</p>
-                    <p class="py-2 px-2 px-lg-4 mb-0">{{ lat }}</p>
-                </div>
-            </section>
-            <section class="mb-5">
-                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">経度</p>
-                    <p class="py-2 px-2 px-lg-4 mb-0">{{ lon }}</p>
-                </div>
-            </section>
-            <section class="mb-5">
-                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">暑さ指数</p>
-                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt }}</p>
-                </div>
-            </section>
-            <section class="mb-5">
-                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">対策</p>
-                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_indicator }}</p>
-                </div>
-            </section>
-            <!----------------------------------------------->
-            <div class="list29">
-                <div class="list29-title">1日の暑さ指数による注意度</div>
-                <ul>
-                    {% for w_and_s in wgbt_and_status %}
-                    <li>
-                        <div>{{ w_and_s.time }}</div>
-                        <div>暑さ指数{{ w_and_s.WGBT }}</div>
-                        <div>{{ w_and_s.status }}</div>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <div class="list29-title">近隣地域</div>
-                <ul>
-                    {% for i in tikaku %}
-                    <li>
-                        <div data-label="住所" class="price">{{ i.juusyo }}</div>
-                        <div data-label="緯度" class="price">{{ i.lat }}</div>
-                        <div data-label="経度" class="price">{{ i.lng }}</div>
-                    </li>
-
-                    {% endfor %}
-                </ul>
+            <br>
+            <h4 style="text-align: center;">マップで海や海外などの日本住所がない部分を押した可能性があります。</h4>
+            <br>
+            <br>
+            <div class="text-center">
+                <a class="btn btn-warning btn-lg py-3 px-5 text-white font-weight-bold" href="{% url " Map" %}"
+                    role="button">mapに移動はこちら</a>
             </div>
+            <h4 style="text-align: center;">
+                <br>
+                <br>
+                こちらからまたmapにアクセスしてください
+            </h4>
+            <!----------------------------------------------->
+
         </div><!-- /.container -->
     </main>
-
-
-    <div class="text-white bg-primary">
-        <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
-    </div>
+    <footer>
+        <div class="text-white bg-primary">
+            <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
+        </div>
+    </footer>
     <!----------------------------------------------->
     <!-- javascript はここから -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

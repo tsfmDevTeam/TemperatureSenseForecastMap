@@ -1,0 +1,1 @@
+web: gunicorn vol6-TemperatureSenseForecastMap.wsgi
