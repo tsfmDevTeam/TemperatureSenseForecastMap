@@ -17,7 +17,7 @@ def location2wgbt(ido: float, keido: float) -> float:
         tdate = body["current_weather"]["time"]
         index_now_time = body["hourly"]["time"].index(tdate)
 
-        for index in range(index_now_time, index_now_time + (len(body["hourly"]["time"])-index_now_time)):
+        for index in range(index_now_time, index_now_time + 24):
 
             temperature = body["hourly"]["temperature_2m"][index]
             humidity = body["hourly"]["relativehumidity_2m"][index]
@@ -36,7 +36,7 @@ def location2wgbt(ido: float, keido: float) -> float:
             )
             wgbts_list.append(round(wgbt, 3))
 
-    # 現在からその日の終わりまでの１時間ごとの暑さ指数の予測値の入った配列
+    # 現在から24時間後の暑さ指数の予測値の入った配列
     return wgbts_list
 
 
