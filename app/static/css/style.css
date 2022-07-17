@@ -125,3 +125,61 @@ a:hover {
   }
 
 }
+.list29 {
+  position: relative;
+  border: solid 2px #ee8992;
+  margin: 3em 0 1em 0;
+  background: repeating-linear-gradient(-45deg, #fef4f4, #fef4f4 3px,#ffefef 3px, #ffefef 7px);
+}
+.list29-title {
+  font-size: 1.15em;
+  background: #ee8992;
+  padding: 4px;
+  text-align: center;
+  color: #FFF;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+.list29 ul,.list29 ol {
+  margin: 0;
+  padding: 0 0.5em 0 0.5em;
+  color: #ee8992;
+  border: none;
+  list-style-type: none;
+}
+ .list29 ol{
+  counter-reset: number;
+}
+.list29 ul li,.list29 ol li {
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.4em;
+  border-bottom: dashed 1px #ee8992;
+}
+.list29 ul li:before {
+  position: absolute;
+  font-family: FontAwesome;
+  content: "\f14a";
+  left : 0.5em;
+  color: #ee8992;
+}
+.list29 ol li:before {
+  display: inline-block;
+  position: absolute;
+  font-family: "Quicksand", sans-serif;
+  content: counter(number);
+  counter-increment: number;
+  left: 0.5em;
+  width: 22px;
+  height: 22px;
+  border-radius: 20%;
+  background: #ee8992;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 22px;
+}
+.list29 ul li:last-of-type,.list29 ol li:last-of-type{
+  border-bottom: none;
+}
