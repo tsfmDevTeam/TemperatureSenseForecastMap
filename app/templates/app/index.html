@@ -1,119 +1,153 @@
+
 {% load static %}
 <!DOCTYPE html>
-<head>
-       <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="format-detection" content="email=no,telephone=no,address=no">
-        <title>TemperatureSenseForecastMap</title>
-        <meta name="description" content="TemperatureSenseForecastMap">
+<html>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<meta charset="UTF-8">
+<title>ページ名 | サイト名</title>
+<meta name="description" content="サイトの説明文">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="canonical" href="あなたのサイトURL">
+<link rel="icon" type="image/png" href="ファビコンのパス" />
+<!-- OGP設定 -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="あなたのサイトURL" />
+<meta property="og:image" content="SNSで表示させたい画像のパス" />
+<meta property="og:title" content="ページタイトル" />
+<meta property="og:description" content="サイトの説明文" />
+<!-- Facebook用設定 -->
+<meta property="fb:app_id" content="facebookのApp ID" />
+<meta property="article:publisher" content="FacebookページのURL">
+<!-- Twitter用設定 -->
+<meta name="twitter:card" content="Twitterカードの種類">
+<meta name="twitter:site" content="@ユーザー名">
+<!-- スタイルシートはここから -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
 
-        <meta name="robots" content="index,follow">
 
-    <link rel="icon" href="{% static 'img/icon2.png' %}">
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
 
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-
-    <link rel="stylesheet"  href="{% static 'css/kihonnstyle.css' %}"/>
-
-    <!--位置情報-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet"  href="{% static 'css/L.Control.Locate.min.css' %}"/>
-    <script type="text/javascript" src="{% static 'js/L.Control.Locate.min.js' %}"></script>
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_290f8bf58b504a9dbb050469d3255ec9 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 91.0%;
-                    left: 0.0%;
-                    top: -20px;
-                }
-                header{
-                    position: relative;
-                    z-index: 1000000;
-                }
-            </style>
 </head>
+<body id="page-top">
+<!----------------------------------------------->
+<header>
+  <nav id="nav01">
+    <div class="container navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand mr-auto" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="サイト名" height="50"></a>
+      <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
+        <li class="nav-item"><a href="{% url 'Map' %}" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>マップ</a></li>
+        <li class="nav-item"><a href="https://www.wbgt.env.go.jp/wbgt_lp.php" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>環境省HP</a></li>
+      </ul>
+      <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
+        <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
+      </form>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav><!-- /# nav01 -->
 
-<body>
-<!-- top nav -->
+</header>
+<!----------------------------------------------->
+<main>
+<!----------------------------------------------->
+  <div class="container">
+    <div class="jumbotron mt-4">
+      <h1 class="display-4 font-weight-bold text-white text-shadow">TemperatureSenseForecastMap</h1>
+      <p class="text-white text-shadow font-weight-bold h3">マップのの位置情報から暑さ指数、危険度などを表示します。</p>
+      <hr class="my-4 border-white text-shadow" style="border-width:2px;">
+      <p class="text-white text-shadow font-weight-bold">～～といったAPIを使用しています。</p>
+      <a class="btn btn-warning btn-lg text-white font-weight-bold" href="#" role="button">お問い合わせはこちら</a>
+    </div><!-- /.jumbotron -->
+<!----------------------------------------------->
+    <section class="mb-5">
+      <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+        <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">about</p>
+        <p class="py-2 px-2 px-lg-4 mb-0">clickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
+            <br>詳細画面では暑さ指数や暑さの危険度・近隣地域を確認できます。</p>
+      </div>
+    </section>
+  </div><!-- /.container -->
+<!----------------------------------------------->
+    <section class="py-5 bg-yl-color">
+    <div class="container p-3 rounded">
+      <h2 class="text-center mb-3"><i class="fas fa-thermometer-half mr-3"></i>clickした位置の暑さ状況を確認できるmapに移動します。</h2>
+        <form style="text-align: center;" action="{% url 'Map' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <br>
+          <br>
+            <!-- top nav -->
     <form action="{% url "BuffView" %}" method="GET">
-        
+
+
         <select id="geoapi-prefectures" name="geoapi-prefectures">
             <option value="都道府県を選択してください">都道府県を選択してください</option>
         </select>
         <select id="geoapi-cities" name="geoapi-cities">
             <option value="市区町村名を選択してください">市区町村名を選択してください</option>
         </select>
-        
+
         <select id="geoapi-towns" name="geoapi-towns">
             <option value="町域を選択してください">町域を選択してください</option>
         </select>
-        
-        <button>まっぷを見る</button>
-        
+
+        <button>マップを見る</button>
+        <br>
+
+<small>※都道府県を選択するとそのマップの地点に移動します。</small>
     </form>
 
+<br>
+        </form>
+        <br>
+        <br>
 
-    <!-- footer -->
-    <div  id="footer">
+        <div class="text-center">
+        <a class="btn btn-warning btn-lg py-3 px-5 text-white font-weight-bold" href="{% url "Map" %}" role="button">mapに移動はこちら</a>
+      </div>
+        <br>
+        <br>
+        <br>
+        <div style="text-align: center;">
 
-        <!-- footer nav -->
-        <ul class="navbar-nav list-inline">
-            <li class="first">
-                <a href="">運営会社</a>
-            </li>
-            <li>
-                <a href="">関連会社</a>
-            </li>
-            <li>
-                <a href="">利用規約</a>
-            </li>
-            <li>
-                <a href="">社会貢献</a>
-            </li>
-            <li style="width:100px;">
-                <a href="">お問い合わせ</a>
-            </li>
-        </ul>
+           <h3>
 
-        <!-- clear fix -->
-        <div class="clearfix"></div>
-        <!-- sns icons -->
-        <ul class="sns-icon list-inline">
-            <li>
-                <i class="fa fa-twitter fa-3x"></i>
-            </li>
-            <li>
-                <i class="fa fa-facebook fa-3x"></i>
-            </li>
-            <li>
-                <i class="fa fa-github fa-3x"></i>
-            </li>
-        </ul>
-        <!-- copy right -->
-        <div class="copy">
-            <span>Copyright &#169; 2015 All Rights Reserved.</span>
+        暑さ指数（WBGT（湿球黒球温度）とは
+               <hr>
+           </h3>
+        <p>
+            <br>Wet Bulb Globe Temperature）は、熱中症を予防することを目的として1954年にアメリカで提案された指標です。 単位は気温と同じ摂氏度（℃）で示されますが、その値は気温とは異なります。
+            <br>
+            <br>
+            暑さ指数（WBGT）は人体と外気との熱のやりとり（熱収支）に着目した指標です。
+        </p>
+        <p style="text-align: left;display: inline-block;">
+            ①湿度
+            <br>②日射・輻射(ふくしゃ)など周辺の熱環境
+            <br>③気温
+        </p>
+            <p>
+                人体の熱収支に与える影響の大きい上記の３つを取り入れた指標です。
+        </p>
         </div>
     </div>
-    <!-- end footer -->
+  </section>
+<!----------------------------------------------->
+</main>
+<div class="text-white bg-primary">
+  <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
+</div>
+<!----------------------------------------------->
+<!-- javascript はここから -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script>
+
+<!----------------------------------------------->
 </body>
+</html>
