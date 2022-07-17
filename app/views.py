@@ -40,6 +40,11 @@ class MapView(TemplateView):
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
 
+
+
+
+
+
         return render(
             request,
             "app/detail.html",
