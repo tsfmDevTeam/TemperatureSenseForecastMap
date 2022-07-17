@@ -1,0 +1,127 @@
+@charset "utf-8";
+
+/*
+ * "Fredericka" is lisenced under the SIL Open Font License 1.1
+ * http://fonts.googleapis.com
+ * https://www.google.com/fonts/attribution
+ * http://scripts.sil.org/OFL
+ */
+
+/* *****共通設定***** */
+
+a {
+  color: #696969;
+}
+
+a:hover {
+  color: #a9a9a9;
+}
+
+.bg-primary,
+.btn-primary {
+  background-color: #00008b !important;
+}
+
+.border-primary {
+  border-color: #00008b !important;
+}
+
+.bg-maincolor {
+  background-color: #f0f8ff !important;
+}
+
+.btn-warning:hover {
+  color: #212529;
+  background-color: #ffa500;
+  border-color: #ffa500;
+}
+
+.bg-yl-color {
+  background-color: #fffaf0 !important;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 3px #000;
+}
+
+.font-patrick {
+  font-family: 'Fredericka the Great', cursive;
+}
+
+/* ヘッダー(navbar) */
+#nav01 {
+  border-bottom: 3px solid #00008b;
+}
+
+#nav02 .nav-fill {
+  width: 100%;
+}
+
+#nav02 .nav-item {
+  border-left: 1px solid #dee2e6;
+}
+
+#nav02 .last-list-md {
+  border-right: 1px solid #dee2e6;
+}
+
+/* フッター */
+#footer-sns img {
+  height: 58px;
+  width: auto;
+  margin-right: 25px;
+}
+
+#footer-index ul ul {
+  padding-left: 0.75rem;
+  border-left: 1px solid #6c757d;
+}
+
+/* *****トップページ***** */
+.jumbotron {
+  background-image: url("../img/photo0000-2784.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* *****下層ページ***** */
+.breadcrumb-item + .breadcrumb-item:before {
+  content: "\f054";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: small;
+  color: #fff;
+}
+
+#page .jumbotron {
+  background: #f1efff url("../img/subpage-headding.jpg") no-repeat center center;
+  background-size: cover;
+  border-radius: initial;
+}
+
+/* --------------------------------------------------
+
+ レスポンシブ
+
+--------------------------------------------------　*/
+
+@media (max-width: 991.98px) {
+  /* md タブレット・スマートフォン向け */
+  #nav02 .nav-item {
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #dee2e6;
+    letter-spacing: 0.25rem;
+  }
+
+  @media (max-width: 575.98px) {
+    /* xs スマートフォン向け */
+    /* フッター */
+    #footer-sns img {
+      height: 29px;
+      margin-right: 15px;
+    }
+
+  }
+
+}
