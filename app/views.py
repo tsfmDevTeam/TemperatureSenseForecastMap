@@ -48,7 +48,7 @@ class MapView(TemplateView):
                 "wgbt_max": wgbt_max,
                 "wgbt_status_now": wgbt_status_now,
                 "wgbt_status_max": wgbt_status_max,
-                "wgbt_and_status": wgbt_and_status,
+                "wgbt_and_status": wgbt_and_status[1:],
                 "tikaku": tikaku,
             },
         )
