@@ -60,39 +60,32 @@
 </body>
 
 <script>
-    
+
     var RLet = 35.41222;
     var RLng =139.41303;
-        
+
     var getQuery = window.location.search;
     console.log("q", getQuery);
     if(getQuery){
         getQuery = getQuery.substring(1);
         var ele = getQuery.split('&')[0].split('=')[1]
-        
-        //ele ="〇県〇郡〇町"
-        
-        console.log("___", ele, "__");
         if(ele && ele.match(/\S*/g)){
             console.log("not empty");
             getLatLng(decodeURIComponent(ele), (result) => {
                 console.log(decodeURIComponent(ele));
                 console.log("緯度: ", result.lat);
                 console.log("経度: ", result.lng);
-                
                 map_290f8bf58b504a9dbb050469d3255ec9.setView([result.lat, result.lng], 12);
-                
             });
         }
-    
     }
     
     function checkForm(){
         if(document.getElementById('lat').value === "" || document.getElementById('lon').value === ""){
             alert("地図をclickして場所を指定してください。");
-        return false;
+            return false;
         }else{
-        return true;
+            return true;
         }
     }
 
@@ -159,8 +152,7 @@
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
     ).addTo(map_290f8bf58b504a9dbb050469d3255ec9);
-    
-    
+
     console.log(map_290f8bf58b504a9dbb050469d3255ec9["options"]["center"])
     console.log(7777)
 </script>

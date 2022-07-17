@@ -34,8 +34,8 @@
     <link rel="stylesheet"  href="{% static 'css/kihonnstyle.css' %}"/>
 
     <!--位置情報-->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-     <link rel="stylesheet"  href="{% static 'css/L.Control.Locate.min.css' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet"  href="{% static 'css/L.Control.Locate.min.css' %}"/>
     <script type="text/javascript" src="{% static 'js/L.Control.Locate.min.js' %}"></script>
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -52,72 +52,68 @@
                     z-index: 1000000;
                 }
             </style>
-
 </head>
+
 <body>
 <!-- top nav -->
+    <form action="{% url "BuffView" %}" method="GET">
+        
+        <select id="geoapi-prefectures" name="geoapi-prefectures">
+            <option value="都道府県を選択してください">都道府県を選択してください</option>
+        </select>
+        <select id="geoapi-cities" name="geoapi-cities">
+            <option value="市区町村名を選択してください">市区町村名を選択してください</option>
+        </select>
+        
+        <select id="geoapi-towns" name="geoapi-towns">
+            <option value="町域を選択してください">町域を選択してください</option>
+        </select>
+        
+        <button>まっぷを見る</button>
+        
+    </form>
 
 
+    <!-- footer -->
+    <div  id="footer">
 
-<form action="{% url "BuffView" %}" method="GET">
-	
-	<select id="geoapi-prefectures" name="geoapi-prefectures">
-		<option value="都道府県を選択してください">都道府県を選択してください</option>
-	</select>
-	<select id="geoapi-cities" name="geoapi-cities">
-		<option value="市区町村名を選択してください">市区町村名を選択してください</option>
-	</select>
-	
-	<select id="geoapi-towns" name="geoapi-towns">
-		<option value="町域を選択してください">町域を選択してください</option>
-	</select>
-	
-	<button>まっぷを見る</button>
-	
-</form>
+        <!-- footer nav -->
+        <ul class="navbar-nav list-inline">
+            <li class="first">
+                <a href="">運営会社</a>
+            </li>
+            <li>
+                <a href="">関連会社</a>
+            </li>
+            <li>
+                <a href="">利用規約</a>
+            </li>
+            <li>
+                <a href="">社会貢献</a>
+            </li>
+            <li style="width:100px;">
+                <a href="">お問い合わせ</a>
+            </li>
+        </ul>
 
-
-<!-- footer -->
-<div  id="footer">
-
-    <!-- footer nav -->
-    <ul class="navbar-nav list-inline">
-        <li class="first">
-            <a href="">運営会社</a>
-        </li>
-        <li>
-            <a href="">関連会社</a>
-        </li>
-        <li>
-            <a href="">利用規約</a>
-        </li>
-        <li>
-            <a href="">社会貢献</a>
-        </li>
-        <li style="width:100px;">
-            <a href="">お問い合わせ</a>
-        </li>
-    </ul>
-
-    <!-- clear fix -->
-    <div class="clearfix"></div>
-    <!-- sns icons -->
-    <ul class="sns-icon list-inline">
-        <li>
-            <i class="fa fa-twitter fa-3x"></i>
-        </li>
-        <li>
-            <i class="fa fa-facebook fa-3x"></i>
-        </li>
-        <li>
-            <i class="fa fa-github fa-3x"></i>
-        </li>
-    </ul>
-    <!-- copy right -->
-    <div class="copy">
-        <span>Copyright &#169; 2015 All Rights Reserved.</span>
+        <!-- clear fix -->
+        <div class="clearfix"></div>
+        <!-- sns icons -->
+        <ul class="sns-icon list-inline">
+            <li>
+                <i class="fa fa-twitter fa-3x"></i>
+            </li>
+            <li>
+                <i class="fa fa-facebook fa-3x"></i>
+            </li>
+            <li>
+                <i class="fa fa-github fa-3x"></i>
+            </li>
+        </ul>
+        <!-- copy right -->
+        <div class="copy">
+            <span>Copyright &#169; 2015 All Rights Reserved.</span>
+        </div>
     </div>
-</div>
-<!-- end footer -->
-
+    <!-- end footer -->
 </body>

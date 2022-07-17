@@ -4,11 +4,12 @@ from django.views.generic import TemplateView
 from src import geo_apis, wgbt
 
 
-class IndexView(TemplateView):
-    template_name = "app/index.html"
-
 class BuffView(TemplateView):
     template_name = "app/buff.html"
+
+
+class IndexView(TemplateView):
+    template_name = "app/index.html"
 
 
 class MapView(TemplateView):

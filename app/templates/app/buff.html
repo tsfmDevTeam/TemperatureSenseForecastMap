@@ -1,17 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
+
 <head>
     <title>none_name</title>
-    
+
 </head>
 
 <body>
-<script>
-    var url = new URL(window.location.href);
-    paramStr = url.searchParams.get('geoapi-prefectures') 
-    + url.searchParams.get('geoapi-cities') 
-    + url.searchParams.get('geoapi-towns');
-    
-    window.location.href = "{% url "Map" %}"+"?address=" + paramStr;
-</script>
+    <script>
+        var url = new URL(window.location.href);
+        paramStr = url.searchParams.get('geoapi-prefectures')
+            + url.searchParams.get('geoapi-cities')
+            + url.searchParams.get('geoapi-towns');
+
+        window.location.href = "{% url "Map" %}" + "?address=" + paramStr;
+    </script>
 </body>
