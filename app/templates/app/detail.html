@@ -87,26 +87,48 @@
             </section>
             <!----------------------------------------------->
             <div class="list29">
-                <div class="list29-title">1日の暑さ指数による注意度</div>
                 <ul>
-                    {% for w_and_s in wgbt_and_status %}
                     <li>
-                        <div>{{ w_and_s.time }}</div>
-                        <div>暑さ指数{{ w_and_s.WGBT }}</div>
-                        <div>{{ w_and_s.status }}</div>
+                        1日の暑さ指数による注意度
                     </li>
-                    {% endfor %}
-                </ul>
-                <div class="list29-title">近隣地域</div>
-                <ul>
-                    {% for i in tikaku %}
-                    <li>
-                        <div data-label="住所" class="price">{{ i.juusyo }}</div>
-                        <div data-label="緯度" class="price">{{ i.lat }}</div>
-                        <div data-label="経度" class="price">{{ i.lng }}</div>
-                    </li>
+                    <div class="list29-title" style="white-space: nowrap; overflow-x: scroll;">
 
-                    {% endfor %}
+                        <table border="1" style="width: 100%;
+                            border-collapse: collapse;
+                            white-space: nowrap;">
+                            <tr>
+                                <th style="position: sticky; left: 0; color :white; background: #007bff;"
+                                    align="center">時刻
+                                </th>
+                                {% for w_and_s in wgbt_and_status %}
+                                <td align="center">{{ w_and_s.time }}</td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th style="position: sticky; left: 0; color :white; background: #007bff;"
+                                    align="center">
+                                    暑さ指数</th>
+                                {% for w_and_s in wgbt_and_status %}
+                                <td align="center">{{ w_and_s.WGBT }}</td>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <li>
+                        近隣地域
+                    </li>
+                    <div class=" list29-title">
+                        <ul>
+                            {% for i in tikaku %}
+                            <li>
+                                <div data-label="住所" class="price">{{ i.juusyo }}</div>
+                                <div data-label="緯度" class="price">{{ i.lat }}</div>
+                                <div data-label="経度" class="price">{{ i.lng }}</div>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </ul>
             </div>
         </div><!-- /.container -->
