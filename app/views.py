@@ -37,7 +37,7 @@ class MapView(TemplateView):
         for WGBT, time in zip(wgbt_list, time_list):
             status = wgbt.wgbt_indicator(WBGT=WGBT)
 
-            wgbt_and_status.append({"WGBT": WGBT, "status": status, "time": time[11:]})
+            wgbt_and_status.append({"WGBT": WGBT, "status": status, "time": time[6:]})
 
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
