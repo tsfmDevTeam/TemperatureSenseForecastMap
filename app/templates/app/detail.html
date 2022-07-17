@@ -1,19 +1,167 @@
-<p>緯度{{ lat }}</p>
+{% load static %}
+<!DOCTYPE html>
+<html>
 
-<p>経度{{ lon }}</p>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="email=no,telephone=no,address=no">
+    <title>TemperatureSenseForecastMap</title>
+    <meta name="description" content="TemperatureSenseForecastMap">
 
-<p>暑さ指数{{ wgbt }}</p>
+    <meta name="robots" content="index,follow">
 
-<p>{{ wgbt_indicator }}</p>
-<p>近隣地域</p>
-{% for i in tikaku %}
+    <link rel="icon" href="{% static 'img/icon2.png' %}">
+    <!-- スタイルシートはここから -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+</head>
 
-    <tr>
-        <th>{{ i.yuubin }}</th>
-        <td data-label="住所" class="price">{{ i.juusyo }}</td>
-        <td data-label="緯度" class="price">{{ i.lat }}</td>
-        <td data-label="経度" class="price">{{ i.lng }}</td>
-    </tr>
-    <br>
+<body id="page-top">
+    <!----------------------------------------------->
+    <header>
+        <nav id="nav01">
+            <div class="container navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand mr-auto" href="{% url 'index' %}"><img src="{% static 'img/log.png' %}"
+                        alt="サイト名" height="50"></a>
+                <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
+                    <li class="nav-item"><a href="#" class="nav-link p-2"><i
+                                class="fa fa-chevron-right mr-1 small"></i>LINK01</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link p-2"><i
+                                class="fa fa-chevron-right mr-1 small"></i>LINK02</a></li>
+                </ul>
+                <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
+                    <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
+                </form>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav><!-- /# nav01 -->
+    </header>
 
-{% endfor %}
+    <!----------------------------------------------->
+
+    <main>
+        <div class="container">
+            <br>
+            <!--
+<div class="demo demo4">
+  <div class="heading">指定地域の暑さ指数</div>
+</div>
+-->
+            <h1 class="cp_h1title" style="text-align:center;">指定地域の暑さ指数</h1>
+            <!----------------------------------------------->
+            <hr>
+
+            <!----------------------------------------------->
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">緯度</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ lat }}</p>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">経度</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ lon }}</p>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">暑さ指数</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_now }}</p>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">対策</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_now }}</p>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">24時間後までの最大暑さ指数</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_max }}（{{ max_time }}）</p>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex flex-column flex-lg-row border border-primary rounded">
+                    <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">最大暑さ指数の対策</p>
+                    <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_max }}</p>
+                </div>
+            </section>
+            <!----------------------------------------------->
+            <div class="list29">
+                <ul>
+                    <li>
+                        1日の暑さ指数による注意度
+                    </li>
+                    <div class="list29-title" style="white-space: nowrap; overflow-x: scroll;">
+
+                        <table border="1" style="width: 100%;
+                            border-collapse: collapse;
+                            white-space: nowrap;">
+                            <tr>
+                                <th style="position: sticky; left: 0; color :white; background: #007bff;"
+                                    align="center">時刻
+                                </th>
+                                {% for w_and_s in wgbt_and_status %}
+                                <td align="center">{{ w_and_s.time }}</td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                <th style="position: sticky; left: 0; color :white; background: #007bff;"
+                                    align="center">
+                                    暑さ指数</th>
+                                {% for w_and_s in wgbt_and_status %}
+                                <td align="center">{{ w_and_s.WGBT }}</td>
+                                {% endfor %}
+                            </tr>
+                        </table>
+                    </div>
+                    <li>
+                        近隣地域
+                    </li>
+                    <div class=" list29-title">
+                        <ul>
+                            {% for i in tikaku %}
+                            <li>
+                                <div data-label="住所" class="price">{{ i.juusyo }}</div>
+                                <div data-label="緯度" class="price">{{ i.lat }}</div>
+                                <div data-label="経度" class="price">{{ i.lng }}</div>
+                            </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </div><!-- /.container -->
+    </main>
+
+
+    <div class="text-white bg-primary">
+        <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
+    </div>
+    <!----------------------------------------------->
+    <!-- javascript はここから -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <!----------------------------------------------->
+</body>
+
+</html>
