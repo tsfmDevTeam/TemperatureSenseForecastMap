@@ -17,7 +17,7 @@ class MapView(TemplateView):
 
 
 
-        wgbt_list = wgbt.location2wgbt(ido=lat, keido=lon)
+        wgbt_list, time_list = wgbt.location2wgbt(ido=lat, keido=lon)
 
         wgbt_now = wgbt_list[0]
         wgbt_status_now = wgbt.wgbt_indicator(WBGT=wgbt_now)
@@ -26,12 +26,13 @@ class MapView(TemplateView):
         wgbt_status_max = wgbt.wgbt_indicator(WBGT=wgbt_max)
 
         wgbt_and_status: list[dict[str, str]] = []
-        for WGBT in wgbt_list:
+        for WGBT, time in zip(wgbt_list, time_list):
             status = wgbt.wgbt_indicator(WBGT=WGBT)
             wgbt_and_status.append(
                 {
                     "WGBT": WGBT,
                     "status": status,
+                    "time":time,
                 }
             )
 
