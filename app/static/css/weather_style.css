@@ -1,0 +1,114 @@
+.image-box {
+    width: 700px;
+    top: 0px;
+    left: 0px;
+    position: relative;
+}
+img{
+    width: 100%;
+
+}
+.max-Temp{
+    color:red;
+}
+.min-Temp{
+	color:blue;
+}
+.humidity{
+
+}
+.wi{
+	font-size: 30px;
+}
+.sapporo {
+	position: absolute;
+	top: 50px;
+	bottom: 0;
+	right: 0;
+	left: 500px;
+	font-size: 17px;
+	
+	
+}
+.niigata {
+	position: absolute;
+	top: 185px;
+	bottom: 0;
+	right: 0;
+	left: 460px;
+	font-size: 17px;
+}
+.senndai {
+	position: absolute;
+	top: 205px;
+	bottom: 0;
+	right: 0;
+	left: 565px;
+	font-size: 17px;
+}
+.tokyo {
+	position: absolute;
+	top: 335px;
+	bottom: 0;
+	right: 0;
+	left: 575px;
+	font-size: 17px;
+}
+.kanazawa {
+	position: absolute;
+	top:235px;
+	bottom: 0;
+	right: 0;
+	left: 370px;
+	font-size: 17px;
+}
+.nagoya {
+	position: absolute;
+	top:395px;
+	bottom: 0;
+	right: 0;
+	left: 484px;
+	font-size: 17px;
+}
+.hirosima {
+	position: absolute;
+	top: 275px;
+	bottom: 0;
+	right: 0;
+	left: 280px;
+	font-size: 17px;
+}
+.oosaka {
+	position: absolute;
+	top: 405px;
+	bottom: 0;
+	right: 0;
+	left: 385px;
+	font-size: 17px;
+}
+.kouti {
+	position: absolute;
+	top: 440px;
+	bottom: 0;
+	right: 0;
+	left: 290px;
+	font-size: 17px;
+}
+.hukuoka {
+	position: absolute;
+	top: 335px;
+	bottom: 0;
+	right: 0;
+	left: 180px;
+	font-size: 17px;
+}
+.naha {
+	position: absolute;
+	top: 545px;
+	bottom: 0;
+	right: 0;
+	left: 80px;
+	font-size: 17px;
+}
+
+	
