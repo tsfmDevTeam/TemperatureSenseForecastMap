@@ -30,6 +30,7 @@
 
 
 </head>
+
 <body id="page-top">
 <!----------------------------------------------->
 <header>
@@ -39,6 +40,7 @@
       <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
         <li class="nav-item"><a href="{% url 'Map' %}" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>マップ</a></li>
         <li class="nav-item"><a href="https://www.wbgt.env.go.jp/wbgt_lp.php" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>環境省HP</a></li>
+        <li class="nav-item"><a href="{% url 'WF' %}" class="nav-link p-2"><i class="fa fa-chevron-right mr-1 small"></i>天気予報</a></li>
       </ul>
       <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
         <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
@@ -51,7 +53,7 @@
 
 </header>
 <!----------------------------------------------->
-<main>
+<main >
 <!----------------------------------------------->
   <div class="container">
     <div class="jumbotron mt-4">
@@ -62,7 +64,8 @@
       <a class="btn btn-warning btn-lg text-white font-weight-bold" href="#" role="button">お問い合わせはこちら</a>
     </div><!-- /.jumbotron -->
 <!----------------------------------------------->
-    <section class="mb-5">
+
+    <section class="mb-5" style="display:flex;flex-flow: column;">
       <div class="d-flex flex-column flex-lg-row border border-primary rounded">
         <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">about</p>
         <p class="py-2 px-2 px-lg-4 mb-0">clickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
@@ -94,6 +97,7 @@
         </select>
 
         <button type="submit" name="button">マップを見る</button>
+
         <br>
 
 <small>※都道府県を選択するとそのマップの地点に移動します。</small>
