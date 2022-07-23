@@ -16,6 +16,9 @@ class IndexView(TemplateView):
 class WFView(TemplateView):
     template_name = "app/WF.html"
 
+class JikkennView(TemplateView):
+    template_name = "app/jikkenn.html"
+
 class MapView(TemplateView):
     template_name = "app/Map.html"
 

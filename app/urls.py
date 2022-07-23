@@ -8,4 +8,5 @@ urlpatterns = [
     path('WF/', views.WFView.as_view(), name='WF'),
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.basyodetail, name="Mapdetail"),
+    path("Jikkenn/", views.JikkennView.as_view(), name="Jikkenn"),
 ]
