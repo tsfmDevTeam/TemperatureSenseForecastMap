@@ -183,21 +183,3 @@ a:hover {
 .list29 ul li:last-of-type,.list29 ol li:last-of-type{
   border-bottom: none;
 }
-.container {
-	display: flex;
-}
-
-.container table {
-	width: 100%;
-}
-
-.container th {
-	padding: 4px;
-	color: #FFF;
-	background: #4169e1;
-}
-
-.container td {
-	padding: 4px;
-	background: #87cefa;
-}

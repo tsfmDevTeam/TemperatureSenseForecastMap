@@ -1,1 +1,1 @@
-web: gunicorn vol6-TemperatureSenseForecastMap.wsgi
+web: gunicorn TemperatureSenseForecastMap.wsgi
