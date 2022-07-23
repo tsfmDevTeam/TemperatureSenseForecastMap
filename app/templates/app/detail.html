@@ -101,32 +101,9 @@
         <div class="l">
             <ul>
                 <li>
-                    1日の暑さ指数による注意度
+                    1日の暑さ指数
                 </li>
-                <div class="l" style="white-space: nowrap; overflow-x: scroll;">
-
-                    <table border="1" style="width: 100%;
-                            border-collapse: collapse;
-                            white-space: nowrap;">
-                        <tr>
-                            <th style="position: sticky; left: 0; color :white; background: #007bff;"
-                                align="center">時刻
-                            </th>
-                            {% for w_and_s in wgbt_and_status %}
-                                <td align="center">{{ w_and_s.time }}</td>
-                            {% endfor %}
-                        </tr>
-                        <tr>
-                            <th style="position: sticky; left: 0; color :white; background: #007bff;"
-                                align="center">
-                                暑さ指数
-                            </th>
-                            {% for w_and_s in wgbt_and_status %}
-                                <td align="center">{{ w_and_s.WGBT }}</td>
-                            {% endfor %}
-                        </tr>
-                    </table>
-                </div>
+                <img src="data:image/png;base64,{{ chart | safe }}">
 
             </ul>
         </div>
