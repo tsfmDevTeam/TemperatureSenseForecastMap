@@ -1,6 +1,38 @@
 import json
 from urllib import request
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+import base64
+from io import BytesIO
 
+#プロットしたグラフを画像データとして出力するための関数
+def Output_Graph():
+    buffer = BytesIO()                   #バイナリI/O(画像や音声データを取り扱う際に利用)
+    plt.savefig(buffer, format="png")    #png形式の画像データを取り扱う
+    buffer.seek(0)                       #ストリーム先頭のoffset byteに変更
+    img   = buffer.getvalue()            #バッファの全内容を含むbytes
+    graph = base64.b64encode(img)        #画像ファイルをbase64でエンコード
+    graph = graph.decode("utf-8")        #デコードして文字列から画像に変換
+    buffer.close()
+    return graph
+
+#グラフをプロットするための関数
+def Plot_Graph(x,y):
+
+    x_num = list(range(0, len(x), 1))      #x軸の連番値を作成
+
+    plt.switch_backend("AGG")        #スクリプトを出力させない
+    plt.figure(figsize=(10,5))       #グラフサイズ
+    plt.bar(x,y)                     #グラフ作成
+    plt.xticks(x_num, x)            #横軸を日付にする
+    plt.xticks(rotation=90)         # x軸縦書き（90度回転）
+    plt.title("WGBT-Graph")    #グラフタイトル
+    plt.xlabel("Date")               #xラベル
+    plt.ylabel("WGBT")             #yラベル
+    plt.tight_layout()               #レイアウト
+    graph = Output_Graph()           #グラフプロット
+    return graph
 
 def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
     """WGBT温度の計算
@@ -42,8 +74,8 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
             time = body["hourly"]["time"][index]
 
             time = time.replace(year, "")
-            time = time.replace(str1, "月")
-            time = time.replace(str2, "日")
+            time = time.replace(str1, "/")
+            time = time.replace(str2, "/")
 
             time_list.append(time)
 
@@ -65,7 +97,7 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
             wgbts_list.append(round(wgbt, 3))
 
     # 現在から24時間後の暑さ指数の予測値と時刻が入った配列
-    return wgbts_list, time_list
+    return wgbts_list, time_list, Plot_Graph(time_list, wgbts_list)
 
 
 def wgbt_indicator(WBGT: float) -> str:
