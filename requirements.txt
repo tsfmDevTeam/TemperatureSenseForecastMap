@@ -13,6 +13,7 @@ gunicorn
 idna
 matplotlib
 pip
+psycopg2
 python-dateutil
 requests
 setuptools

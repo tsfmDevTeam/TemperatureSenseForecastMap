@@ -34,7 +34,7 @@ def Plot_Graph(x,y):
     graph = Output_Graph()           #グラフプロット
     return graph
 
-def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
+def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
     """WGBT温度の計算
     緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
         - 温度
@@ -49,7 +49,9 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
         - ido (float): 緯度
         - keido (float): 経度
     Returns:
-        - wgbt (float): WGBT温度
+        - wgbts_list list[float]: WGBT温度（24時間分）
+        - time_list list[str]: １時間ごとの時間（24時間分）
+        - Plot_Graph(time_list, wgbts_list) str: グラフ(x:wgbt, y:時間)
     """
 
     url = (
