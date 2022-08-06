@@ -1,8 +1,8 @@
-from typing import Union
+from typing import Any, Union
 
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
+from django import forms
 from src import geo_apis, wgbt
 
 
@@ -13,8 +13,10 @@ class BuffView(TemplateView):
 class IndexView(TemplateView):
     template_name = "app/index.html"
 
+
 class WFView(TemplateView):
     template_name = "app/WF.html"
+
 
 class MapView(TemplateView):
     template_name = "app/Map.html"
@@ -42,11 +44,6 @@ class MapView(TemplateView):
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
 
-
-
-
-
-
         return render(
             request,
             "app/detail.html",
@@ -60,6 +57,37 @@ class MapView(TemplateView):
                 "wgbt_and_status": wgbt_and_status,
                 "tikaku": tikaku,
                 "max_time": max_time,
-                "chart":chart,
+                "chart": chart,
+            },
+        )
+
+
+class User(TemplateView):
+    template_name: str = "app/user.html"
+
+    class location_form(forms.Form):
+        location1 = forms.DateField(label="地点1")
+        location2 = forms.DateField(label="地点2")
+        location3 = forms.DateField(label="地点3")
+
+    def get2(self, request: Any) -> Any:
+        initial = dict(
+            location1="test1",
+            location2="test2",
+            location3="test3",
+        )
+        myform = self.location_form(request.GET or None, initial=initial)
+
+        return render(request=request, template_name="app/user.html", context=dict(form=myform))
+
+    def main(self, request: Any) -> Any:
+        return render(
+            request=request,
+            template_name="app/user.html",
+            context={
+                "user": self.request.user,
+                "location1": "test1",
+                "location2": "test2",
+                "location3": "test3",
             },
         )
