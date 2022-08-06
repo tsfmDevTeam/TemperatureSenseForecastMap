@@ -62,7 +62,7 @@ class MapView2(TemplateView):
         lat: float = request.POST.get("lat")
         lon: float = request.POST.get("lng")
 
-        wgbt_list, time_list = wgbt.location2wgbt(ido=lat, keido=lon)
+        wgbt_list, time_list, chart = wgbt.location2wgbt(ido=lat, keido=lon)
 
         wgbt_now = wgbt_list[0]
         wgbt_status_now = wgbt.wgbt_indicator(WBGT=wgbt_now)
@@ -94,6 +94,7 @@ class MapView2(TemplateView):
                 "wgbt_and_status": wgbt_and_status,
                 "tikaku": tikaku,
                 "max_time": max_time,
+                "chart": chart,
             },
         )
 
@@ -118,7 +119,7 @@ class MapView3(TemplateView):
         lat = response.json()[0]["geometry"]["coordinates"][1]
         lon = response.json()[0]["geometry"]["coordinates"][0]
 
-        wgbt_list, time_list = wgbt.location2wgbt(ido=lat, keido=lon)
+        wgbt_list, time_list, chart = wgbt.location2wgbt(ido=lat, keido=lon)
 
         wgbt_now = wgbt_list[0]
         wgbt_status_now = wgbt.wgbt_indicator(WBGT=wgbt_now)
@@ -150,6 +151,7 @@ class MapView3(TemplateView):
                 "wgbt_and_status": wgbt_and_status,
                 "tikaku": tikaku,
                 "max_time": max_time,
+                "chart": chart,
             },
         )
 
