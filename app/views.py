@@ -166,5 +166,6 @@ class Juusyo(TemplateView):
             "app/juuyojikkenn2.html",
             {
                 'ken': ken
+                "chart":chart,
             },
         )

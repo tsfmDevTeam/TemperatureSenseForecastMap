@@ -17,6 +17,7 @@ def Output_Graph():
     buffer.close()
     return graph
 
+
 #グラフをプロットするための関数
 def Plot_Graph(x,y):
 
