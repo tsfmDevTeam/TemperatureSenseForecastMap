@@ -17,6 +17,7 @@ def Output_Graph():
     buffer.close()
     return graph
 
+
 #グラフをプロットするための関数
 def Plot_Graph(x,y):
 
@@ -34,23 +35,25 @@ def Plot_Graph(x,y):
     graph = Output_Graph()           #グラフプロット
     return graph
 
-def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
+def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
     """WGBT温度の計算
-    緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
-        - 温度
-        - 湿度
-        - 直達日射量
-        - 散乱日射量
-        - 風速
-        を取得します
-        これらの値からWGBT温度を計算します
-        (https://blog.obniz.com/news/obniz-wbgt-service.html)
-    Args:
-        - ido (float): 緯度
-        - keido (float): 経度
-    Returns:
-        - wgbt (float): WGBT温度
-    """
+        緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
+            - 温度
+            - 湿度
+            - 直達日射量
+            - 散乱日射量
+            - 風速
+            を取得します
+            これらの値からWGBT温度を計算します
+            (https://blog.obniz.com/news/obniz-wbgt-service.html)
+        Args:
+            - ido (float): 緯度
+            - keido (float): 経度
+        Returns:
+            - wgbts_list list[float]: WGBT温度（24時間分）
+            - time_list list[str]: １時間ごとの時間（24時間分）
+            - Plot_Graph(time_list, wgbts_list) str: グラフ(x:wgbt, y:時間)
+        """
 
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={ido}&longitude={keido}"
