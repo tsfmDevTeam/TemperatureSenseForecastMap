@@ -1,15 +1,29 @@
 {% load static %}
-
-{{ form.as_p }}
-
 <!DOCTYPE html>
 
 <head>
+    <style>
+        .locations {
+            display: flex;
+            flex-flow: column;
+        }
 
+        .location_columns {
+            display: flex;
+            flex-flow: row;
+        }
+    </style>
 </head>
 
 <body>
-    <input type="text" name="location_1" value={{ location1 }}><button>選択</button>
-    <input type="text" name="location_2" value={{ location2 }}><button>選択</button>
-    <input type="text" name="location_3" value={{ location3 }}><button>選択</button>
+    <main>
+        <div class="locations">
+            <div class="location_columns"><input type="text" name="location_1" value={{ location1 }}><button>選択</button>
+            </div>
+            <div class="location_columns"><input type="text" name="location_2" value={{ location2 }}><button>選択</button>
+            </div>
+            <div class="location_columns"><input type="text" name="location_3" value={{ location3 }}><button>選択</button>
+            </div>
+        </div>
+    </main>
 </body>

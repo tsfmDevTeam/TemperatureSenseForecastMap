@@ -1,8 +1,8 @@
 from typing import Any, Union
 
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from django import forms
+from django.views.generic import TemplateView, View
+
 from src import geo_apis, wgbt
 
 
@@ -45,9 +45,9 @@ class MapView(TemplateView):
         tikaku = geo_apis.find_near(ido=lat, keido=lon)
 
         return render(
-            request,
-            "app/detail.html",
-            {
+            request=request,
+            template_name="app/detail.html",
+            context={
                 "lat": lat,
                 "lon": lon,
                 "wgbt_now": wgbt_now,
@@ -62,30 +62,15 @@ class MapView(TemplateView):
         )
 
 
-class User(TemplateView):
+class User(View):
     template_name: str = "app/user.html"
 
-    class location_form(forms.Form):
-        location1 = forms.DateField(label="地点1")
-        location2 = forms.DateField(label="地点2")
-        location3 = forms.DateField(label="地点3")
-
-    def get2(self, request: Any) -> Any:
-        initial = dict(
-            location1="test1",
-            location2="test2",
-            location3="test3",
-        )
-        myform = self.location_form(request.GET or None, initial=initial)
-
-        return render(request=request, template_name="app/user.html", context=dict(form=myform))
-
-    def main(self, request: Any) -> Any:
+    def main(request: Any) -> Any:
         return render(
             request=request,
             template_name="app/user.html",
             context={
-                "user": self.request.user,
+                "user": request.user,
                 "location1": "test1",
                 "location2": "test2",
                 "location3": "test3",
