@@ -66,6 +66,11 @@ class User(View):
     template_name: str = "app/user.html"
 
     def main(request: Any) -> Any:
+        if request.method == "POST":
+            if "save_button" in request.POST:
+                print(f"{request.POST}")
+                # print(f"{request.location_1}, {request.location_2}, {request.location_3}")
+
         return render(
             request=request,
             template_name="app/user.html",
