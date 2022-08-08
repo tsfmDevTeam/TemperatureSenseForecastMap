@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import AbstractUser
 
 
 class point_name(models.Model):
@@ -31,3 +32,7 @@ class point_name(models.Model):
 
     class Meta:
         verbose_name_plural = "地点名"
+
+
+class CustomUser(AbstractUser):
+    location1 = models.CharField(max_length=50, verbose_name="よく行く場所１")

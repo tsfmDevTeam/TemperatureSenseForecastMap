@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "app",
 ]
 
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -89,6 +91,10 @@ DATABASES = {
         'PORT': 5432
     }
 }
+
+# Userモデルは使わず、自分で作ったモデルを使用する
+AUTH_USER_MODEL = "app.CustomUser"
+
 
 
 # Password validation
