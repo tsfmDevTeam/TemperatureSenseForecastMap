@@ -1,7 +1,7 @@
 from typing import Any, Union
 
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView
 
 from src import geo_apis, wgbt
 
@@ -20,6 +20,7 @@ class WFView(TemplateView):
 
 class MapView(TemplateView):
     template_name = "app/Map.html"
+    # next_page =
 
     def basyodetail(request):
         lat: float = request.POST.get("lat")
@@ -62,10 +63,15 @@ class MapView(TemplateView):
         )
 
 
-class User(View):
+class MapSelection(MapView):
+    pass
+
+
+class User(TemplateView):
     template_name: str = "app/user.html"
 
-    def main(request: Any) -> Any:
+    def post(self, request: Any, *args: Any, **kwargs: Any) -> Any:
+        print(request)
         if request.method == "POST":
             if "save_button" in request.POST:
                 print(f"{request.POST}")
@@ -81,3 +87,9 @@ class User(View):
                 "location3": "test3",
             },
         )
+
+    def get_context_data(self, **kwargs):  # type:ignore
+        context = super().get_context_data(**kwargs)
+        # context[""] =
+
+        return context

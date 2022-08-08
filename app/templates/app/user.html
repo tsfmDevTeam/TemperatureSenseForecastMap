@@ -1,5 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
+<html lang="ja">
 
 <head>
     <style>
@@ -21,21 +22,21 @@
             {% csrf_token %}
             <div class="locations">
                 <div class="location_columns">
-                    <input type="text" value={{ location1 }} name="location_1">
-                    <input id="ido_1" type="hidden" name="lat_1" value={{ ido_1 }}>
-                    <input id="keido_1" type="hidden" name="keido_1" value={{ keido_1 }}>
+                    <input id="location_1" name="location_1" type="text" value={{ location1 }}>
+                    <input id="ido_1" name="lat_1" type="hidden" value={{ ido_1 }}>
+                    <input id="keido_1" name="keido_1" type="hidden" value={{ keido_1 }}>
                     <button type="button" onclick="window.open({% url 'Map' %})">選択</button>
                 </div>
                 <div class="location_columns">
-                    <input type="text" value={{ location2 }} name="location_2">
-                    <input id="ido_2" type="hidden" name="lat_2" value={{ ido_1 }}>
-                    <input id="keido_2" type="hidden" name="keido_2" value={{ keido_1 }}>
+                    <input id="location_2" name="location_2" type="text" value={{ location2 }}>
+                    <input id="ido_2" name="lat_2" type="hidden" value={{ ido_1 }}>
+                    <input id="keido_2" name="keido_2" type="hidden" value={{ keido_1 }}>
                     <button type="button" onclick="window.open({% url 'Map' %})">選択</button>
                 </div>
                 <div class="location_columns">
-                    <input type="text" value={{ location3 }} name="location_3">
-                    <input id="ido_3" type="hidden" name="lat_3" value={{ ido_1 }}>
-                    <input id="keido_3" type="hidden" name="keido_3" value={{ keido_1 }}>
+                    <input id="location_3" name="location_3" type="text" value={{ location3 }}>
+                    <input id="ido_3" name="lat_3" type="hidden" value={{ ido_1 }}>
+                    <input id="keido_3" name="keido_3" type="hidden" value={{ keido_1 }}>
                     <button type="button" onclick="window.open({% url 'Map' %})">選択</button>
                 </div>
                 <div><button type="submit" name="save_button">保存</button></div>
@@ -43,3 +44,5 @@
         </form>
     </main>
 </body>
+
+</html>
