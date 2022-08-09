@@ -10,7 +10,6 @@ urlpatterns = [
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView2.basyodetail, name="Mapdetail"),
     path("nameMapdetail/", views.MapView3.basyodetail, name="nameMapdetail"),
-    path("Jikkenn/", views.JikkennView.as_view(), name="Jikkenn"),
     path("juusyo/", views.Juusyo.jikkenn, name="juusyo"),
     path("juusyo2/", views.Juusyo.as_view(), name="juusyo2"),
 
