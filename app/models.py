@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     pass
 
 class location(models.Model):
-    user_id = models.ForeignKey(CustomUser, db_column='id', on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     location_name = models.CharField(max_length=50, verbose_name="よく行く場所")
     ido = models.FloatField(verbose_name="緯度")
     keido = models.FloatField(verbose_name="経度")
