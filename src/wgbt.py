@@ -17,6 +17,7 @@ def Output_Graph():
     buffer.close()
     return graph
 
+
 #グラフをプロットするための関数
 def Plot_Graph(x,y):
 
@@ -53,6 +54,7 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
         - time_list list[str]: １時間ごとの時間（24時間分）
         - Plot_Graph(time_list, wgbts_list) str: グラフ(x:wgbt, y:時間)
     """
+
 
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={ido}&longitude={keido}"
