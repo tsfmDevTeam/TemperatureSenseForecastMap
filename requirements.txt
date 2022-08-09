@@ -9,9 +9,12 @@ asgiref
 certifi
 charset-normalizer
 django-request
+dj_database_url
 gunicorn
 idna
+matplotlib
 pip
+psycopg2
 python-dateutil
 requests
 setuptools
