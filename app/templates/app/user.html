@@ -13,45 +13,35 @@
             display: flex;
             flex-flow: row;
         }
-
-        .button {
-            display: inline-block;
-            border-style: solid;
-            color: black;
-            background-color: rgb(225, 224, 224);
-            border-width: 1px;
-            border-color: darkgray;
-            text-decoration: none;
-        }
     </style>
 </head>
 
 <body>
     <main>
         <div class="locations">
-            <div class="location_columns">
-                <form method="post">
-                    <input id="location" name="location" type="text" value={{ location_1 }}>{% csrf_token %}
-                </form>
-            </div>
-            <div class="location_columns">
-                <form method="post">
-                    <input id="location" name="location" type="text" value={{ location_2 }}>{% csrf_token %}
-                </form>
-            </div>
-            <div class="add_location">
-                <button onclick="location.href='{{ link }}'">追加</button>
-            </div>
+            <ul id="location_columns">
+            </ul>
+        </div>
+
+        <div id="add_location">
+            <button onclick="location.href='{{ link }}'">追加</button>
         </div>
 
     </main>
+
     <script type="text/javascript">
-        function LinkClick() {
-            var f = document.forms["add"];
-            // console.log(id, f);
-            // f.method = "POST";
-            f.submit();
-            return true;
+        const data = JSON.parse('{{ locations|safe }}');
+        console.log("data", data);
+
+        for (let i = 0; i < data.len; i++) {
+            var new_elem = document.createElement("li");
+            new_elem.textContent = data.locations[i];
+            console.log(new_elem);
+            document.getElementById("location_columns").appendChild(new_elem);
+        }
+
+        if (data.len == 3) {
+            document.getElementById("add_location").hidden = true;
         }
     </script>
 </body>

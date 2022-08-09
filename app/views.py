@@ -1,3 +1,4 @@
+import json
 import urllib
 from random import randint
 from typing import Any, Dict, Union
@@ -189,7 +190,7 @@ class UserPage(TemplateView):
     template_name: str = "app/user.html"
 
     def get_location_from_db(self) -> list[str]:
-        return [str(i) for i in range(randint(0, 3))]
+        return [str(randint(100, 200)) for _ in range(randint(1, 3))]
 
     def get_context_data(self, **kwargs):  # type:ignore
         print(self.request)
@@ -197,6 +198,7 @@ class UserPage(TemplateView):
         # context[""] =
         context["location_1"] = "test"
 
+        context["locations"] = json.dumps(loc_data)
         context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
 
         return context
@@ -219,8 +221,6 @@ class SetLocationName(TemplateView):
             ret = render(request=request, template_name="app/user.html", context={})
             return ret
         else:
-            print("POStview", request.POST.items())
-
             ret = render(
                 request=request,
                 template_name="app/locationname.html",
@@ -233,7 +233,6 @@ class SetLocationName(TemplateView):
             return ret
 
     def get_context_data(self, **kwargs):  # type:ignore
-        print("locatename META", self.request.META)
         context = super().get_context_data(**kwargs)
 
         return context
