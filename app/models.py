@@ -42,3 +42,6 @@ class location(models.Model):
     location_name = models.CharField(max_length=50, verbose_name="よく行く場所")
     ido = models.FloatField(verbose_name="緯度")
     keido = models.FloatField(verbose_name="経度")
+
+    class Meta:
+        verbose_name_plural = "よく行く場所"
