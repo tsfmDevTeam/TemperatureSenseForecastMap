@@ -1,18 +1,14 @@
-
-# dev dependecy
-black==22.6.0
-flake8==4.0.1
-isort==5.10.1
-
-Django==4.0.5
 asgiref
 certifi
 charset-normalizer
+dj_database_url
 django-request
+Django==4.0.5
 gunicorn
 idna
 matplotlib
 pip
+psycopg2
 python-dateutil
 requests
 setuptools
