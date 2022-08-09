@@ -35,4 +35,15 @@ class point_name(models.Model):
 
 
 class CustomUser(AbstractUser):
-    location1 = models.CharField(max_length=50, verbose_name="よく行く場所１")
+
+    user_id = models.CharField(max_length=25, primary_key=True, verbose_name="user_id")
+    # location1 = models.CharField(max_length=50, verbose_name="よく行く場所１")
+
+    def __str__(self):
+        return self.user_id
+
+class location(models.Model):
+    user_id = models.ForeignKey(CustomUser, db_column='user_id', on_delete=models.CASCADE)
+    location_name = models.CharField(max_length=50, verbose_name="よく行く場所")
+    ido = models.FloatField(verbose_name="緯度")
+    keido = models.FloatField(verbose_name="経度")

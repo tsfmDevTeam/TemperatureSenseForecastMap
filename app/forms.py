@@ -7,7 +7,7 @@ from .models import CustomUser
 class SignupForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password1', 'password2', "location1"]
+        fields = ['username', 'email', 'password1', 'password2']
 
 class LoginForm(AuthenticationForm):
     class Meta:
