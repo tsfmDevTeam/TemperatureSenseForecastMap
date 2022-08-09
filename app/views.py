@@ -31,7 +31,7 @@ class MapView(TemplateView):
         if request.GET.get("type") == "location":
             return render(
                 request=request,
-                template_name="app/user.html",
+                template_name="app/locationname.html",
                 context={"lat": ido, "lon": keido, "id": request.GET.get("id")},
             )
 
@@ -77,7 +77,7 @@ class MapView(TemplateView):
 
         if self.request.GET.get("type") == "location":
             context["button_message"] = "この場所を選択する"
-            context["next_page"] = f"{self.request._current_scheme_host}/user/"  # type: ignore
+            context["next_page"] = f"{self.request._current_scheme_host}/locationname/"  # type: ignore
 
         else:
             context["button_message"] = "この場所の情報を見る"
@@ -92,9 +92,6 @@ class MapView(TemplateView):
 class User(TemplateView):
     template_name: str = "app/user.html"
 
-    def do_save(self, id: int, ido: float, keido: float):
-        print(id, ido, keido)
-
     def post(self, request: HttpRequest) -> Any:
         query: dict[str, list[Any]] = urllib.parse.parse_qs(request.META.get("HTTP_REFERER"))  # type:ignore
         print(request.POST.items())
@@ -131,14 +128,10 @@ class User(TemplateView):
         context["link_3"] = f"{self.request._current_scheme_host}/Map/?type=location&id=3"  # type: ignore
 
         return context
-
-    # def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-    #     context = super().get(request, *args, **kwargs)
-    #     return context
 
 
 class SetLocationName(TemplateView):
-    template_name: str = "app/userlocation.html"
+    template_name: str = "app/locationname.html"
 
     def do_save(self, id: int, ido: float, keido: float):
         print(id, ido, keido)
@@ -173,13 +166,5 @@ class SetLocationName(TemplateView):
     def get_context_data(self, **kwargs):  # type:ignore
         print(self.request)
         context = super().get_context_data(**kwargs)
-        # context[""] =
-        context["link_1"] = f"{self.request._current_scheme_host}/Map/?type=location&id=1"  # type: ignore
-        context["link_2"] = f"{self.request._current_scheme_host}/Map/?type=location&id=2"  # type: ignore
-        context["link_3"] = f"{self.request._current_scheme_host}/Map/?type=location&id=3"  # type: ignore
 
         return context
-
-    # def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-    #     context = super().get(request, *args, **kwargs)
-    #     return context

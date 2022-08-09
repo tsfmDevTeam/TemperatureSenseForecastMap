@@ -9,5 +9,5 @@ urlpatterns = [
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
     path("user/", views.User.as_view(), name="user"),
-    path("userlocate/", views.MapView.as_view(), name="user"),
+    path("locationname/", views.SetLocationName.as_view(), name="userloc"),
 ]

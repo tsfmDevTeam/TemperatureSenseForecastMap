@@ -30,6 +30,7 @@
     <main>
         <div class="locations">
             <div class="location_columns">
+                名前を入力してください。
                 <form method="post">
                     <input id="location" name="location" type="text" value={{ location_1 }}>{% csrf_token %}
                     <input id="ido" name="ido" type="hidden" value={{ ido_1 }}>
@@ -37,23 +38,6 @@
                     <input type="submit" class="button" href={{ link_1 }} value="選択"></input>
                 </form>
             </div>
-            <div class="location_columns">
-                <form method="post">
-                    <input id="location" name="location" type="text" value={{ location_2 }}>{% csrf_token %}
-                    <input id="ido" name="ido" type="hidden" value={{ ido_2 }}>
-                    <input id="keido" name="keido" type="hidden" value={{ keido_2 }}>
-                    <input type="submit" class="button" href={{ link_2 }} value="選択"></input>
-                </form>
-            </div>
-            <div class="location_columns">
-                <form name="form3" method="post" action={{ link_3 }}>
-                    <input id="location" name="location" type="text" value={{ location_3 }}>{% csrf_token %}
-                    <input id="ido" name="ido" type="hidden" value={{ ido_3}}>
-                    <input id="keido" name="keido" type="hidden" value={{ keido_3 }}>
-                </form>
-                <a onclick="LinkClick(3);" class="button" href={{ link_3 }}>選択</a>
-            </div>
-            <!-- <div><button type="submit" name="save_button">保存</button></div> -->
         </div>
 
     </main>
