@@ -35,7 +35,6 @@ class point_name(models.Model):
 
 
 class CustomUser(AbstractUser):
-
     user_id = models.CharField(max_length=25, primary_key=True, verbose_name="user_id")
     # location1 = models.CharField(max_length=50, verbose_name="よく行く場所１")
 
