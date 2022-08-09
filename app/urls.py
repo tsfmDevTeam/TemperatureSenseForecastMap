@@ -4,6 +4,7 @@ from app import views
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
+    path("Mapsitei/", views.MapView.juusyo, name="Mapsitei"),
     path("BuffView/", views.BuffView.as_view(), name="BuffView"),
     path("Jikkenn/", views.JikkennView.as_view(), name="Jikkenn"),
     path("juusyo/", views.Juusyo.jikkenn, name="juusyo"),
