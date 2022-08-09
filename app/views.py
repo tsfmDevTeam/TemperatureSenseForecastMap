@@ -1,3 +1,4 @@
+from random import randint
 import urllib
 from typing import Any, Dict, Union
 
@@ -29,10 +30,11 @@ class MapView(TemplateView):
         keido: float = request.POST.get("keido")  # type: ignore
 
         if request.GET.get("type") == "location":
+            print(f"mapview ,{ido} {keido}")
             return render(
                 request=request,
                 template_name="app/locationname.html",
-                context={"lat": ido, "lon": keido, "id": request.GET.get("id")},
+                context={"ido": ido, "keido": keido},
             )
 
         else:
@@ -85,47 +87,20 @@ class MapView(TemplateView):
 
         return context
 
-    # def get (self, request: HttpRequest) -> None:
-    #     print(request.GET.get("type", default=None))
-
 
 class User(TemplateView):
     template_name: str = "app/user.html"
 
-    def post(self, request: HttpRequest) -> Any:
-        query: dict[str, list[Any]] = urllib.parse.parse_qs(request.META.get("HTTP_REFERER"))  # type:ignore
-        print(request.POST.items())
-        self.do_save(id=int(query.get("id")[0]), ido=request.POST.get("ido"), keido=request.POST.get("keido"))  # type: ignore
-
-        ret = render(
-            request=request,
-            template_name="app/user.html",
-            context={
-                "user": request.user,
-                # これらの値は，DBから取得する
-                "location_1": "test1",
-                "ido_1": 40,
-                "keido_1": 135,
-                "location_2": "test2",
-                "ido_2": 40,
-                "keido_2": 135,
-                "location_3": "test3",
-                "ido_3": 140,
-                "keido_3": 135,
-            },
-        )
-
-        #     print(ret)
-
-        return ret
+    def get_location_from_db(self) -> list[str]:
+        return [str(i) for i in range(randint(0, 3))]
 
     def get_context_data(self, **kwargs):  # type:ignore
         print(self.request)
         context = super().get_context_data(**kwargs)
         # context[""] =
-        context["link_1"] = f"{self.request._current_scheme_host}/Map/?type=location&id=1"  # type: ignore
-        context["link_2"] = f"{self.request._current_scheme_host}/Map/?type=location&id=2"  # type: ignore
-        context["link_3"] = f"{self.request._current_scheme_host}/Map/?type=location&id=3"  # type: ignore
+        context["location_1"] = "test"
+
+        context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
 
         return context
 
@@ -133,38 +108,35 @@ class User(TemplateView):
 class SetLocationName(TemplateView):
     template_name: str = "app/locationname.html"
 
-    def do_save(self, id: int, ido: float, keido: float):
-        print(id, ido, keido)
+    def do_save(self, name: str, ido: float, keido: float):
+        print(name, ido, keido)
 
     def post(self, request: HttpRequest) -> Any:
-        query: dict[str, list[Any]] = urllib.parse.parse_qs(request.META.get("HTTP_REFERER"))  # type:ignore
-        print(request.POST.items())
-        self.do_save(id=int(query.get("id")[0]), ido=request.POST.get("ido"), keido=request.POST.get("keido"))  # type: ignore
+        if "save" in request.POST:
+            self.do_save(
+                name=request.POST.get("location_name"),  # type: ignore
+                ido=request.POST.get("ido"),  # type: ignore
+                keido=request.POST.get("keido"),  # type: ignore
+            )
 
-        ret = render(
-            request=request,
-            template_name="app/user.html",
-            context={
-                "user": request.user,
-                # これらの値は，DBから取得する
-                "location_1": "test1",
-                "ido_1": 40,
-                "keido_1": 135,
-                "location_2": "test2",
-                "ido_2": 40,
-                "keido_2": 135,
-                "location_3": "test3",
-                "ido_3": 140,
-                "keido_3": 135,
-            },
-        )
+            ret = render(request=request, template_name="app/user.html", context={})
+            return ret
+        else:
+            print("POStview", request.POST.items())
 
-        #     print(ret)
-
-        return ret
+            ret = render(
+                request=request,
+                template_name="app/locationname.html",
+                context={
+                    "location_id": request.POST.get("location_id"),
+                    "ido": request.POST.get("ido"),
+                    "keido": request.POST.get("keido"),
+                },
+            )
+            return ret
 
     def get_context_data(self, **kwargs):  # type:ignore
-        print(self.request)
+        print("locatename META", self.request.META)
         context = super().get_context_data(**kwargs)
 
         return context

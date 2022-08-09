@@ -31,11 +31,12 @@
         <div class="locations">
             <div class="location_columns">
                 名前を入力してください。
-                <form method="post">
-                    <input id="location" name="location" type="text" value={{ location_1 }}>{% csrf_token %}
-                    <input id="ido" name="ido" type="hidden" value={{ ido_1 }}>
-                    <input id="keido" name="keido" type="hidden" value={{ keido_1 }}>
-                    <input type="submit" class="button" href={{ link_1 }} value="選択"></input>
+                <form method="post">{% csrf_token %}
+                    <input id="location_name" name="location_name" type="text">
+                    <input id="location_id" name="location_id" type="hidden" value={{ location_id }}>
+                    <input id="ido" name="ido" type="hidden" value={{ ido }}>
+                    <input id="keido" name="keido" type="hidden" value={{ keido }}>
+                    <input type="submit" name="save" class="button" href={{ link }} value="保存"></input>
                 </form>
             </div>
         </div>
