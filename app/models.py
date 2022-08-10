@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class point_name(models.Model):
-
+    id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     name = models.CharField(max_length=31, verbose_name="地点名")
     katakana = models.CharField(max_length=31, verbose_name="カタカナ名")
     address = models.CharField(max_length=31, verbose_name="住所")
