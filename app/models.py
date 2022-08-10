@@ -27,16 +27,11 @@ class point_name(models.Model):
         max_length=25,
         verbose_name="時間リスト")
 
-    def __str__(self):
-        return self.name
+    def __int__(self):
+        return self.id
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["id", "name"],
-                name="地点名"
-            ),
-        ]
+        verbose_name_plural = "地点id"
 
 
 class CustomUser(AbstractUser):
