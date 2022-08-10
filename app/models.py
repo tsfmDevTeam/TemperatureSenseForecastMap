@@ -28,10 +28,15 @@ class point_name(models.Model):
         verbose_name="時間リスト")
 
     def __str__(self):
-        return self.name, self.id
+        return self.name
 
     class Meta:
-        verbose_name_plural = "地点名"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["id", "name"],
+                name="地点名"
+            ),
+        ]
 
 
 class CustomUser(AbstractUser):
