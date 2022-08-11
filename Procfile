@@ -1,2 +1,2 @@
 web: gunicorn TemperatureSenseForecastMap.wsgi
-clock: python time_scheduler.py
+clock: python app/time_scheduler.py
