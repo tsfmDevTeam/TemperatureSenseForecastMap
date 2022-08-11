@@ -73,7 +73,7 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str]]:
 
 
 scheduler = BackgroundScheduler()
-@scheduler.scheduled_job('cron', hour=17, minute=5)# 毎日15時10分に実行
+@scheduler.scheduled_job('cron', hour=17, minute=27)# 毎日15時10分に実行
 def update_point_wgbt():
     for point in point_name.objects.all():
         #更新
