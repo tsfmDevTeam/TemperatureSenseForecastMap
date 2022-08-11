@@ -89,7 +89,8 @@
                             <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
                             <li class="active"><a href="{% url 'juusyo' %}">実験</a></li>
                             <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
-                            <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li>
+                            <li class="btn-cta"><a href="{% url "login" %}"><span>log in</span></a></li>
+                            <li class="btn-cta"><a href="{% url "signup" %}"><span>sign up</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -193,14 +194,14 @@
                         <form class="form-inline">
 
                             <div class="col-md-12 col-sm-12">
-                            <a href="{% url "Map" %}">
+                                <a href="{% url "Map" %}">
 
-                                <button type="button" class="btn btn-default btn-block">
+                                    <button type="button" class="btn btn-default btn-block">
 
-                                    マップに移動はこちら
+                                        マップに移動はこちら
 
-                                </button>
-                            </a>
+                                    </button>
+                                </a>
 
 
                             </div>
@@ -226,7 +227,7 @@
 
                         <form style="text-align: center;" class="" action="{% url 'nameMapdetail' %}" method="post"
                               enctype="multipart/form-data">
-                             {% csrf_token %}
+                            {% csrf_token %}
 
                             <select id="geoapi-prefectures" name="geoapi-prefectures">
                                 <option value="都道府県を選択してください">都道府県を選択してください</option>
@@ -245,21 +246,9 @@
 
                             <br>
 
-        <div class="text-center">
-        <a class="btn btn-warning btn-lg py-3 px-5 text-white font-weight-bold" href="{% url "Map" %}" role="button">mapに移動はこちら</a>
-      </div>
-        <br>
-        <div class="text-center">
-            <a class="btn btn-warning btn-lg py-2 px-4 text-white font-weight-bold" href="{% url "signup" %}" role="button">会員登録</a>
-            <a class="btn btn-warning btn-lg py-2 px-4 text-white font-weight-bold" href="{% url "login" %}" role="button">ログイン</a>
-        </div>
-        <br>
-        <br>
-        <div style="text-align: center;">
 
-
-            <br>
-            <br>
+                            <br>
+                            <br>
 
                         </form>
 
