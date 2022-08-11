@@ -52,9 +52,9 @@
 </head>
 
 <body>
-    <form style="position: absolute;" class="" action="{% url "Mapdetail" %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <input id="lat" type="hidden" name="lat" value="" /><input id="lng" type="hidden" name="lng" value="" />
-        <input class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" value="この場所の情報を見る" onclick="return checkForm();">
+    <form style="position: absolute;" class="" action="{{ next_page }}" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <input id="ido" type="hidden" name="ido" value="" /><input id="keido" type="hidden" name="keido" value="" />
+        <input class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" onclick="return checkForm();" value={{ button_message }} >
     </form>
     <div class="folium-map" id="map_290f8bf58b504a9dbb050469d3255ec9" ></div>
 </body>
@@ -80,7 +80,7 @@
         }
     }
     
-    function checkForm(){
+    function checkForm(id){
         if(document.getElementById('lat').value === "" || document.getElementById('lon').value === ""){
             alert("地図をclickして場所を指定してください。");
             return false;
@@ -141,8 +141,8 @@
             {}
         ).addTo(map_290f8bf58b504a9dbb050469d3255ec9).bindPopup('緯度：'+lat +'<br>経度：'+lng+'').openPopup();
 
-        document.getElementById('lat').value = lat;
-        document.getElementById('lng').value = lng;
+        document.getElementById('ido').value = lat;
+        document.getElementById('keido').value = lng;
         console.log('333')
         console.log(document.getElementById('lng').value)
     } );
