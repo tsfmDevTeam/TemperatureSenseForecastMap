@@ -1,144 +1,271 @@
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html>
-
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="format-detection" content="email=no,telephone=no,address=no">
-    <title>TemperatureSenseForecastMap</title>
-    <meta name="description" content="TemperatureSenseForecastMap">
+    <title>Splash &mdash; Free Website Template, Free HTML5 Template by FreeHTML5.co</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co"/>
+    <meta name="keywords"
+          content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"/>
+    <meta name="author" content="FreeHTML5.co"/>
 
-    <meta name="robots" content="index,follow">
+    <!--
+    //////////////////////////////////////////////////////
 
-    <link rel="icon" href="{% static 'img/icon2.png' %}">
-    <!-- スタイルシートはここから -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    FREE HTML5 TEMPLATE
+    DESIGNED & DEVELOPED by FREEHTML5.CO
+
+    Website: 		http://freehtml5.co/
+    Email: 			info@freehtml5.co
+    Twitter: 		http://twitter.com/fh5co
+    Facebook: 		https://www.facebook.com/fh5co
+
+    //////////////////////////////////////////////////////
+     -->
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <!-- Themify Icons-->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <!-- Owl Carousel  -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <!-- Theme style  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+
+    <!-- Modernizr JS -->
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+	<script src="{% static 'js/respond.min.js' %}"></script>
+	<![endif]-->
+
 </head>
+<body>
 
-<body id="page-top">
-<!----------------------------------------------->
-<header>
-    <nav id="nav01">
-        <div class="container navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand mr-auto" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="サイト名"
-                                                                          height="50"></a>
-            <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
-                <li class="nav-item"><a href="{% url 'Map' %}" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>マップ</a></li>
-                <li class="nav-item"><a href="https://www.wbgt.env.go.jp/wbgt_lp.php" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>環境省HP</a></li>
-            </ul>
-            <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
-                <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
-            </form>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<div class="gtco-loader"></div>
+
+<div id="page">
+
+
+    <div class="page-inner">
+        <nav class="gtco-nav" role="navigation">
+            <div class="gtco-container">
+
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <div id="gtco-logo"><a href="{% url 'index' %}">home <em>.</em></a></div>
+                    </div>
+                    <div class="col-xs-8 text-right menu-1">
+                        <ul>
+                            <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
+                            <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
+                            <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
+                style="height: 10rem; background-image: url(../../static/img/onndann.jpg);">
+            <div class="overlay"></div>
+            <div class="gtco-container">
+
+            </div>
+        </header>
+
+
+        <div class="gtco-section border-bottom">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>指定地域の暑さ指数</h2>
+                        <p>指定された地域の暑さ指数情報を表示します。</p>
+                        <hr>
+                    </div>
+                </div>
+
+
+                <!--
+                <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                    <div style="height: 3px;text-align: center;" class="price-box popular">
+                        <div class="popular-text">緯度</div>
+                        <h4 class="pricing-plan">{{ lat }}</h4>
+                    </div>
+                    <div style="height: 3px;text-align: center;" class="price-box popular">
+                        <div class="popular-text">経度</div>
+                        <h4 class="pricing-plan">{{ lon }}</h4>
+
+                    </div>
+                </div>
+
+                -->
+                <div class="col-md-12 col-md-offset1 text-center gtco-heading">
+                    <div class="price-box popular">
+
+                        <h2 class="pricing-plan">暑さabout</h2>
+
+                        <p>暑さ指数</p>
+                        <hr>
+
+                        <ol style="text-align: center; " class="sample1">
+                            <li><a>暑さ指数：{{ wgbt_now }}</a></li>
+                            <br>
+                            <li><a>対策：{{ wgbt_status_now }}</a></li>
+                            <br>
+                            <li><a>24時間後までの最大暑さ指数：{{ wgbt_max }}（{{ max_time }}）</a></li>
+                            <br>
+                            <li><a>最大暑さ指数の対策：{{ wgbt_status_max }}</a></li>
+                            <br>
+                            <li><a>一日の暑さ指数推移</a></li>
+                            <br>
+                        </ol>
+                            <img style="width: 100%" src="data:image/png;base64,{{ chart | safe }}">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-md-offset-1 text-center gtco-heading">
+                <div class="price-box popular">
+
+                    <h2 class="pricing-plan">近隣地域</h2>
+                    <hr>
+
+                    <ol style="text-align: center; " class="sample1">
+                        {% for i in tikaku %}
+                            <li><a>
+
+                                {{ i.juusyo }}
+                                {{ i.lat }}
+                                {{ i.lng }}
+                            </a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+
+                </div>
+            </div>
         </div>
-    </nav><!-- /# nav01 -->
 
-</header>
-<!----------------------------------------------->
 
-<main>
-    <div class="container">
-        <br>
-        <!--
-<div class="demo demo4">
-<div class="heading">指定地域の暑さ指数</div>
+    </div>
 </div>
--->
-        <h1 class="cp_h1title" style="text-align:center;">指定地域の暑さ指数</h1>
-        <!----------------------------------------------->
-        <hr>
 
-        <!----------------------------------------------->
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">緯度</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ lat }}</p>
-            </div>
-        </section>
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">経度</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ lon }}</p>
-            </div>
-        </section>
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">暑さ指数</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_now }}</p>
-            </div>
-        </section>
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">対策</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_now }}</p>
-            </div>
-        </section>
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">24時間後までの最大暑さ指数</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_max }}（{{ max_time }}）</p>
-            </div>
-        </section>
-        <section class="mb-5">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">最大暑さ指数の対策</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_max }}</p>
-            </div>
-        </section>
-        <!----------------------------------------------->
-        <div class="l">
-            <ul>
-                <li>
-                    1日の暑さ指数
-                </li>
-                <img src="data:image/png;base64,{{ chart | safe }}">
 
-            </ul>
+<footer id="gtco-footer" role="contentinfo">
+    <div class="gtco-container">
+        <div class="row row-p	b-md">
+
+            <div class="col-md-4">
+                <div class="gtco-widget">
+                    <h3>About <span class="footer-logo">Splash</span></h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore eos molestias quod sint ipsum
+                        possimus temporibus officia iste perspiciatis consectetur in fugiat repudiandae cum. Totam
+                        cupiditate nostrum ut neque ab?</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-md-push-1">
+                <div class="gtco-widget">
+                    <h3>Links</h3>
+                    <ul class="gtco-footer-links">
+                        <li><a href="#">Knowledge Base</a></li>
+                        <li><a href="#">Career</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Terms of services</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="gtco-widget">
+                    <h3>Get In Touch</h3>
+                    <ul class="gtco-quick-contact">
+                        <li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
+                        <li><a href="#"><i class="icon-mail2"></i> info@FreeHTML5.co</a></li>
+                        <li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
-        <div class="list29">
-            <div class="list29-title">近隣地域</div>
-            <ul>
-                {% for i in tikaku %}
-                <li>
-                    {{ i.juusyo }}
-                    {{ i.lat }}
-                    {{ i.lng }}
-                </li>
-                {% endfor %}
-            </ul>
+        <div class="row copyright">
+            <div class="col-md-12">
+                <p class="pull-left">
+                    <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
+                    <small class="block">Designed by <a href="http://FreeHTML5.co/" target="_blank">FreeHTML5.co</a>
+                        Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+                </p>
+                <p class="pull-right">
+                <ul class="gtco-social-icons pull-right">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                </ul>
+                </p>
+            </div>
         </div>
-    </div><!-- /.container -->
-</main>
 
-
-<div class="text-white bg-primary">
-    <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
+    </div>
+</footer>
 </div>
-<!----------------------------------------------->
-<!-- javascript はここから -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-<!----------------------------------------------->
+
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Easing -->
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- countTo -->
+<script src="{% static 'js/jquery.countTo.js' %}"></script>
+<!-- Magnific Popup -->
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+<!-- Main -->
+<script src="{% static 'js/main.js' %}"></script>
+
 </body>
-
 </html>
+
+
+
