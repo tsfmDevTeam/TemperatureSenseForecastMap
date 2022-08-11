@@ -1,39 +1,79 @@
-import json
-from urllib import request
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
 import base64
+import json
 from io import BytesIO
+from urllib import request
 
-#プロットしたグラフを画像データとして出力するための関数
+import matplotlib
+from matplotlib import pyplot as plt
+
+matplotlib.use("Agg")
+
+
+# プロットしたグラフを画像データとして出力するための関数
 def Output_Graph():
-    buffer = BytesIO()                   #バイナリI/O(画像や音声データを取り扱う際に利用)
-    plt.savefig(buffer, format="png")    #png形式の画像データを取り扱う
-    buffer.seek(0)                       #ストリーム先頭のoffset byteに変更
-    img   = buffer.getvalue()            #バッファの全内容を含むbytes
-    graph = base64.b64encode(img)        #画像ファイルをbase64でエンコード
-    graph = graph.decode("utf-8")        #デコードして文字列から画像に変換
+    buffer = BytesIO()  # バイナリI/O(画像や音声データを取り扱う際に利用)
+    plt.savefig(buffer, format="png")  # png形式の画像データを取り扱う
+    buffer.seek(0)  # ストリーム先頭のoffset byteに変更
+    img = buffer.getvalue()  # バッファの全内容を含むbytes
+    graph = base64.b64encode(img)  # 画像ファイルをbase64でエンコード
+    graph = graph.decode("utf-8")  # デコードして文字列から画像に変換
     buffer.close()
     return graph
 
 
-#グラフをプロットするための関数
-def Plot_Graph(x,y):
+# グラフをプロットするための関数
+def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
+    x_num = list(range(0, len(time_list), 1))  # x軸の連番値を作成
 
-    x_num = list(range(0, len(x), 1))      #x軸の連番値を作成
+    plt.switch_backend("AGG")  # スクリプトを出力させない
+    plt.figure(figsize=(10, 5))  # グラフサイズ
 
-    plt.switch_backend("AGG")        #スクリプトを出力させない
-    plt.figure(figsize=(10,5))       #グラフサイズ
-    plt.bar(x,y)                     #グラフ作成
-    plt.xticks(x_num, x)            #横軸を日付にする
-    plt.xticks(rotation=90)         # x軸縦書き（90度回転）
-    plt.title("WGBT-Graph")    #グラフタイトル
-    plt.xlabel("Date")               #xラベル
-    plt.ylabel("WGBT")             #yラベル
-    plt.tight_layout()               #レイアウト
-    graph = Output_Graph()           #グラフプロット
+    plt.bar(time_list, [min(i, 24) for i in wgbt_list], color="cyan")  # type:ignore
+
+    blue_x: list[str] = []
+    blue_y: list[float] = []
+    for time, wgbt in zip(time_list, wgbt_list):
+        if wgbt >= 24:
+            blue_x.append(time)
+            blue_y.append(min(wgbt, 28) - 24)
+    plt.bar(blue_x, blue_y, color="blue", bottom=24)  # type:ignore
+
+    yellow_x: list[str] = []
+    yellow_y: list[float] = []
+    for time, wgbt in zip(time_list, wgbt_list):
+        if wgbt >= 28:
+            yellow_x.append(time)
+            yellow_y.append(min(wgbt, 31) - 28)
+    plt.bar(yellow_x, yellow_y, color="yellow", bottom=28)  # type:ignore
+
+    orange_x: list[str] = []
+    orange_y: list[float] = []
+    for time, wgbt in zip(time_list, wgbt_list):
+        if wgbt >= 31:
+            orange_x.append(time)
+            orange_y.append(min(wgbt, 35) - 31)
+    plt.bar(orange_x, orange_y, color="orange", bottom=31)  # type:ignore
+
+    red_x: list[str] = []
+    red_y: list[float] = []
+    for time, wgbt in zip(time_list, wgbt_list):
+        if wgbt > 35:
+            red_x.append(time)
+            red_y.append(wgbt - 35)
+    plt.bar(red_x, red_y, color="red", bottom=35)  # type:ignore
+
+    # 横軸を日付にする
+    plt.xticks(x_num, time_list)  # type:ignore
+    # x軸縦書き（90度回転）
+    plt.xticks(rotation=90)  # type:ignore
+    plt.title("WGBT-Graph")  # グラフタイトル
+    plt.xlabel("Date")  # type:ignore
+    plt.ylabel("WGBT")  # type:ignore
+    plt.tight_layout()  # レイアウト
+    graph = Output_Graph()  # グラフプロット
+
     return graph
+
 
 def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
     """WGBT温度の計算
@@ -54,7 +94,6 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
         - time_list list[str]: １時間ごとの時間（24時間分）
         - Plot_Graph(time_list, wgbts_list) str: グラフ(x:wgbt, y:時間)
     """
-
 
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={ido}&longitude={keido}"
@@ -111,7 +150,13 @@ def wgbt_indicator(WBGT: float) -> str:
     Returns:
         message (str): 危険度合のメッセージ
     """
-    status: list[str] = ["運動は原則中止", "厳重警戒（激しい運動は中止）", "警戒（積極的に休憩)", "注意（積極的に水分補給）", "ほぼ安全（適宜水分補給）"]
+    status: list[str] = [
+        "運動は原則中止",
+        "厳重警戒（激しい運動は中止）",
+        "警戒（積極的に休憩)",
+        "注意（積極的に水分補給）",
+        "ほぼ安全（適宜水分補給）",
+    ]
 
     if WBGT > 35:
         return status[0]
