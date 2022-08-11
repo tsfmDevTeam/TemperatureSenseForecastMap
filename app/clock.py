@@ -87,8 +87,6 @@ def update_point_wgbt():
         point.save() #ここでUPDATEが実行される
         time.sleep(1)
 
-
-def start():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(update_point_wgbt, 'cron', hour=15, minute=52)# 毎日15時10分に実行
-    scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(update_point_wgbt, 'cron', hour=16, minute=6)# 毎日15時10分に実行
+scheduler.start()
