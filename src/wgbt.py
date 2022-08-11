@@ -1,12 +1,15 @@
 import base64
 import json
+import os
 from io import BytesIO
+import pathlib
+import random
 from urllib import request
+import numpy as np
 
-import matplotlib
 from matplotlib import pyplot as plt
 
-matplotlib.use("Agg")
+# matplotlib.use("Agg")
 
 
 # プロットしたグラフを画像データとして出力するための関数
@@ -21,56 +24,121 @@ def Output_Graph():
     return graph
 
 
+def load_font():
+    target = pathlib.Path(__file__).parent / "font.ttf"
+    url = "https://github.com/minoryorg/Noto-Sans-CJK-JP/blob/master/fonts/NotoSansCJKjp-Regular.ttf" + "?raw=true"
+
+    if not target.exists():
+        data = request.urlopen(url).read()
+        with open(target, mode="wb") as f:
+            f.write(data)
+
+
 # グラフをプロットするための関数
 def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
-    x_num = list(range(0, len(time_list), 1))  # x軸の連番値を作成
+    load_font()
+    colors = ["#1C75BC", "#16C4FD", "#FFB23B", "#F17816", "#FF5722"]
 
-    plt.switch_backend("AGG")  # スクリプトを出力させない
+    # plt.switch_backend("AGG")  # スクリプトを出力させない
     plt.figure(figsize=(10, 5))  # グラフサイズ
+    graph_min = min(wgbt_list) // 1 - 1
+    graph_max = max(wgbt_list) // 1 + 2
 
-    plt.bar(time_list, [min(i, 24) for i in wgbt_list], color="cyan")  # type:ignore
+    virtual_x = list(range(len(time_list)))
+    plt.ylim(graph_min, graph_max)
+    plt.xlim(time_list[0], time_list[-1])
+    thresholds = [24, 28, 31, 35]
 
-    blue_x: list[str] = []
-    blue_y: list[float] = []
-    for time, wgbt in zip(time_list, wgbt_list):
-        if wgbt >= 24:
-            blue_x.append(time)
-            blue_y.append(min(wgbt, 28) - 24)
-    plt.bar(blue_x, blue_y, color="blue", bottom=24)  # type:ignore
+    alpha = 0.7
+    levels = [np.empty(0), np.empty(0), np.empty(0), np.empty(0), np.empty(0)]
+    full_detailed_x = [np.empty(0)]
 
-    yellow_x: list[str] = []
-    yellow_y: list[float] = []
-    for time, wgbt in zip(time_list, wgbt_list):
-        if wgbt >= 28:
-            yellow_x.append(time)
-            yellow_y.append(min(wgbt, 31) - 28)
-    plt.bar(yellow_x, yellow_y, color="yellow", bottom=28)  # type:ignore
+    for x1, x2, y1, y2 in zip(virtual_x[:-1], virtual_x[1:], wgbt_list[:-1], wgbt_list[1:]):
+        # print(f"{x1}, {x2}, {y1}, {y2}")
 
-    orange_x: list[str] = []
-    orange_y: list[float] = []
-    for time, wgbt in zip(time_list, wgbt_list):
-        if wgbt >= 31:
-            orange_x.append(time)
-            orange_y.append(min(wgbt, 35) - 31)
-    plt.bar(orange_x, orange_y, color="orange", bottom=31)  # type:ignore
+        def f(x):
+            a = (y2 - y1) / (x2 - x1)
+            b = y1 - a * x1
+            return a * x + b
 
-    red_x: list[str] = []
-    red_y: list[float] = []
-    for time, wgbt in zip(time_list, wgbt_list):
-        if wgbt > 35:
-            red_x.append(time)
-            red_y.append(wgbt - 35)
-    plt.bar(red_x, red_y, color="red", bottom=35)  # type:ignore
+        detailed_x = np.arange(x1, x2, 0.02)
+        full_detailed_x = np.append(full_detailed_x, detailed_x)
 
-    # 横軸を日付にする
-    plt.xticks(x_num, time_list)  # type:ignore
-    # x軸縦書き（90度回転）
-    plt.xticks(rotation=90)  # type:ignore
-    plt.title("WGBT-Graph")  # グラフタイトル
-    plt.xlabel("Date")  # type:ignore
-    plt.ylabel("WGBT")  # type:ignore
+        detailed_wgbt = f(detailed_x)
+
+        modified_wgbt = np.where(detailed_wgbt > thresholds[0], thresholds[0], detailed_wgbt)
+        levels[0] = np.append(levels[0], modified_wgbt)
+
+        modified_wgbt = np.where(detailed_wgbt > thresholds[1], thresholds[1], detailed_wgbt)
+        levels[1] = np.append(levels[1], modified_wgbt)
+
+        modified_wgbt = np.where(detailed_wgbt > thresholds[2], thresholds[2], detailed_wgbt)
+        levels[2] = np.append(levels[2], modified_wgbt)
+
+        modified_wgbt = np.where(detailed_wgbt > thresholds[3], thresholds[3], detailed_wgbt)
+        levels[3] = np.append(levels[3], modified_wgbt)
+
+        modified_wgbt = np.array(detailed_wgbt)
+        levels[4] = np.append(levels[4], modified_wgbt)
+
+    # full_detailed_times = np.arange(virtual_x[0], virtual_x[-1], 0.02)
+
+    plt.fill_between(
+        full_detailed_x,
+        graph_min,
+        levels[0],
+        color=colors[0],
+        alpha=alpha,
+    )
+    plt.fill_between(
+        full_detailed_x,
+        thresholds[0],
+        levels[1],
+        where=levels[1] >= thresholds[0],
+        color=colors[1],
+        alpha=alpha,
+    )
+    plt.fill_between(
+        full_detailed_x,
+        thresholds[1],
+        levels[2],
+        where=levels[2] >= thresholds[1],
+        color=colors[2],
+        alpha=alpha,
+    )
+    plt.fill_between(
+        full_detailed_x,
+        thresholds[2],
+        levels[3],
+        where=levels[3] >= thresholds[2],
+        color=colors[3],
+        alpha=alpha,
+    )
+    plt.fill_between(
+        full_detailed_x,
+        thresholds[3],
+        levels[4],
+        where=levels[4] >= thresholds[3],
+        color=colors[4],
+        alpha=alpha,
+    )
+    plt.plot(virtual_x, wgbt_list, color="black", marker="o", lw=3)
+
+    plt.grid()
+
+    plt.ylabel("W\nG\nB\nT\n[C°]", va="center", rotation=0, size=15, labelpad=20)
     plt.tight_layout()  # レイアウト
-    graph = Output_Graph()  # グラフプロット
+
+    if os.environ.get("tsfm_debug"):  # デバッグ用設定
+        plt.show()
+
+    else:  # 本番環境用設定
+        plt.xticks(
+            [i for i in range(len(time_list))],
+            [f"{time.split('/')[2].split(':')[0]}時" for time in time_list],
+            font=pathlib.Path(__file__).parent / "font.ttf",
+        )
+        graph = Output_Graph()  # グラフプロット
 
     return graph
 
@@ -168,3 +236,10 @@ def wgbt_indicator(WBGT: float) -> str:
         return status[3]
     else:  # WBGT < 24:
         return status[4]
+
+
+if __name__ == "__main__":
+    os.environ["tsfm_debug"] = "1"
+    x = [i for i in range(0, 24)]
+    y = [random.randint(20, 38) for _ in x]
+    Plot_Graph(x, y)
