@@ -90,5 +90,5 @@ def update_point_wgbt():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(update_point_wgbt, 'cron', hour=15, minute=23)# 毎日15時10分に実行
+    scheduler.add_job(update_point_wgbt, 'cron', hour=15, minute=31)# 毎日15時10分に実行
     scheduler.start()

@@ -8,7 +8,7 @@ Django==4.0.5
 asgiref
 certifi
 charset-normalizer
-django_apscheduler
+APScheduler
 django-request
 dj_database_url
 gunicorn
