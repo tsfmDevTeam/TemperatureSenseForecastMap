@@ -1,120 +1,249 @@
 {% load static %}
-<!DOCTYPE html>
+
+<!DOCTYPE HTML>
 <html>
-<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
-    <meta charset="UTF-8">
-    <title>ページ名 | サイト名</title>
-    <meta name="description" content="サイトの説明文">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="canonical" href="あなたのサイトURL">
-    <link rel="icon" type="image/png" href="ファビコンのパス"/>
-    <!-- OGP設定 -->
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="あなたのサイトURL"/>
-    <meta property="og:image" content="SNSで表示させたい画像のパス"/>
-    <meta property="og:title" content="ページタイトル"/>
-    <meta property="og:description" content="サイトの説明文"/>
-    <!-- Facebook用設定 -->
-    <meta property="fb:app_id" content="facebookのApp ID"/>
-    <meta property="article:publisher" content="FacebookページのURL">
-    <!-- Twitter用設定 -->
-    <meta name="twitter:card" content="Twitterカードの種類">
-    <meta name="twitter:site" content="@ユーザー名">
-    <!-- スタイルシートはここから -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TemperatureSenseForecastMap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="TemperatureSenseForecastMap-暑さしい数による暑さ対策サイト">
+
+    <meta name="robots" content="index,follow">
+
+    <link rel="icon" href="{% static 'img/icon2.png' %}">
+    <meta name="keywords"
+          content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"/>
+    <meta name="author" content="FreeHTML5.co"/>
+    <!--
+    //////////////////////////////////////////////////////
+
+    FREE HTML5 TEMPLATE
+    DESIGNED & DEVELOPED by FREEHTML5.CO
+
+    Website: 		http://freehtml5.co/
+    Email: 			info@freehtml5.co
+    Twitter: 		http://twitter.com/fh5co
+    Facebook: 		https://www.facebook.com/fh5co
+
+    //////////////////////////////////////////////////////
+     -->
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <!-- Themify Icons-->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <!-- Owl Carousel  -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+    <!-- Theme style  -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+
+    <!-- Modernizr JS -->
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+	<script src="{% static 'js/respond.min.js' %}"></script>
+	<![endif]-->
 
 
 </head>
+<body>
 
-<body id="page-top">
-<!----------------------------------------------->
-<header>
-    <nav id="nav01">
-        <div class="container navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand mr-auto" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="サイト名"
-                                                                          height="50"></a>
-            <ul class="nav mr-3 align-self-lg-end justify-content-lg-end d-none d-lg-flex">
-                <li class="nav-item"><a href="{% url 'Map' %}" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>マップ</a></li>
-                <li class="nav-item"><a href="https://www.wbgt.env.go.jp/wbgt_lp.php" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>環境省HP</a></li>
-                <li class="nav-item"><a href="{% url 'WF' %}" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>天気予報</a></li>
-                <li class="nav-item"><a href="{% url 'Jikkenn' %}" class="nav-link p-2"><i
-                        class="fa fa-chevron-right mr-1 small"></i>実験</a></li>
+<div class="gtco-loader"></div>
+
+<div id="page">
 
 
-            </ul>
-            <form class="form-inline mr-3 d-none d-lg-flex align-self-lg-end">
-                <input class="form-control" type="text" placeholder="サイト内を検索" aria-label="Search">
-            </form>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav><!-- /# nav01 -->
+    <div class="page-inner">
+        <nav class="gtco-nav" role="navigation">
+            <div class="gtco-container">
 
-</header>
-<!----------------------------------------------->
-<main>
-    <!----------------------------------------------->
-    <div class="container">
-        <div class="jumbotron mt-4">
-            <h1 class="display-4 font-weight-bold text-white text-shadow">TemperatureSenseForecastMap</h1>
-            <p class="text-white text-shadow font-weight-bold h3">マップのの位置情報から暑さ指数、危険度などを表示します。</p>
-            <hr class="my-4 border-white text-shadow" style="border-width:2px;">
-            <p class="text-white text-shadow font-weight-bold">～～といったAPIを使用しています。</p>
-            <a class="btn btn-warning btn-lg text-white font-weight-bold" href="{% url 'juusyo2' %}" role="button">お問い合わせはこちら</a>
-        </div><!-- /.jumbotron -->
-        <!----------------------------------------------->
+                <div class="row">
+                    <div class="col-sm-4 col-xs-12">
+                        <div id="gtco-logo"><a href="{% url 'index' %}">home <em>.</em></a></div>
+                    </div>
+                    <div class="col-xs-8 text-right menu-1">
+                        <ul>
+                            <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
+                            <li class="active"><a href="{% url 'juusyo' %}">実験</a></li>
+                            <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
+                            <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li>
+                        </ul>
+                    </div>
+                </div>
 
-        <section class="mb-5" style="display:flex;flex-flow: column;">
-            <div class="d-flex flex-column flex-lg-row border border-primary rounded">
-                <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">about</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">clickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
-                    <br>詳細画面では暑さ指数や暑さの危険度・近隣地域を確認できます。</p>
             </div>
-        </section>
-    </div><!-- /.container -->
-    <!----------------------------------------------->
-    <section class="py-5 bg-yl-color">
-        <div class="container p-3 rounded">
-            <h2 class="text-center mb-3"><i class="fas fa-thermometer-half mr-3"></i>clickした位置の暑さ状況を確認できるmapに移動します。</h2>
+        </nav>
 
-            <br>
-            <br>
-            <!-- top nav -->
-            <form style="text-align: center;" class="" action="{% url 'nameMapdetail' %}" method="post"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
+                style="background-image: url(../../static/img/onndann.jpg);">
+            <div class="overlay"></div>
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-0 text-left">
 
-                <select id="geoapi-prefectures" name="geoapi-prefectures">
-                    <option value="都道府県を選択してください">都道府県を選択してください</option>
-                </select>
-                <select id="geoapi-cities" name="geoapi-cities">
-                    <option value="市区町村名を選択してください">市区町村名を選択してください</option>
-                </select>
 
-                <select id="geoapi-towns" name="geoapi-towns">
-                    <option value="町域を選択してください">町域を選択してください</option>
-                </select>
+                        <div class="row row-mt-15em">
 
-                <button type="submit" name="button">マップを見る</button>
+                            <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                                <span class="intro-text-small">マップのの位置情報から暑さ指数、危険度などを表示します。</span>
+                                <h1>Temperature Sense<br>Forecast Map</h1>
+                            </div>
 
-                <br>
+                        </div>
 
-                <small>※都道府県を選択するとそのマップの地点に移動します。</small>
 
-            </form>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-            <br>
 
+        <div class="gtco-section">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>page about</h2>
+                        <small>本サイトでは以下のようなclickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
+                            また、詳細画面では暑さ指数や暑さの危険度・近隣地域を確認できます。</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/スクリーンショット 2022-08-09 165644.png' %}"
+                           class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/スクリーンショット 2022-08-09 165644.png' %}" alt="Image"
+                                     class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>暑さ指数について</h2>
+                                <p>暑さ指数（WBGT:Wet Bulb Globe Temperature:湿球黒球温度）の詳細です。</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/スクリーンショット 2022-08-09 165520.png' %}images/スクリーンショット 2022-08-09 165520.png"
+                           class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/スクリーンショット 2022-08-09 165520.png' %}" alt="Image"
+                                     class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>click map</h2>
+                                <p>clickした位置の暑さ状況を確認できます。
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/スクリーンショット 2022-08-09 165621.png' %}"
+                           class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/スクリーンショット 2022-08-09 165621.png' %}" alt="Image"
+                                     class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>住所検索</h2>
+                                <p>指定した住所の暑さ状況を確認できます。</p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="gtco-subscribe">
+            <div class="gtco-container">
+                <div id="clicmap" class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>暑さ指数clickmap</h2>
+                        <p>clickした位置の暑さ状況を確認できるmapに移動します。</p>
+                    </div>
+                </div>
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2">
+                        <form class="form-inline">
+
+                            <div class="col-md-12 col-sm-12">
+                            <a href="{% url "Map" %}">
+
+                                <button type="button" class="btn btn-default btn-block">
+
+                                    マップに移動はこちら
+
+                                </button>
+                            </a>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+
+                        <br>
+                        <br>
+                        <br>
+                        <hr>
+                        <br>
+                        <br>
+                        <br>
+                        <h2>住所指定での暑さ指数検索</h2>
+                        <p>指定した住所の暑さ状況を確認できます。</p>
+                    </div>
+                </div>
+                <div id="kennsaku" class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <form style="text-align: center;" class="" action="{% url 'nameMapdetail' %}" method="post"
+                              enctype="multipart/form-data">
+                             {% csrf_token %}
+
+                            <select id="geoapi-prefectures" name="geoapi-prefectures">
+                                <option value="都道府県を選択してください">都道府県を選択してください</option>
+                            </select>
+                            <select id="geoapi-cities" name="geoapi-cities">
+                                <option value="市区町村名を選択してください">市区町村名を選択してください</option>
+                            </select>
+
+                            <select id="geoapi-towns" name="geoapi-towns">
+                                <option value="町域を選択してください">町域を選択してください</option>
+                            </select>
+                            <br>
+                            <div class="col-md-12 col-sm-7">
+                                <button type="submit" class="btn btn-default btn-block">暑さ指数を見る</button>
+                            </div>
+
+                            <br>
 
         <div class="text-center">
         <a class="btn btn-warning btn-lg py-3 px-5 text-white font-weight-bold" href="{% url "Map" %}" role="button">mapに移動はこちら</a>
@@ -132,63 +261,169 @@
             <br>
             <br>
 
-            <div class="text-center">
-                <a class="btn btn-warning btn-lg py-3 px-5 text-white font-weight-bold" href="{% url "Map" %}"
-                   role="button">mapに移動はこちら</a>
-            </div>
-            <br>
-            <br>
+                        </form>
 
-
-            <br>
-            <br>
-            <br>
-            <br>
-            <div style="text-align: center;">
-
-                <h3>
-
-                    暑さ指数（WBGT（湿球黒球温度）とは
-                    <hr>
-                </h3>
-                <p>
-                    <br>Wet Bulb Globe Temperature）は、熱中症を予防することを目的として1954年にアメリカで提案された指標です。
-                    単位は気温と同じ摂氏度（℃）で示されますが、その値は気温とは異なります。
-                    <br>
-                    <br>
-                    暑さ指数（WBGT）は人体と外気との熱のやりとり（熱収支）に着目した指標です。
-                </p>
-                <p style="text-align: left;display: inline-block;">
-                    ①湿度
-                    <br>②日射・輻射(ふくしゃ)など周辺の熱環境
-                    <br>③気温
-                </p>
-                <p>
-                    人体の熱収支に与える影響の大きい上記の３つを取り入れた指標です。
-                </p>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-    <!----------------------------------------------->
-</main>
-<div class="text-white bg-primary">
-    <p class="text-center mb-0 py-2"><small>2022 Copyright (C) TemperatureSenseForecastMap</small></p>
-</div>
-<!----------------------------------------------->
-<!-- javascript はここから -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script>
 
-<!----------------------------------------------->
+
+        <div class="gtco-section border-bottom">
+            <div id="sisuu" class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 text-left gtco-heading">
+                        <h2>- 暑さ指数 -</h2>
+                        <p>WBGT（湿球黒球温度）: Wet Bulb Globe Temperature</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+						<span class="icon">
+							<i class="icon-check"></i>
+						</span>
+                            <div class="feature-copy">
+                                <h3>・暑さ指数とは</h3>
+                                <p>熱中症を予防することを目的として1954年にアメリカで提案された指標です。 単位は気温と同じ摂氏度（℃）で示されますが、その値は気温とは異なります。</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+						<span class="icon">
+							<i class="icon-check"></i>
+						</span>
+                            <div class="feature-copy">
+                                <h3>・指標</h3>
+                                <p>暑さ指数（WBGT）は人体と外気との熱のやりとり（熱収支）に着目した指標で、人体の熱収支に与える影響の大きい下記の３つを取り入れた指標です。
+                                    <br>
+                                    <br>
+                                    ①湿度
+                                    <br>
+                                    ②日射・輻射(ふくしゃ)など周辺の熱環境
+                                    <br>
+                                    ③気温
+
+
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+						<span class="icon">
+							<i class="icon-check"></i>
+						</span>
+                            <div class="feature-copy">
+                                <h3>暑さ指数の使い方</h3>
+                                <p>
+                                    暑さ指数（WBGT）は労働環境や運動環境の指針として有効であると認められ、ISO等で国際的に規格化されています。<br>
+                                    （公財）日本スポーツ協会では「熱中症予防運動指針」、日本生気象学会では「日常生活に関する指針」を下記のとおり公表しています。労働環境では世界的にはISO7243、国内ではJIS　Z
+                                    8504　「WBGT（湿球黒球温度）指数に基づく作業者の熱ストレスの評価－暑熱環境」として規格化されています。</p>
+
+                                <br>
+                                引用:https://www.wbgt.env.go.jp/wbgt.php
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-7 macbook-wrap animate-box" data-animate-effect="fadeInRight">
+                        <img src="{% static 'img/mockuper.png' %}" alt="Free HTML5 Bootstrap Template">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer id="gtco-footer" role="contentinfo">
+            <div class="gtco-container">
+                <div class="row row-p	b-md">
+
+                    <div class="col-md-4">
+                        <div class="gtco-widget">
+                            <h3>About <span class="footer-logo">Splash.</span></h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore eos molestias quod sint
+                                ipsum possimus temporibus officia iste perspiciatis consectetur in fugiat repudiandae
+                                cum. Totam cupiditate nostrum ut neque ab?</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-md-push-1">
+                        <div class="gtco-widget">
+                            <h3>Links</h3>
+                            <ul class="gtco-footer-links">
+                                <li><a href="#">Knowledge Base</a></li>
+                                <li><a href="#">Career</a></li>
+                                <li><a href="#">Press</a></li>
+                                <li><a href="#">Terms of services</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="gtco-widget">
+                            <h3>Get In Touch</h3>
+                            <ul class="gtco-quick-contact">
+                                <li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
+                                <li><a href="#"><i class="icon-mail2"></i> info@FreeHTML5.co</a></li>
+                                <li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row copyright">
+                    <div class="col-md-12">
+                        <p class="pull-left">
+                            <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
+                            <small class="block">Designed by <a href="http://FreeHTML5.co/"
+                                                                target="_blank">FreeHTML5.co</a> Demo Images: <a
+                                    href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+                        </p>
+                        <p class="pull-right">
+                        <ul class="gtco-social-icons pull-right">
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-facebook"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Easing -->
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Carousel -->
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- countTo -->
+<script src="{% static 'js/jquery.countTo.js' %}"></script>
+<!-- Magnific Popup -->
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+<!-- Main -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<!--住所-->
+<script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script>
 </body>
 </html>
+

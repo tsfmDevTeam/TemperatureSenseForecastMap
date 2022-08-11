@@ -31,7 +31,7 @@ class WFView(TemplateView):
 
 
 class JikkennView(TemplateView):
-    template_name = "app/jikkenn.html"
+    template_name = "app/juuyojikkenn.html"
 
 
 class MapView(TemplateView):
