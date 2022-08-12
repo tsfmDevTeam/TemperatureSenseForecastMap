@@ -17,8 +17,13 @@ def test_job():
         keido = point.keido
 
         wgbts_list, time_list = wgbt.location2wgbt(ido, keido)
-        point.wgbts_list = wgbts_list
-        point.time_list = time_list
+
+        wgbt_time_dict = {}
+        wgbt_time_dict["wgbt"] = wgbts_list
+        wgbt_time_dict["time"] = time_list
+        wgbt_time_json = json.dumps(wgbt_time_json)
+
+        point.wgbt_time_json = wgbt_time_json
 
         point.save() #ここでUPDATEが実行される
         time.sleep(1)
