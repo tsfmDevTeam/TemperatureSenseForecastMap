@@ -10,24 +10,7 @@ class point_name(models.Model):
     address = models.CharField(max_length=31, verbose_name="住所")
     ido = models.FloatField(verbose_name="緯度")
     keido = models.FloatField(verbose_name="経度")
-
-    # wgbt_list = ArrayField(
-    #     models.FloatField(null=True, blank=True),
-    #     size=6,
-    #     null=True,
-    #     blank=True,
-    #     max_length=25,
-    #     verbose_name="24時間のwgbt")
-    #
-    # time_list = ArrayField(
-    #     models.CharField(max_length=10, null=True, blank=True),
-    #     size=6,
-    #     null=True,
-    #     blank=True,
-    #     max_length=25,
-    #     verbose_name="時間リスト")
-
-    wgbt_time_json = models.JSONField(blank=True, null=True)
+    wgbt_time_json = models.JSONField(blank=True, null=True, verbose_name="24時間分のwgbt")
 
     def __int__(self):
         return self.id

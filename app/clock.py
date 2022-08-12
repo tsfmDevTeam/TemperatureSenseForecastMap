@@ -16,20 +16,31 @@ def test_job():
         ido = point.ido
         keido = point.keido
 
-        wgbts_list, time_list = wgbt.location2wgbt(ido, keido)
+        print("id", point.id)
+        print("地点名", point.name)
+        print("ido", ido)
+        print("keido", keido)
 
-        wgbt_time_dict = {}
-        wgbt_time_dict["wgbt"] = wgbts_list
-        wgbt_time_dict["time"] = time_list
-        wgbt_time_json = json.dumps(wgbt_time_json)
+        try:
+            wgbts_list, time_list, _ = wgbt.location2wgbt(ido, keido)
 
-        point.wgbt_time_json = wgbt_time_json
+            # global wgbt_time_dict
+            wgbt_time_dict = {}
+            wgbt_time_dict["wgbt"] = wgbts_list
+            wgbt_time_dict["time"] = time_list
+            wgbt_time_json = json.dumps(wgbt_time_dict)
 
-        point.save() #ここでUPDATEが実行される
-        time.sleep(1)
+            print("wgbt_time_json", wgbt_time_json)
+            point.wgbt_time_json = wgbt_time_json
+
+            point.save() #ここでUPDATEが実行される
+            time.sleep(1)
+        except:
+            print("止まりました")
+            time.sleep(3)
 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(test_job, 'cron', hour=16, minute=12)# 毎日23時59分に実行
+    scheduler.add_job(test_job, 'cron', hour=19, minute=41)# 毎日23時59分に実行
     scheduler.start()
