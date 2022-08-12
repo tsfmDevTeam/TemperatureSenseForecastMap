@@ -42,5 +42,5 @@ def test_job():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(test_job, 'cron', hour=19, minute=41)# 毎日23時59分に実行
+    scheduler.add_job(test_job, 'cron', hour=21, minute=51)# 毎日23時59分に実行
     scheduler.start()
