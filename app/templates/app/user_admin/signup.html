@@ -9,7 +9,14 @@
 <h1>ユーザー登録</h1>
 <form action="{% url 'signup' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.label }}
+    <br>
+    {{ field }}
+    <br>
+    {{ field.error }}
+    {% endfor %}
     <p><input type="submit" value="登録"></p>
 </form>
 </body>

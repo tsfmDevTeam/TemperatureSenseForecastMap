@@ -1,6 +1,9 @@
 asgiref
 certifi
 charset-normalizer
+APScheduler
+django_apscheduler
+django-request
 dj_database_url
 django-request
 Django==4.0.5
