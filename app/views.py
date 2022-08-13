@@ -37,7 +37,7 @@ class JikkennView(TemplateView):
 class MapView(TemplateView):
     template_name = "app/Map.html"
 
-    def juusyo(request):
+    def juusyomap(request):
         ken = request.POST.get("geoapi-prefectures")
         siku = request.POST.get("geoapi-cities")
         tyouiki = request.POST.get("geoapi-towns")
@@ -131,7 +131,7 @@ class MapView(TemplateView):
         return context
 
 
-class MapView3(TemplateView):
+class JuusyokennsakuView(TemplateView):
     def basyodetail(request):
         ken = request.POST.get("geoapi-prefectures")
         siku = request.POST.get("geoapi-cities")

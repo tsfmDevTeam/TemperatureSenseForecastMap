@@ -4,7 +4,6 @@ from app import views
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
-    path("Mapsitei/", views.MapView.juusyo, name="Mapsitei"),
     path("BuffView/", views.BuffView.as_view(), name="BuffView"),
     path("Jikkenn/", views.JikkennView.as_view(), name="Jikkenn"),
     path("juusyo/", views.Juusyo.jikkenn, name="juusyo"),
@@ -12,8 +11,8 @@ urlpatterns = [
     path("locationname/", views.SetLocationName.as_view(), name="userloc"),
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
-    path("Mapsitei/", views.MapView.juusyo, name="Mapsitei"),
-    path("nameMapdetail/", views.MapView3.basyodetail, name="nameMapdetail"),
+    path("Mapsitei/", views.MapView.juusyomap, name="Mapsitei"),
+    path("nameMapdetail/", views.JuusyokennsakuView.basyodetail, name="nameMapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
     path("WF/", views.WFView.as_view(), name="WF"),
     # 以下ログイン関連
