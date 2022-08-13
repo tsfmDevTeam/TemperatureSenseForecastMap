@@ -129,13 +129,13 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
             windspeed_10m = abs(body["hourly"]["windspeed_10m"][index] * 1000 / 3600)
 
             wgbt = (
-                    0.735 * temperature
-                    + 0.0374 * humidity
-                    + 0.00292 * temperature * humidity
-                    + 7.619 * (direct_radiation + diffuse_radiation)
-                    - 4.557 * (direct_radiation + diffuse_radiation) ** 2
-                    - 0.0572 * windspeed_10m
-                    - 4.064
+                0.735 * temperature
+                + 0.0374 * humidity
+                + 0.00292 * temperature * humidity
+                + 7.619 * (direct_radiation + diffuse_radiation)
+                - 4.557 * (direct_radiation + diffuse_radiation) ** 2
+                - 0.0572 * windspeed_10m
+                - 4.064
             )
             wgbts_list.append(round(wgbt, 3))
 
