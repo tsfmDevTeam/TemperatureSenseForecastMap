@@ -36,11 +36,11 @@ def test_job():
             point.save() #ここでUPDATEが実行される
             time.sleep(1)
         except:
-            print("止まりました")
+            print("id{}のDBの更新ができませんでした".format(point.id))
             time.sleep(3)
 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(test_job, 'cron', hour=21, minute=51)# 毎日23時59分に実行
+    scheduler.add_job(test_job, 'cron', hour=23, minute=59)# 毎日23時59分に実行
     scheduler.start()
