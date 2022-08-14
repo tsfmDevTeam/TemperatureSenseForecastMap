@@ -33,9 +33,9 @@
         const data = JSON.parse('{{ locations|safe }}');
         console.log("data", data);
 
-        for (let i = 0; i < data.len; i++) {
+        for (let i = 0; i < data.length; i++) {
             var new_elem = document.createElement("li");
-            new_elem.textContent = data.locations[i];
+            new_elem.textContent = data[i];
             console.log(new_elem);
             document.getElementById("location_columns").appendChild(new_elem);
         }
