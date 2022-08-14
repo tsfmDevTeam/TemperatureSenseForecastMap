@@ -11,8 +11,6 @@ urlpatterns = [
     path("locationname/", views.SetLocationName.as_view(), name="userloc"),
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
-    path("Mapsitei/", views.MapView.juusyomap, name="Mapsitei"),
-    path("nameMapdetail/", views.JuusyokennsakuView.basyodetail, name="nameMapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
     path("WF/", views.WFView.as_view(), name="WF"),
     # 以下ログイン関連
