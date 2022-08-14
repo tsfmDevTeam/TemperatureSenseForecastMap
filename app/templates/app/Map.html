@@ -61,8 +61,8 @@
 
 <script>
 
-    var RLet = 35.41222;
-    var RLng =139.41303;
+    var default_ido = 35.6895014;
+    var default_keido =139.6917337;
 
     var getQuery = window.location.search;
     console.log("q", getQuery);
@@ -81,7 +81,7 @@
     }
     
     function checkForm(id){
-        if(document.getElementById('lat').value === "" || document.getElementById('lon').value === ""){
+        if(document.getElementById('ido').value === "" || document.getElementById('keido').value === ""){
             alert("地図をclickして場所を指定してください。");
             return false;
         }else{
@@ -92,7 +92,7 @@
     var map_290f8bf58b504a9dbb050469d3255ec9 = L.map(
         "map_290f8bf58b504a9dbb050469d3255ec9",
         {
-            center: [RLet, RLng],
+            center: [default_ido, default_keido],
             crs: L.CRS.EPSG3857,
             zoom: 12,
             maxZoom: 20,
@@ -124,8 +124,8 @@
     //クリックイベント
     map_290f8bf58b504a9dbb050469d3255ec9.on('click', function(e) {
         //クリック位置経緯度取得
-        lat = e.latlng.lat;
-        lng = e.latlng.lng;
+        clicked_ido = e.latlng.lat;
+        clicked_keido = e.latlng.lng;
 
         // 住所表示
         //var URL = 'http://geoapi.heartrails.com/api/xml?method=searchByGeoLocation&x='+lat+'&y='+lng;
@@ -137,14 +137,15 @@
             map_290f8bf58b504a9dbb050469d3255ec9.removeLayer(marker);
         }
         marker = L.marker(
-            [lat,lng],
+            [clicked_ido,clicked_keido],
             {}
-        ).addTo(map_290f8bf58b504a9dbb050469d3255ec9).bindPopup('緯度：'+lat +'<br>経度：'+lng+'').openPopup();
+        ).addTo(map_290f8bf58b504a9dbb050469d3255ec9).bindPopup('緯度：' + clicked_ido + '<br>経度：' + clicked_keido + '').openPopup();
 
-        document.getElementById('ido').value = lat;
-        document.getElementById('keido').value = lng;
-        console.log('333')
-        console.log(document.getElementById('lng').value)
+        document.getElementById('ido').value = clicked_ido;
+        document.getElementById('keido').value = clicked_keido;
+        
+        console.log("地点がクリックされました --- " + "緯度：" + clicked_ido + "経度：" + clicked_keido);
+        
     } );
 
 
