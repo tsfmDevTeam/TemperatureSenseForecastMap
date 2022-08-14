@@ -18,3 +18,4 @@ tzdata
 urllib3
 wheel
 whitenoise
+django-widget-tweaks

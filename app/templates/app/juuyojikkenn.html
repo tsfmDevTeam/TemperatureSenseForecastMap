@@ -68,186 +68,160 @@
 </head>
 <body>
 
-<div class="gtco-loader"></div>
+	<div class="gtco-loader"></div>
 
-<div id="page">
-
-
-    <div class="page-inner">
-        <nav class="gtco-nav" role="navigation">
-            <div class="gtco-container">
-
-                <div class="row">
-                    <div class="col-sm-4 col-xs-12">
-                        <div id="gtco-logo"><a href="{% url 'index' %}">home <em>.</em></a></div>
-                    </div>
-                    <div class="col-xs-8 text-right menu-1">
-                        <ul>
-                            <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
-                            <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
-                            <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </nav>
-
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
-                style="height: 10rem; background-image: url(../../static/img/onndann.jpg);">
-            <div class="overlay"></div>
-            <div class="gtco-container">
-
-            </div>
-        </header>
+	<div id="page">
 
 
-        <div class="gtco-section border-bottom">
-            <div class="gtco-container">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                        <h2>指定地域にエラーが発生しました</h2>
-                        <p>マップで海や海外などの日本住所がない部分を押した可能性があります。以下から先述の点に注意して再度検索してください。</p>
-                        <hr>
-                    </div>
-                </div>
+	<div class="page-inner">
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
 
-            </div>
+			<div class="row">
+				<div class="col-sm-4 col-xs-12">
+					<div id="gtco-logo"><a href="index.html">Splash <em>.</em></a></div>
+				</div>
+				<div class="col-xs-8 text-right menu-1">
+					<ul>
+						<li><a href="features.html">Features</a></li>
+						<li><a href="tour.html">Tour</a></li>
+						<li class="has-dropdown">
+							<a href="#">Dropdown</a>
+							<ul class="dropdown">
+								<li><a href="#">Web Design</a></li>
+								<li><a href="#">eCommerce</a></li>
+								<li><a href="#">Branding</a></li>
+								<li><a href="#">API</a></li>
+							</ul>
+						</li>
+						<li><a href="pricing.html">Pricing</a></li>
+						<li><a href="contact.html">Contact</a></li>
+						<li class="btn-cta"><a href="#"><span>Get started</span></a></li>
+					</ul>
+				</div>
+			</div>
 
-            <div id="gtco-subscribe">
-                <div class="gtco-container">
-                    <div id="clicmap" class="row animate-box">
-                        <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                            <h2>暑さ指数clickmap</h2>
-                            <p>clickした位置の暑さ状況を確認できるmapに移動します。</p>
-                        </div>
-                    </div>
-                    <div class="row animate-box">
-                        <div class="col-md-8 col-md-offset-2">
-                            <form class="form-inline">
+		</div>
+	</nav>
 
-                                <div class="col-md-12 col-sm-12">
-                                    <a href="{% url "Map" %}">
-
-                                        <button type="button" class="btn btn-default btn-block">
-
-                                            マップに移動はこちら
-
-                                        </button>
-                                    </a>
-
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row animate-box">
-                        <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-
-                            <br>
-                            <br>
-                            <br>
-                            <hr>
-                            <br>
-                            <br>
-                            <br>
-                            <h2>住所指定での暑さ指数検索</h2>
-                            <p>指定した住所の暑さ状況を確認できます。</p>
-                        </div>
-                    </div>
-                    <div id="kennsaku" class="row animate-box">
-                        <div class="col-md-8 col-md-offset-2">
-
-                            <form style="text-align: center;" class="" action="{% url 'nameMapdetail' %}" method="post"
-                                  enctype="multipart/form-data">
-                                {% csrf_token %}
-
-                                <select id="geoapi-prefectures" name="geoapi-prefectures">
-                                    <option value="都道府県を選択してください">都道府県を選択してください</option>
-                                </select>
-                                <select id="geoapi-cities" name="geoapi-cities">
-                                    <option value="市区町村名を選択してください">市区町村名を選択してください</option>
-                                </select>
-
-                                <select id="geoapi-towns" name="geoapi-towns">
-                                    <option value="町域を選択してください">町域を選択してください</option>
-                                </select>
-                                <br>
-                                <div class="col-md-12 col-sm-7">
-                                    <button type="submit" class="btn btn-default btn-block">暑さ指数を見る</button>
-                                </div>
-
-                                <br>
-
-                                <small>※都道府県を選択するとその地点での暑さ指数を表示します。</small>
-
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url(images/onndann.jpg)">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-12 col-md-offset-0 text-left">
 
 
-            <footer id="gtco-footer" role="contentinfo">
-                <div class="gtco-container">
-                    <div class="row row-p	b-md">
+					<div class="row row-mt-15em">
+						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+							<span class="intro-text-small">Welcome to Splash</span>
+							<h1>Build website using this template.</h1>
+						</div>
+						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+							<div class="form-wrap">
+								<div class="tab">
+									<div class="tab-content">
+										<div class="tab-content-inner active" data-content="signup">
+											<form action="#">
+												<div class="row form-group">
+                                                    {{ form.as_p }}
+													<div class="col-md-12">
+														<label for="username">Username or Email</label>
+														<input type="text" class="form-control" id="id_username">
+													</div>
+												</div>
+												<div class="row form-group">
+													<div class="col-md-12">
+														<label for="password">Password</label>
+														<input type="password" class="form-control" id="password">
+													</div>
+												</div>
+												<div class="row form-group">
+													<div class="col-md-12">
+														<label for="password2">Repeat Password</label>
+														<input type="password" class="form-control" id="password2">
+													</div>
+												</div>
 
-                        <div class="col-md-4">
-                            <div class="gtco-widget">
-                                <h3>About <span class="footer-logo">Splash</span></h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore eos molestias quod
-                                    sint ipsum possimus temporibus officia iste perspiciatis consectetur in fugiat
-                                    repudiandae cum. Totam cupiditate nostrum ut neque ab?</p>
-                            </div>
-                        </div>
+												<div class="row form-group">
+													<div class="col-md-12">
+														<input type="submit" class="btn btn-primary" value="Sign up">
+													</div>
+												</div>
+											</form>
+										</div>
 
-                        <div class="col-md-4 col-md-push-1">
-                            <div class="gtco-widget">
-                                <h3>Links</h3>
-                                <ul class="gtco-footer-links">
-                                    <li><a href="#">Knowledge Base</a></li>
-                                    <li><a href="#">Career</a></li>
-                                    <li><a href="#">Press</a></li>
-                                    <li><a href="#">Terms of services</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                </ul>
-                            </div>
-                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                        <div class="col-md-4">
-                            <div class="gtco-widget">
-                                <h3>Get In Touch</h3>
-                                <ul class="gtco-quick-contact">
-                                    <li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
-                                    <li><a href="#"><i class="icon-mail2"></i> info@FreeHTML5.co</a></li>
-                                    <li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
-                                </ul>
-                            </div>
-                        </div>
 
-                    </div>
+				</div>
+			</div>
+		</div>
+	</header>
 
-                    <div class="row copyright">
-                        <div class="col-md-12">
-                            <p class="pull-left">
-                                <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
-                                <small class="block">Designed by <a href="http://FreeHTML5.co/" target="_blank">FreeHTML5.co</a>
-                                    Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
-                            </p>
-                            <p class="pull-right">
-                            <ul class="gtco-social-icons pull-right">
-                                <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                <li><a href="#"><i class="icon-facebook"></i></a></li>
-                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
-                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
-                            </ul>
-                            </p>
-                        </div>
-                    </div>
 
-                </div>
-            </footer>
+
+
+
+	<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+			<div class="row row-p	b-md">
+
+				<div class="col-md-4">
+					<div class="gtco-widget">
+						<h3>About <span class="footer-logo">Splash</span></h3>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore eos molestias quod sint ipsum possimus temporibus officia iste perspiciatis consectetur in fugiat repudiandae cum. Totam cupiditate nostrum ut neque ab?</p>
+					</div>
+				</div>
+
+				<div class="col-md-4 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>Links</h3>
+						<ul class="gtco-footer-links">
+							<li><a href="#">Knowledge Base</a></li>
+							<li><a href="#">Career</a></li>
+							<li><a href="#">Press</a></li>
+							<li><a href="#">Terms of services</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="gtco-widget">
+						<h3>Get In Touch</h3>
+						<ul class="gtco-quick-contact">
+							<li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> info@FreeHTML5.co</a></li>
+							<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
+						<small class="block">Designed by <a href="http://FreeHTML5.co/" target="_blank">FreeHTML5.co</a> Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+					</p>
+					<p class="pull-right">
+						<ul class="gtco-social-icons pull-right">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
         </div>
 
     </div>
