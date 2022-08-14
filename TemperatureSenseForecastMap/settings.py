@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_apscheduler",
     "app",
+    "widget_tweaks",
 ]
 
 
