@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parents[1]
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_apscheduler",
     "app",
     "widget_tweaks",
 ]
@@ -79,14 +82,17 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WSGI_APPLICATION = "TemperatureSenseForecastMap.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': dj_database_url.config(default='postgres:///d3l05rplb8rf11'),
 }
+
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
+
+
 
 # Userモデルは使わず、自分で作ったモデルを使用する
 AUTH_USER_MODEL = "app.CustomUser"
