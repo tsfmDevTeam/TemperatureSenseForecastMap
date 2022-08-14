@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+import os
 
 
 class AppConfig(AppConfig):
@@ -7,4 +8,7 @@ class AppConfig(AppConfig):
 
     def ready(self):
         from .clock import start
-        start()
+
+        release_flag = os.environ.get("wgbt_release", 0)
+        if release_flag == 1:
+            start()

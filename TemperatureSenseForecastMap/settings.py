@@ -83,14 +83,24 @@ WSGI_APPLICATION = "TemperatureSenseForecastMap.wsgi.application"
 
 
 
-import dj_database_url
-db_from_env = dj_database_url.config()
+# import dj_database_url
+# db_from_env = dj_database_url.config()
+# DATABASES = {
+#     'default': dj_database_url.config(default='postgres:///d3l05rplb8rf11'),
+# }
+#
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
 DATABASES = {
-    'default': dj_database_url.config(default='postgres:///d3l05rplb8rf11'),
+    "default": {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd3l05rplb8rf11',
+        'USER': 'cdpfoeaibvrnfm',
+        'PASSWORD': '2898cd9b3492704dd643891487aa7a4f99ad6fe5eda3a4bee14ad72a5e051679',
+        'HOST': 'ec2-54-152-28-9.compute-1.amazonaws.com',
+        'PORT': 5432
+    }
 }
-
-DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
-
 
 
 

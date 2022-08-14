@@ -19,4 +19,5 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     # path("user/", views.user_view, name="user"),
     # path('other/', views.other_view, name='other'),
+    path("success_signup/", views.success_signup, name="success_signup"),
 ]
