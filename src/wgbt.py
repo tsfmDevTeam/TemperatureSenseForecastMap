@@ -1,15 +1,16 @@
 import base64
 import json
 import os
-from io import BytesIO
 import pathlib
 import random
+from io import BytesIO
 from urllib import request
-import numpy as np
 
+import matplotlib
+import numpy as np
 from matplotlib import pyplot as plt
 
-# matplotlib.use("Agg")
+matplotlib.use("Agg")
 
 
 # プロットしたグラフを画像データとして出力するための関数
