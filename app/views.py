@@ -206,7 +206,7 @@ def signup_view(request):
     return render(request, "app/user_admin/signup.html", param)
 
 # サインアップ成功の表示
-def success_signup(request, username):
+def success_signup(request):
     return render(request, "app/user_admin/success_signup.html",context=params)
 
 
