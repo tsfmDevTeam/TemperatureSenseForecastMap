@@ -13,7 +13,10 @@ from django.views.generic import TemplateView
 from src import geo_apis, wgbt
 
 from .forms import LoginForm, SignupForm
+from .models import CustomUser
 
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
 class BuffView(TemplateView):
     template_name = "app/buff.html"
@@ -191,6 +194,9 @@ def signup_view(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
+            # サインアップ成功時にsuccess_signup.htmlに遷移
+
+            return HttpResponseRedirect(reverse("success_signup"))
 
     else:
         form = SignupForm()
@@ -198,6 +204,10 @@ def signup_view(request):
     param = {"form": form}
 
     return render(request, "app/user_admin/signup.html", param)
+
+# サインアップ成功の表示
+def success_signup(request, username):
+    return render(request, "app/user_admin/success_signup.html",context=params)
 
 
 def login_view(request):
