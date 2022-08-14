@@ -14,3 +14,11 @@
 3. 依存ライブラリをインストールします `python -m pip install -r requirements.txt`
 4. django を起動します `python manage.py runserver`
 5. アクセスします `127.0.0.1:8000`
+
+
+### 環境変数の設定
+- PowerShell
+  -  `$env:DATABASE_URL = "ここにログインコードを入れる"`
+
+- Linux
+  - `export DATABASE_URL = "ここにログインコードを入れる"`
