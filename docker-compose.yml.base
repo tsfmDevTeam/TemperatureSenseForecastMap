@@ -11,5 +11,9 @@ services:
       - ./:/src
     environment:
       - TZ=Asia/Tokyo
+      - DISABLE_COLLECTSTATIC=1
+      - DATABASE_URL= # ここにDBのURLを入れる
     command: "python manage.py runserver 0:8000"
     container_name: TempSenseMap
+
+
