@@ -127,12 +127,9 @@ class UserPage(TemplateView):
         return [str(randint(100, 200)) for _ in range(randint(1, 3))]
 
     def get_context_data(self, **kwargs):  # type:ignore
-        print(self.request)
         context = super().get_context_data(**kwargs)
-        # context[""] =
-        context["location_1"] = "test"
 
-        context["locations"] = json.dumps(loc_data)
+        context["locations"] = json.dumps(self.get_location_from_db())
         context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
 
         return context
