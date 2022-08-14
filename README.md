@@ -19,8 +19,9 @@
 
 
 ### 環境変数の設定
+- コマンドプロンプト
+  - `set DATABASE_URL=ここにログインコードを入れる`
 - PowerShell
   -  `$env:DATABASE_URL = "ここにログインコードを入れる"`
-
 - Linux
   - `export DATABASE_URL = "ここにログインコードを入れる"`
