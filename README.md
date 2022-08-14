@@ -5,8 +5,10 @@
     - そこで，現在の熱中症のリスクを客観的に調査できるサービスを作成しました。
 ## 開発用情報
 ### セットアップ手順（Docker環境）
-1. docker 環境を起動します `docker compose up -d`
-2. アクセスします `127.0.0.1:8000`
+1. docker-compose.yml.base を docker-compose.yml にコピーします。
+2. 中の"DATABASE_URL" の欄にログインコードを記入します
+3. docker 環境を起動します `docker compose up -d`
+4. アクセスします `127.0.0.1:8000`
 
 ### セットアップ手順（ローカル環境）
 1. venv 環境を構築します `python -m venv .venv`
