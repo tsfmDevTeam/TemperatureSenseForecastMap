@@ -13,10 +13,11 @@ from django.views.generic import TemplateView
 from src import geo_apis, wgbt
 
 from .forms import LoginForm, SignupForm
-from .models import CustomUser
+from .models import CustomUser, location
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+
 
 class BuffView(TemplateView):
     template_name = "app/buff.html"
@@ -126,22 +127,37 @@ class MapView(TemplateView):
 class UserPage(TemplateView):
     template_name: str = "app/user.html"
 
-    def get_location_from_db(self) -> list[str]:
-        return [str(randint(100, 200)) for _ in range(randint(1, 3))]
+    def get_location_from_db(self, uid: int) -> list[str]:
+        locations = []
+        for query in location.objects.filter(user_id=uid):
+            lid = query.id
+            name = query.location_name
+            ido = query.ido
+            keido = query.keido
+            locations.append((lid, name, ido, keido))
+        return locations
+
+    def post(self, request: HttpRequest):
+        print(request)
 
     def get_context_data(self, **kwargs):  # type:ignore
         context = super().get_context_data(**kwargs)
 
-        context["locations"] = json.dumps(self.get_location_from_db())
-        context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
+        context["user_name"] = self.request.user.username
+        context["user_id"] = self.request.user.id
+        context["user_email"] = self.request.user.email
 
+        context["locations"] = json.dumps(self.get_location_from_db(uid=self.request.user.id))
+        context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
+        print(context)
         return context
 
 
 class SetLocationName(TemplateView):
     template_name: str = "app/locationname.html"
 
-    def do_save(self, name: str, ido: float, keido: float):
+    def do_save(self, name: str, ido: float, keido: float, uid: int):
+        location.objects.update_or_create(location_name=name, ido=ido, keido=keido, user_id_id=uid)
         print(name, ido, keido)
 
     def post(self, request: HttpRequest) -> Any:
@@ -150,18 +166,19 @@ class SetLocationName(TemplateView):
                 name=request.POST.get("location_name"),  # type: ignore
                 ido=request.POST.get("ido"),  # type: ignore
                 keido=request.POST.get("keido"),  # type: ignore
+                uid=request.user.id,
             )
 
-            ret = render(request=request, template_name="app/user.html", context={})
-            return ret
+            ret = redirect(f"{self.request._current_scheme_host}/user/")
+            return
         else:
             ret = render(
                 request=request,
                 template_name="app/locationname.html",
                 context={
-                    "location_id": request.POST.get("location_id"),
                     "ido": request.POST.get("ido"),
                     "keido": request.POST.get("keido"),
+                    "link": f"{self.request._current_scheme_host}/user/",  # type:ignore
                 },
             )
             return ret
@@ -205,6 +222,7 @@ def signup_view(request):
 
     return render(request, "app/user_admin/signup.html", param)
 
+
 # サインアップ成功の表示
 def success_signup(request):
     return render(request, "app/user_admin/success_signup.html")
@@ -220,11 +238,12 @@ def login_view(request):
 
             if user:
                 login(request, user)
-                if next == "None":
+                if next is None:
                     # 既にログインしており、userページにいたならuserページに飛ぶ
-                    return redirect(to="/app/user_admin/user.html")
+                    return redirect(to="/user")
                 else:
                     # 既にログインしており、userページ以外にいたならそのページに飛ぶ
+                    print(next)
                     return redirect(to=next)
     else:
         form = LoginForm()
@@ -255,6 +274,15 @@ def user_view(request):
 
     else:
         form = LoginForm()
+        uid = request.user.id
+        locations = []
+
+        for query in location.objects.filter(user_id=uid):
+            lid = query.id
+            name = query.location_name
+            ido = query.ido
+            keido = query.keido
+            locations.append((lid, name, ido, keido))
 
     param = {
         "title": "ログイン",

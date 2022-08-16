@@ -18,13 +18,34 @@
 
 <body>
     <main>
+        <div class="user_info">
+            <ul>
+                <li>
+                    <p>名前</p>
+                    <input type="text" id="username" value={{user_name}}>
+                </li>
+                <li>
+                    <p>メールアドレス</p>
+                    <input type="email" id="email" value={{user_email}}>
+                </li>
+                <li>
+                    <p>パスワード</p>
+                    <input type="password" id="password1">
+                </li>
+                <li>
+                    <p>パスワード(再入力）</p>
+                    <input type="password" id="password2">
+                </li>
+            </ul>
+        </div>
         <div class="locations">
+            <p>登録地点</p>
             <ul id="location_columns">
             </ul>
         </div>
 
         <div id="add_location">
-            <button onclick="location.href='{{ link }}'">追加</button>
+            <!-- <button onclick="location.href='{{ link }}'">追加</button> -->
         </div>
 
     </main>
@@ -34,14 +55,21 @@
         console.log("data", data);
 
         for (let i = 0; i < data.length; i++) {
-            var new_elem = document.createElement("li");
-            new_elem.textContent = data[i];
-            console.log(new_elem);
-            document.getElementById("location_columns").appendChild(new_elem);
+            var location_elem = document.createElement("li");
+            location_elem.textContent = data[i];
+
+            var delete_button = document.createElement("button");
+            delete_button.textContent = "この地点を削除";
+
+            document.getElementById("location_columns").appendChild(location_elem);
         }
 
-        if (data.len == 3) {
-            document.getElementById("add_location").hidden = true;
+        if (data.length < 3) {
+
+            add_button = document.createElement("button");
+            add_button.addEventListener("click", e => location.href = '{{ link }}');
+            add_button.textContent = "追加"
+            document.getElementById("add_location").appendChild(add_button)
         }
     </script>
 </body>
