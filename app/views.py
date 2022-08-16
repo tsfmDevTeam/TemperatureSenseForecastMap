@@ -234,7 +234,7 @@ def login_view(request):
 
     return render(request, "app/user_admin/login.html", param)
 
-
+@login_required
 def logout_view(request):
     logout(request)
 
