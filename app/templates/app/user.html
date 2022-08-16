@@ -1,14 +1,49 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="utf-8">
-    <title>あなたの情報</title>
+    <style>
+        .locations {
+            display: flex;
+            flex-flow: column;
+        }
+
+        .location_columns {
+            display: flex;
+            flex-flow: row;
+        }
+    </style>
 </head>
+
 <body>
-<h1>{{user.username}}</h1>
-<p>連絡先：{{user.email}}</p>
-<p>アカウント作成日：{{user.date_joined}}</p>
+    <main>
+        <div class="locations">
+            <ul id="location_columns">
+            </ul>
+        </div>
+
+        <div id="add_location">
+            <button onclick="location.href='{{ link }}'">追加</button>
+        </div>
+
+    </main>
+
+    <script type="text/javascript">
+        const data = JSON.parse('{{ locations|safe }}');
+        console.log("data", data);
+
+        for (let i = 0; i < data.length; i++) {
+            var new_elem = document.createElement("li");
+            new_elem.textContent = data[i];
+            console.log(new_elem);
+            document.getElementById("location_columns").appendChild(new_elem);
+        }
+
+        if (data.len == 3) {
+            document.getElementById("add_location").hidden = true;
+        }
+    </script>
 </body>
 
 </html>
