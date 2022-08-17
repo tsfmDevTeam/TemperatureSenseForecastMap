@@ -1,22 +1,19 @@
 import json
 import urllib
-from random import randint
-from typing import Any, Dict, Union
+from typing import Any, Dict, Union, cast
 
 import requests
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render  # type:ignore
+from django.urls import reverse
 from django.views.generic import TemplateView
 
 from src import geo_apis, wgbt
 
 from .forms import LoginForm, SignupForm
 from .models import CustomUser, location
-
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 
 
 class BuffView(TemplateView):
@@ -54,8 +51,8 @@ class MapView(TemplateView):
             )
 
         else:  # 暑さ指数の地点選択モード
-            ido: Union[float, None] = request.POST.get("ido", None)
-            keido: Union[float, None] = request.POST.get("keido", None)
+            ido: Union[float, None] = request.POST.get("ido", None)  # type:ignore
+            keido: Union[float, None] = request.POST.get("keido", None)  # type:ignore
             if ido is not None and keido is not None:  # Map からの遷移
                 pass
 
@@ -71,8 +68,8 @@ class MapView(TemplateView):
 
                 response = requests.get(makeUrl + s_quote)
 
-                ido = response.json()[0]["geometry"]["coordinates"][1]
-                keido = response.json()[0]["geometry"]["coordinates"][0]
+                ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
+                keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
 
             wgbt_list, time_list, chart = wgbt.location2wgbt(ido=ido, keido=keido)
 
@@ -127,8 +124,8 @@ class MapView(TemplateView):
 class UserPage(TemplateView):
     template_name: str = "app/user.html"
 
-    def get_location_from_db(self, uid: int) -> list[str]:
-        locations = []
+    def get_location_from_db(self, uid: int) -> list[Any]:
+        locations: list[Any] = []
         for query in location.objects.filter(user_id=uid):
             lid = query.id
             name = query.location_name
@@ -138,18 +135,23 @@ class UserPage(TemplateView):
         return locations
 
     def post(self, request: HttpRequest):
-        print(request)
+        loc_id = int(request.POST.get("text", "0"))
+
+        if str(location.objects.filter(id=loc_id)[0].user_id) == request.user.username:  # type: ignore
+            location.objects.filter(id=loc_id).delete()
+
+        ret = redirect(f"{self.request._current_scheme_host}/user/")  # type: ignore
+        return ret
 
     def get_context_data(self, **kwargs):  # type:ignore
         context = super().get_context_data(**kwargs)
 
-        context["user_name"] = self.request.user.username
-        context["user_id"] = self.request.user.id
-        context["user_email"] = self.request.user.email
+        context["user_name"] = self.request.user.username  # type: ignore
+        context["user_email"] = self.request.user.email  # type: ignore
+        context["user_id"] = self.request.user.id  # type: ignore
 
-        context["locations"] = json.dumps(self.get_location_from_db(uid=self.request.user.id))
+        context["locations"] = json.dumps(self.get_location_from_db(uid=self.request.user.id))  # type: ignore
         context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
-        print(context)
         return context
 
 
@@ -166,10 +168,10 @@ class SetLocationName(TemplateView):
                 name=request.POST.get("location_name"),  # type: ignore
                 ido=request.POST.get("ido"),  # type: ignore
                 keido=request.POST.get("keido"),  # type: ignore
-                uid=request.user.id,
+                uid=request.user.id,  # type: ignore
             )
 
-            ret = redirect(f"{self.request._current_scheme_host}/user/")
+            ret = redirect(f"{self.request._current_scheme_host}/user/")  # type: ignore
             return ret
         else:
             ret = render(
