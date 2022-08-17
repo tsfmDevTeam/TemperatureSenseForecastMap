@@ -170,7 +170,7 @@ class SetLocationName(TemplateView):
             )
 
             ret = redirect(f"{self.request._current_scheme_host}/user/")
-            return
+            return ret
         else:
             ret = render(
                 request=request,
@@ -253,43 +253,43 @@ def login_view(request):
 
     return render(request, "app/user_admin/login.html", param)
 
-@login_required
+
 def logout_view(request):
     logout(request)
 
     return render(request, "app/user_admin/logout.html")
 
 
-@login_required  # 未登録のユーザーのアクセス制限
-def user_view(request):
-    if request.method == "POST":
-        form = LoginForm(request, data=request.POST)
-
-        if form.is_valid():
-            user = form.get_user()
-
-            if user:
-                login(request, user)
-                return redirect(to="/app/user_admin/user/")
-
-    else:
-        form = LoginForm()
-        uid = request.user.id
-        locations = []
-
-        for query in location.objects.filter(user_id=uid):
-            lid = query.id
-            name = query.location_name
-            ido = query.ido
-            keido = query.keido
-            locations.append((lid, name, ido, keido))
-
-    param = {
-        "title": "ログイン",
-        "form": form,
-    }
-
-    return render(request, "app/user_admin/user.html", param)
+# @login_required  # 未登録のユーザーのアクセス制限
+# def user_view(request):
+#     if request.method == "POST":
+#         form = LoginForm(request, data=request.POST)
+#
+#         if form.is_valid():
+#             user = form.get_user()
+#
+#             if user:
+#                 login(request, user)
+#                 return redirect(to="/app/user_admin/user/")
+#
+#     else:
+#         form = LoginForm()
+#         uid = request.user.id
+#         locations = []
+#
+#         for query in location.objects.filter(user_id=uid):
+#             lid = query.id
+#             name = query.location_name
+#             ido = query.ido
+#             keido = query.keido
+#             locations.append((lid, name, ido, keido))
+#
+#     param = {
+#         "title": "ログイン",
+#         "form": form,
+#     }
+#
+#     return render(request, "app/user_admin/user.html", param)
 
 
 # @login_required
