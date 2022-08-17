@@ -89,9 +89,15 @@
                             <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
                             <li class="active"><a href="{% url 'Jikkenn' %}">実験</a></li>
                             <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
-                            <li class="btn-cta"><a href="{% url "login" %}"><span>log in</span></a></li>
-                            <li class="btn-cta"><a href="{% url "signup" %}"><span>sign up</span></a></li>
-                            <li class="btn-cta"><a href="{% url "logout" %}"><span>log out</span></a></li>
+                            {% if request.user.is_authenticated %}
+                                <li class="btn-cta"><a href="{% url "user" %}"><span>user</span></a></li>
+                                <li class="btn-cta"><a href="{% url "logout" %}"><span>log out</span></a></li>
+                            {% else %}
+                                <li class="btn-cta"><a href="{% url "login" %}"><span>log in</span></a></li>
+                                <li class="btn-cta"><a href="{% url "signup" %}"><span>sign up</span></a></li>
+                            {% endif %}
+
+
                         </ul>
                     </div>
                 </div>
