@@ -51,25 +51,50 @@
     </main>
 
     <script type="text/javascript">
-        const data = JSON.parse('{{ locations|safe }}');
-        console.log("data", data);
+        const locations = JSON.parse('{{ locations|safe }}');
+        console.log("data", locations);
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < locations.length; i++) {
             var location_elem = document.createElement("li");
-            location_elem.textContent = data[i];
+            location_elem.textContent = locations[i][1];
 
             var delete_button = document.createElement("button");
             delete_button.textContent = "この地点を削除";
+            delete_button.name = locations[i][0]
+            delete_button.addEventListener("click", e => loc_delete(locations[i][0]));
 
+
+            location_elem.appendChild(delete_button)
             document.getElementById("location_columns").appendChild(location_elem);
         }
 
-        if (data.length < 3) {
-
+        if (locations.length < 3) {
             add_button = document.createElement("button");
             add_button.addEventListener("click", e => location.href = '{{ link }}');
             add_button.textContent = "追加"
             document.getElementById("add_location").appendChild(add_button)
+        }
+
+        function loc_delete(id) {
+            var form = document.createElement('form');
+            var request = document.createElement('input');
+            form.method = 'POST';
+
+            let csrf_element = document.createElement('input');
+            csrf_element.type = 'hidden';
+            csrf_element.name = 'csrfmiddlewaretoken';
+            csrf_element.value = '{{ csrf_token }}';
+
+            request.type = 'hidden'; //入力フォームが表示されないように
+            request.name = 'text';
+            request.value = id;
+
+            form.appendChild(csrf_element);
+            form.appendChild(request);
+            document.body.appendChild(form);
+
+            form.submit();
+            console.log("delete ", id)
         }
     </script>
 </body>
