@@ -13,6 +13,7 @@ matplotlib
 pip
 psycopg2
 python-dateutil
+python-dotenv
 requests
 setuptools
 six
