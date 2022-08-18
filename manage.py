@@ -2,9 +2,16 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import pathlib
 
+from dotenv import load_dotenv
 
 def main():
+    dotenv_path = pathlib.Path(__file__).parent/".env"
+    if dotenv_path.exists():
+        load_dotenv(verbose=True)
+        load_dotenv(dotenv_path)
+
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TemperatureSenseForecastMap.settings')
     try:

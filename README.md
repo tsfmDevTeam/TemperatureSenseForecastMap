@@ -19,9 +19,5 @@
 
 
 ### 環境変数の設定
-- コマンドプロンプト
-  - `set DATABASE_URL=ここにログインコードを入れる`
-- PowerShell
-  -  `$env:DATABASE_URL = "ここにログインコードを入れる"`
-- Linux
-  - `export DATABASE_URL = "ここにログインコードを入れる"`
+1. `.evb.base` ファイルを**コピー**して， `.env`ファイルを作成する
+2. `.env`ファイル内のトークンを置き換える
