@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render  # type:ignore
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-from src import geo_apis, wgbt
+from src import geo_apis, wbgt
 
 from .forms import LoginForm, SignupForm
 from .models import CustomUser, location
@@ -71,21 +71,21 @@ class MapView(TemplateView):
                 ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
                 keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
 
-            wgbt_list, time_list, chart = wgbt.location2wgbt(ido=ido, keido=keido)
+            wbgt_list, time_list, chart = wbgt.location2wbgt(ido=ido, keido=keido)
 
-            wgbt_now = wgbt_list[0]
-            wgbt_status_now = wgbt.wgbt_indicator(WBGT=wgbt_now)
+            wbgt_now = wbgt_list[0]
+            wbgt_status_now = wbgt.wbgt_indicator(WBGT=wbgt_now)
 
-            wgbt_max = max(wgbt_list)
-            wgbt_status_max = wgbt.wgbt_indicator(WBGT=wgbt_max)
-            max_time = time_list[wgbt_list.index(wgbt_max)]
+            wbgt_max = max(wbgt_list)
+            wbgt_status_max = wbgt.wbgt_indicator(WBGT=wbgt_max)
+            max_time = time_list[wbgt_list.index(wbgt_max)]
 
-            wgbt_and_status: list[dict[str, Union[str, float]]] = []
+            wbgt_and_status: list[dict[str, Union[str, float]]] = []
 
-            for WGBT, time in zip(wgbt_list, time_list):
-                status = wgbt.wgbt_indicator(WBGT=WGBT)
+            for wbgt, time in zip(wbgt_list, time_list):
+                status = wbgt.wbgt_indicator(WBGT=wbgt)
 
-                wgbt_and_status.append({"WGBT": WGBT, "status": status, "time": time[6:]})
+                wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
 
             # 周辺地域の取得
             tikaku = geo_apis.find_near(ido=ido, keido=keido)
@@ -96,11 +96,11 @@ class MapView(TemplateView):
                 context={
                     "lat": ido,
                     "lon": keido,
-                    "wgbt_now": wgbt_now,
-                    "wgbt_max": wgbt_max,
-                    "wgbt_status_now": wgbt_status_now,
-                    "wgbt_status_max": wgbt_status_max,
-                    "wgbt_and_status": wgbt_and_status,
+                    "wbgt_now": wbgt_now,
+                    "wbgt_max": wbgt_max,
+                    "wbgt_status_now": wbgt_status_now,
+                    "wbgt_status_max": wbgt_status_max,
+                    "wbgt_and_status": wbgt_and_status,
                     "tikaku": tikaku,
                     "max_time": max_time,
                     "chart": chart,

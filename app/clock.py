@@ -5,7 +5,7 @@ import json
 from urllib import request
 import time
 
-from src import wgbt
+from src import wbgt
 
 
 
@@ -22,16 +22,16 @@ def test_job():
         print("keido", keido)
 
         try:
-            wgbts_list, time_list, _ = wgbt.location2wgbt(ido, keido)
+            wbgts_list, time_list, _ = wbgt.location2wbgt(ido, keido)
 
-            # global wgbt_time_dict
-            wgbt_time_dict = {}
-            wgbt_time_dict["wgbt"] = wgbts_list
-            wgbt_time_dict["time"] = time_list
-            wgbt_time_json = json.dumps(wgbt_time_dict)
+            # global wbgt_time_dict
+            wbgt_time_dict = {}
+            wbgt_time_dict["wbgt"] = wbgts_list
+            wbgt_time_dict["time"] = time_list
+            wbgt_time_json = json.dumps(wbgt_time_dict)
 
-            print("wgbt_time_json", wgbt_time_json)
-            point.wgbt_time_json = wgbt_time_json
+            print("wbgt_time_json", wbgt_time_json)
+            point.wbgt_time_json = wbgt_time_json
 
             point.save() #ここでUPDATEが実行される
             time.sleep(1)

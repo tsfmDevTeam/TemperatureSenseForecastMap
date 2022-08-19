@@ -208,25 +208,25 @@
         <section class="mb-5">
             <div class="d-flex flex-column flex-lg-row border border-primary rounded">
                 <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">暑さ指数</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_now }}</p>
+                <p class="py-2 px-2 px-lg-4 mb-0">{{ wbgt_now }}</p>
             </div>
         </section>
         <section class="mb-5">
             <div class="d-flex flex-column flex-lg-row border border-primary rounded">
                 <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">対策</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_now }}</p>
+                <p class="py-2 px-2 px-lg-4 mb-0">{{ wbgt_status_now }}</p>
             </div>
         </section>
         <section class="mb-5">
             <div class="d-flex flex-column flex-lg-row border border-primary rounded">
                 <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">24時間後までの最大暑さ指数</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_max }}（{{ max_time }}）</p>
+                <p class="py-2 px-2 px-lg-4 mb-0">{{ wbgt_max }}（{{ max_time }}）</p>
             </div>
         </section>
         <section class="mb-5">
             <div class="d-flex flex-column flex-lg-row border border-primary rounded">
                 <p class="text-center text-white bg-primary py-2 px-4 mb-0 align-self-stretch">最大暑さ指数の対策</p>
-                <p class="py-2 px-2 px-lg-4 mb-0">{{ wgbt_status_max }}</p>
+                <p class="py-2 px-2 px-lg-4 mb-0">{{ wbgt_status_max }}</p>
             </div>
         </section>
         <!----------------------------------------------->
@@ -244,7 +244,7 @@
                             <th style="position: sticky; left: 0; color :white; background: #007bff;"
                                 align="center">時刻
                             </th>
-                            {% for w_and_s in wgbt_and_status %}
+                            {% for w_and_s in wbgt_and_status %}
                                 <td align="center">{{ w_and_s.time }}</td>
                             {% endfor %}
                         </tr>
@@ -253,8 +253,8 @@
                                 align="center">
                                 暑さ指数
                             </th>
-                            {% for w_and_s in wgbt_and_status %}
-                                <td align="center">{{ w_and_s.WGBT }}</td>
+                            {% for w_and_s in wbgt_and_status %}
+                                <td align="center">{{ w_and_s.wbgt }}</td>
                             {% endfor %}
                         </tr>
                     </table>
