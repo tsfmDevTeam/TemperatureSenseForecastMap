@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=31, verbose_name='住所')),
                 ('ido', models.FloatField(verbose_name='緯度')),
                 ('keido', models.FloatField(verbose_name='経度')),
-                ('wgbt_time_json', models.JSONField(blank=True, null=True)),
+                ('wbgt_time_json', models.JSONField(blank=True, null=True)),
             ],
             options={
                 'verbose_name_plural': '地点id',

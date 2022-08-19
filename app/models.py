@@ -10,7 +10,7 @@ class point_name(models.Model):
     address = models.CharField(max_length=31, verbose_name="住所")
     ido = models.FloatField(verbose_name="緯度")
     keido = models.FloatField(verbose_name="経度")
-    wgbt_time_json = models.JSONField(blank=True, null=True, verbose_name="24時間分のwgbt")
+    wbgt_time_json = models.JSONField(blank=True, null=True, verbose_name="24時間分のwbgt")
 
     def __int__(self):
         return self.id

@@ -36,14 +36,14 @@ def load_font():
 
 
 # グラフをプロットするための関数
-def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
+def Plot_Graph(time_list: list[str], wbgt_list: list[float]):
     load_font()
     colors = ["#1C75BC", "#16C4FD", "#FFB23B", "#F17816", "#FF5722"]
 
     # plt.switch_backend("AGG")  # スクリプトを出力させない
     plt.figure(figsize=(10, 5))  # グラフサイズ
-    graph_min = min(wgbt_list) // 1 - 1
-    graph_max = max(wgbt_list) // 1 + 2
+    graph_min = min(wbgt_list) // 1 - 1
+    graph_max = max(wbgt_list) // 1 + 2
 
     virtual_x = list(range(len(time_list)))
     plt.ylim(graph_min, graph_max)
@@ -54,7 +54,7 @@ def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
     levels = [np.empty(0), np.empty(0), np.empty(0), np.empty(0), np.empty(0)]
     full_detailed_x = [np.empty(0)]
 
-    for x1, x2, y1, y2 in zip(virtual_x[:-1], virtual_x[1:], wgbt_list[:-1], wgbt_list[1:]):
+    for x1, x2, y1, y2 in zip(virtual_x[:-1], virtual_x[1:], wbgt_list[:-1], wbgt_list[1:]):
         # print(f"{x1}, {x2}, {y1}, {y2}")
 
         def f(x):
@@ -65,22 +65,22 @@ def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
         detailed_x = np.arange(x1, x2, 0.02)
         full_detailed_x = np.append(full_detailed_x, detailed_x)
 
-        detailed_wgbt = f(detailed_x)
+        detailed_wbgt = f(detailed_x)
 
-        modified_wgbt = np.where(detailed_wgbt > thresholds[0], thresholds[0], detailed_wgbt)
-        levels[0] = np.append(levels[0], modified_wgbt)
+        modified_wbgt = np.where(detailed_wbgt > thresholds[0], thresholds[0], detailed_wbgt)
+        levels[0] = np.append(levels[0], modified_wbgt)
 
-        modified_wgbt = np.where(detailed_wgbt > thresholds[1], thresholds[1], detailed_wgbt)
-        levels[1] = np.append(levels[1], modified_wgbt)
+        modified_wbgt = np.where(detailed_wbgt > thresholds[1], thresholds[1], detailed_wbgt)
+        levels[1] = np.append(levels[1], modified_wbgt)
 
-        modified_wgbt = np.where(detailed_wgbt > thresholds[2], thresholds[2], detailed_wgbt)
-        levels[2] = np.append(levels[2], modified_wgbt)
+        modified_wbgt = np.where(detailed_wbgt > thresholds[2], thresholds[2], detailed_wbgt)
+        levels[2] = np.append(levels[2], modified_wbgt)
 
-        modified_wgbt = np.where(detailed_wgbt > thresholds[3], thresholds[3], detailed_wgbt)
-        levels[3] = np.append(levels[3], modified_wgbt)
+        modified_wbgt = np.where(detailed_wbgt > thresholds[3], thresholds[3], detailed_wbgt)
+        levels[3] = np.append(levels[3], modified_wbgt)
 
-        modified_wgbt = np.array(detailed_wgbt)
-        levels[4] = np.append(levels[4], modified_wgbt)
+        modified_wbgt = np.array(detailed_wbgt)
+        levels[4] = np.append(levels[4], modified_wbgt)
 
     # full_detailed_times = np.arange(virtual_x[0], virtual_x[-1], 0.02)
 
@@ -123,7 +123,7 @@ def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
         color=colors[4],
         alpha=alpha,
     )
-    plt.plot(virtual_x, wgbt_list, color="black", marker="o", lw=3)
+    plt.plot(virtual_x, wbgt_list, color="black", marker="o", lw=3)
 
     plt.grid()
 
@@ -144,8 +144,8 @@ def Plot_Graph(time_list: list[str], wgbt_list: list[float]):
     return graph
 
 
-def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
-    """WGBT温度の計算
+def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
+    """wbgt温度の計算
     緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
         - 温度
         - 湿度
@@ -153,15 +153,15 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
         - 散乱日射量
         - 風速
         を取得します
-        これらの値からWGBT温度を計算します
+        これらの値からwbgt温度を計算します
         (https://blog.obniz.com/news/obniz-wbgt-service.html)
     Args:
         - ido (float): 緯度
         - keido (float): 経度
     Returns:
-        - wgbts_list list[float]: WGBT温度（24時間分）
+        - wbgts_list list[float]: wbgt温度（24時間分）
         - time_list list[str]: １時間ごとの時間（24時間分）
-        - Plot_Graph(time_list, wgbts_list) str: グラフ(x:wgbt, y:時間)
+        - Plot_Graph(time_list, wbgts_list) str: グラフ(x:wbgt, y:時間)
     """
 
     url = (
@@ -170,7 +170,7 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
         "windspeed_10m&current_weather=true&timezone=Asia%2FTokyo"
     )
 
-    wgbts_list: list[float] = []
+    wbgts_list: list[float] = []
     time_list: list[str] = []
     year = "2022-"
     str1 = "-"
@@ -197,7 +197,7 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
             diffuse_radiation = body["hourly"]["diffuse_radiation"][index] / 1000
             windspeed_10m = abs(body["hourly"]["windspeed_10m"][index] * 1000 / 3600)
 
-            wgbt = (
+            wbgt = (
                 0.735 * temperature
                 + 0.0374 * humidity
                 + 0.00292 * temperature * humidity
@@ -206,16 +206,16 @@ def location2wgbt(ido: float, keido: float) -> tuple[list[float], list[str], str
                 - 0.0572 * windspeed_10m
                 - 4.064
             )
-            wgbts_list.append(round(wgbt, 3))
+            wbgts_list.append(round(wbgt, 3))
 
     # 現在から24時間後の暑さ指数の予測値と時刻が入った配列
-    return wgbts_list, time_list, Plot_Graph(time_list, wgbts_list)
+    return wbgts_list, time_list, Plot_Graph(time_list, wbgts_list)
 
 
-def wgbt_indicator(WBGT: float) -> str:
-    """WGBT温度による熱中症リスクの診断
+def wbgt_indicator(WBGT: float) -> str:
+    """wbgt温度による熱中症リスクの診断
     Args:
-        WBGT (float): WGBT温度
+        WBGT (float): wbgt温度
     Returns:
         message (str): 危険度合のメッセージ
     """
