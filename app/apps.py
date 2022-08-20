@@ -9,6 +9,6 @@ class AppConfig(AppConfig):
     def ready(self):
         from .clock import start
 
-        release_flag = os.environ.get("wbgt_release", 0)
-        if release_flag == 1:
+        release_flag = os.environ.get("wbgt_release", "0")
+        if release_flag == "1":
             start()
