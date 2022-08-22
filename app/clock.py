@@ -22,7 +22,7 @@ def test_job():
         print("keido", keido)
 
         try:
-            wbgts_list, time_list, _ = wbgt.location2wbgt(ido, keido)
+            wbgts_list, time_list = wbgt.location2wbgt(ido, keido)
 
             # global wbgt_time_dict
             wbgt_time_dict = {}

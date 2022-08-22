@@ -71,7 +71,8 @@ class MapView(TemplateView):
                 ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
                 keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
 
-            wbgt_list, time_list, chart = wbgt.location2wbgt(ido=ido, keido=keido)
+            wbgt_list, time_list = wbgt.location2wbgt(ido=ido, keido=keido)
+            chart = wbgt.plot_graph(time_list, wbgt_list)
 
             wbgt_now = wbgt_list[0]
             wbgt_status_now = wbgt.wbgt_indicator(WBGT=wbgt_now)
