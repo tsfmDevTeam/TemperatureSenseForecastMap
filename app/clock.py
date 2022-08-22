@@ -1,18 +1,16 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from django_apscheduler.jobstores import DjangoJobStore,register_events,register_job
+from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 from .models import point_name
 import json
 from urllib import request
 import time
 
-from src import wbgt
-
-
+from src import wbgt_util
 
 
 def test_job():
     for point in point_name.objects.all():
-        #更新
+        # 更新
         ido = point.ido
         keido = point.keido
 
@@ -22,7 +20,7 @@ def test_job():
         print("keido", keido)
 
         try:
-            wbgts_list, time_list, _ = wbgt.location2wbgt(ido, keido)
+            wbgts_list, time_list = wbgt_util.location2wbgt(ido, keido)
 
             # global wbgt_time_dict
             wbgt_time_dict = {}
@@ -33,7 +31,7 @@ def test_job():
             print("wbgt_time_json", wbgt_time_json)
             point.wbgt_time_json = wbgt_time_json
 
-            point.save() #ここでUPDATEが実行される
+            point.save()  # ここでUPDATEが実行される
             time.sleep(1)
         except:
             print("id{}のDBの更新ができませんでした".format(point.id))
@@ -42,5 +40,5 @@ def test_job():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(test_job, 'cron', hour=0, minute=58)# 毎日23時59分に実行
+    scheduler.add_job(test_job, "cron", hour=0, minute=58)  # 毎日23時59分に実行
     scheduler.start()

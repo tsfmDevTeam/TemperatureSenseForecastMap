@@ -36,7 +36,7 @@ def load_font():
 
 
 # グラフをプロットするための関数
-def Plot_Graph(time_list: list[str], wbgt_list: list[float]):
+def plot_graph(time_list: list[str], wbgt_list: list[float]):
     load_font()
     colors = ["#1C75BC", "#16C4FD", "#FFB23B", "#F17816", "#FF5722"]
 
@@ -144,7 +144,7 @@ def Plot_Graph(time_list: list[str], wbgt_list: list[float]):
     return graph
 
 
-def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str], str]:
+def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str]]:
     """wbgt温度の計算
     緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
         - 温度
@@ -161,7 +161,6 @@ def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str], str
     Returns:
         - wbgts_list list[float]: wbgt温度（24時間分）
         - time_list list[str]: １時間ごとの時間（24時間分）
-        - Plot_Graph(time_list, wbgts_list) str: グラフ(x:wbgt, y:時間)
     """
 
     url = (
@@ -209,7 +208,7 @@ def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str], str
             wbgts_list.append(round(wbgt, 3))
 
     # 現在から24時間後の暑さ指数の予測値と時刻が入った配列
-    return wbgts_list, time_list, Plot_Graph(time_list, wbgts_list)
+    return wbgts_list, time_list
 
 
 def wbgt_indicator(WBGT: float) -> str:
