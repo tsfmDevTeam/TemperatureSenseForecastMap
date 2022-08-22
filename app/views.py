@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render  # type:ignore
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-from src import geo_apis, wbgt
+from src import geo_apis, wbgt_util
 
 from .forms import LoginForm, SignupForm
 from .models import CustomUser, location
@@ -71,20 +71,20 @@ class MapView(TemplateView):
                 ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
                 keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
 
-            wbgt_list, time_list = wbgt.location2wbgt(ido=ido, keido=keido)
-            chart = wbgt.plot_graph(time_list, wbgt_list)
+            wbgt_list, time_list = wbgt_util.location2wbgt(ido=ido, keido=keido)
+            chart = wbgt_util.plot_graph(time_list, wbgt_list)
 
             wbgt_now = wbgt_list[0]
-            wbgt_status_now = wbgt.wbgt_indicator(WBGT=wbgt_now)
+            wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
 
             wbgt_max = max(wbgt_list)
-            wbgt_status_max = wbgt.wbgt_indicator(WBGT=wbgt_max)
+            wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
             max_time = time_list[wbgt_list.index(wbgt_max)]
 
             wbgt_and_status: list[dict[str, Union[str, float]]] = []
 
             for wbgt, time in zip(wbgt_list, time_list):
-                status = wbgt.wbgt_indicator(WBGT=wbgt)
+                status = wbgt_util.wbgt_indicator(WBGT=wbgt)
 
                 wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
 
