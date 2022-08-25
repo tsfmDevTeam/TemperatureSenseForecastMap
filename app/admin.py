@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import point_name, CustomUser, location
 
+from .models import CustomUser, location, point_name
 
 
 class CustomUserAdmin(admin.ModelAdmin):

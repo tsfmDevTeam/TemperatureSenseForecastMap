@@ -9,7 +9,6 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render  # type:ignore
 from django.urls import reverse
 from django.views.generic import TemplateView
-
 from src import geo_apis, wbgt_util
 
 from .forms import LoginForm, SignupForm

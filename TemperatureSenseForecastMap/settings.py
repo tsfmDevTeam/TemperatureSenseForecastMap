@@ -14,7 +14,6 @@ from pathlib import Path
 
 import dj_database_url
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parents[1]
 
@@ -28,7 +27,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -44,7 +43,6 @@ INSTALLED_APPS = [
     "app",
     "widget_tweaks",
 ]
-
 
 
 MIDDLEWARE = [
@@ -83,19 +81,16 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 WSGI_APPLICATION = "TemperatureSenseForecastMap.wsgi.application"
 
 
-
-
 db_from_env = dj_database_url.config()
 DATABASES = {
-    'default': dj_database_url.config(default='postgres:///d3l05rplb8rf11'),
+    "default": dj_database_url.config(default="postgres:///d3l05rplb8rf11"),
 }
 
-DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 
 
 # Userモデルは使わず、自分で作ったモデルを使用する
 AUTH_USER_MODEL = "app.CustomUser"
-
 
 
 # Password validation
