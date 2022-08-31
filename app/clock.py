@@ -1,12 +1,9 @@
 import json
-import os
 import time
 from urllib import request
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from django_apscheduler.jobstores import (DjangoJobStore, register_events,
-                                          register_job)
-
+from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 from src import wbgt_util
 
 from .models import point_name
@@ -18,9 +15,10 @@ def test_job():
         ido = point.ido
         keido = point.keido
 
-        print("id:{} 地点名:{}".format(point.id, point.name))
-        # print("ido", ido)
-        # print("keido", keido)
+        print("id", point.id)
+        print("地点名", point.name)
+        print("ido", ido)
+        print("keido", keido)
 
         try:
             wbgts_list, time_list = wbgt_util.location2wbgt(ido, keido)
@@ -29,9 +27,9 @@ def test_job():
             wbgt_time_dict = {}
             wbgt_time_dict["wbgt"] = wbgts_list
             wbgt_time_dict["time"] = time_list
-            wbgt_time_json = wbgt_time_dict
+            wbgt_time_json = json.dumps(wbgt_time_dict)
 
-            # print("wbgt_time_json", wbgt_time_json)
+            print("wbgt_time_json", wbgt_time_json)
             point.wbgt_time_json = wbgt_time_json
 
             point.save()  # ここでUPDATEが実行される
@@ -41,12 +39,7 @@ def test_job():
             time.sleep(3)
 
 
-def sample():
-    print("Hello")
-
-
 def start():
     scheduler = BackgroundScheduler()
-    hour, minute = map(int, os.environ.get("CLOCK_TIME", "00:00").split(":"))
-    scheduler.add_job(test_job, "cron", hour=hour, minute=minute)  # 毎日23時59分に実行
+    scheduler.add_job(test_job, "cron", hour=0, minute=58)  # 毎日23時59分に実行
     scheduler.start()

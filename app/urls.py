@@ -1,6 +1,5 @@
-from django.urls import path
-
 from app import views
+from django.urls import path
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
@@ -13,7 +12,6 @@ urlpatterns = [
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
     path("WF/", views.WFView.as_view(), name="WF"),
-    path("HeatMap/", views.HeatMap_view, name="HeatMap"),
     # 以下ログイン関連
     path("signup/", views.signup_view, name="signup"),
     path("login/", views.login_view, name="login"),
