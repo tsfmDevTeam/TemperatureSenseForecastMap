@@ -14,7 +14,7 @@ matplotlib.use("Agg")
 
 
 # プロットしたグラフを画像データとして出力するための関数
-def Output_Graph():
+def output_graph():
     buffer = BytesIO()  # バイナリI/O(画像や音声データを取り扱う際に利用)
     plt.savefig(buffer, format="png")  # png形式の画像データを取り扱う
     buffer.seek(0)  # ストリーム先頭のoffset byteに変更
@@ -139,7 +139,7 @@ def plot_graph(time_list: list[str], wbgt_list: list[float]):
             [f"{time.split('/')[2].split(':')[0]}時" for time in time_list],
             font=pathlib.Path(__file__).parent / "font.ttf",
         )
-        graph = Output_Graph()  # グラフプロット
+        graph = output_graph()  # グラフプロット
 
     return graph
 
