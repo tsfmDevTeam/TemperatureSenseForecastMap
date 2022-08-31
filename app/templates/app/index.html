@@ -17,15 +17,12 @@
     <meta name="author" content="FreeHTML5.co"/>
     <!--
     //////////////////////////////////////////////////////
-
     FREE HTML5 TEMPLATE
     DESIGNED & DEVELOPED by FREEHTML5.CO
-
     Website: 		http://freehtml5.co/
     Email: 			info@freehtml5.co
     Twitter: 		http://twitter.com/fh5co
     Facebook: 		https://www.facebook.com/fh5co
-
     //////////////////////////////////////////////////////
      -->
     <!-- Facebook and Twitter integration -->
@@ -88,6 +85,7 @@
                         <ul>
                             <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
                             <li class="active"><a href="{% url 'Jikkenn' %}">実験</a></li>
+                            <li class="active"><a href="{% url 'HeatMap' %}">ヒートマップ</a></li>
                             <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
                             {% if request.user.is_authenticated %}
                                 <li class="btn-cta"><a href="{% url "user" %}"><span>user</span></a></li>
@@ -422,4 +420,3 @@
 <script type="text/javascript" src="{% static 'js/geoapi.js' %}"></script>
 </body>
 </html>
-
