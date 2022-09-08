@@ -5,9 +5,6 @@ from app import views
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("BuffView/", views.BuffView.as_view(), name="BuffView"),
-    path("Jikkenn/", views.JikkennView.as_view(), name="Jikkenn"),
-    path("juusyo/", views.Juusyo.jikkenn, name="juusyo"),
-    path("juusyo2/", views.Juusyo.as_view(), name="juusyo2"),
     path("locationname/", views.SetLocationName.as_view(), name="userloc"),
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
