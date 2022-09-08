@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 
 from .location_search import near_observatory
-from . import geo_apis, wbgt_util
+from . import geo_apis, wbgt_util, db2geojson
 
 from .forms import LoginForm, SignupForm
 from .models import CustomUser, location, point_name
@@ -265,25 +265,17 @@ def logout_view(request):
     return render(request, "app/user_admin/logout.html")
 
 
-def HeatMap_view(request):
-    MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
+class HeatMap_view(TemplateView):
+    template_name = "app/Heatmap.html"
 
-    all_data = []
-    for point in point_name.objects.all():
-        data = {}
-        data["ido"] = point.ido
-        data["keido"] = point.keido
-        data["wgbt"] = point.wbgt_time_json["wbgt"]
-        all_data.append(data)
+    def get(self, request: HttpRequest) -> Any:
+        db2geojson.data2geojson()
 
-    # all_data = str(all_data)
+        param = {
+            "MAPBOX_TOKEN": os.getenv("MAPBOX_TOKEN"),
+        }
 
-    param = {
-        "MAPBOX_TOKEN": MAPBOX_TOKEN,
-        "all_data": all_data,
-    }
-
-    return render(request, "app/HeatMap.html", param)
+        return render(request, "app/HeatMap.html", param)
 
 
 # @login_required  # 未登録のユーザーのアクセス制限
