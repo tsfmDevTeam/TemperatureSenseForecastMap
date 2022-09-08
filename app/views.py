@@ -33,8 +33,7 @@ class WFView(TemplateView):
         pass
 
 
-class JikkennView(TemplateView):
-    template_name = "app/juuyojikkenn.html"
+
 
 
 class MapView(TemplateView):
@@ -208,20 +207,7 @@ class SetLocationName(TemplateView):
         return context
 
 
-class Juusyo(TemplateView):
-    template_name = "app/juuyojikkenn.html"
 
-    def jikkenn(request):
-        ken = request.POST.get("aa")
-        print(ken)
-        return render(
-            request,
-            "app/juuyojikkenn2.html",
-            {
-                "ken": ken,
-                "chart": chart,
-            },
-        )
 
 
 def signup_view(request):
