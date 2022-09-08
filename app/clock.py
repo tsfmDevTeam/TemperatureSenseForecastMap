@@ -6,7 +6,7 @@ from urllib import request
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 
-from . import wbgt_util
+from . import wbgt_util, db2geojson
 
 from .models import point_name
 
@@ -35,9 +35,11 @@ def test_job():
 
             point.save()  # ここでUPDATEが実行される
             time.sleep(1)
+
         except:
             print("id{}のDBの更新ができませんでした".format(point.id))
             time.sleep(3)
+    db2geojson.data2geojson(force=True)
 
 
 def sample():
@@ -45,6 +47,8 @@ def sample():
 
 
 def start():
+    db2geojson.data2geojson()
+
     scheduler = BackgroundScheduler()
     hour, minute = map(int, os.environ.get("CLOCK_TIME", "00:00").split(":"))
     scheduler.add_job(test_job, "cron", hour=hour, minute=minute)  # 毎日23時59分に実行

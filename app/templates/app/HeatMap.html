@@ -1,14 +1,14 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="utf-8" />
     <title>ヒートマップ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js"></script>
-    <link
-            href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css"
-            rel="stylesheet"
-    />
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css" rel="stylesheet" />
     <style>
         body {
             margin: 0;
@@ -57,15 +57,12 @@
         }
 
         .colors {
-            background: linear-gradient(
-                    to right,
-                    #2dc4b2,
-                    #3bb3c3,
-                    #669ec4,
-                    #8b88b6,
-                    #a2719b,
-                    #aa5e79
-            );
+            background: linear-gradient(to right,
+                    #1C75BC,
+                    #16C4FD,
+                    #FFB23B,
+                    #F17816,
+                    #FF5722);
             margin-bottom: 5px;
         }
 
@@ -78,153 +75,91 @@
 </head>
 
 <body>
-<div id="map"></div>
-<div id="console">
-    <h1>Motor vehicle collisions</h1>
-    <p>
-        Data:
-        <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95">
-            Motor vehicle collision injuries and death</a>
-        in NYC, Jan 2016
-    </p>
-    <div class="session">
-        <h2>Casualty</h2>
-        <div class="row colors"></div>
-        <div class="row labels">
-            <div class="label">0</div>
-            <div class="label">1</div>
-            <div class="label">2</div>
-            <div class="label">3</div>
-            <div class="label">4</div>
-            <div class="label">5+</div>
+    <div id="map"></div>
+    <div id="console">
+        <h1>熱中症ヒートマップ</h1>
+        <div class="session">
+            <h2>熱中症リスク</h2>
+            <div class="row colors"></div>
+            <div class="row labels">
+                <div class="label">1</div>
+                <div class="label">2</div>
+                <div class="label">3</div>
+                <div class="label">4</div>
+                <div class="label">5</div>
+            </div>
+        </div>
+        <div class="session">
+            <h2>Hour: <label id="active-hour">現在時刻</label></h2>
+            <input id="slider" class="row" type="range" min="0" max="23" step="1" value="12" />
         </div>
     </div>
-    <div class="session">
-        <h2>Hour: <label id="active-hour">12PM</label></h2>
-        <input
-                id="slider"
-                class="row"
-                type="range"
-                min="0"
-                max="23"
-                step="1"
-                value="12"
-        />
-    </div>
-    <div class="session">
-        <h2>Day of the week</h2>
-        <div class="row" id="filters">
-            <input
-                    id="all"
-                    type="radio"
-                    name="toggle"
-                    value="all"
-                    checked="checked"
-            />
-            <label for="all">All</label>
-            <input id="weekday" type="radio" name="toggle" value="weekday" />
-            <label for="weekday">Weekday</label>
-            <input id="weekend" type="radio" name="toggle" value="weekend" />
-            <label for="weekend">Weekend</label>
-        </div>
-    </div>
-</div>
-<script>
-    mapboxgl.accessToken = '{{ MAPBOX_TOKEN }}';
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [139.45, 35.415],
-        zoom: 11
-    });
-
-    map.on('load', () => {
-        let filterHour = ['==', ['number', ['get', 'Hour']], 12];
-        let filterDay = ['!=', ['string', ['get', 'Day']], 'placeholder'];
-
-        map.addLayer({
-            id: 'collisions',
-            type: 'circle',
-            source: {
-                type: 'geojson',
-                data: './collisions1601.geojson' // replace this with the url of your own geojson
-            },
-            paint: {
-                'circle-radius': [
-                    'interpolate',
-                    ['linear'],
-                    ['number', ['get', 'Casualty']],
-                    0,
-                    4,
-                    5,
-                    24
-                ],
-                'circle-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['number', ['get', 'Casualty']],
-                    0,
-                    '#2DC4B2',
-                    1,
-                    '#3BB3C3',
-                    2,
-                    '#669EC4',
-                    3,
-                    '#8B88B6',
-                    4,
-                    '#A2719B',
-                    5,
-                    '#AA5E79'
-                ],
-                'circle-opacity': 0.8
-            },
-            'filter': ['all', filterHour, filterDay]
+    <script>
+        mapboxgl.accessToken = '{{ MAPBOX_TOKEN }}';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: [139.45, 35.415],
+            zoom: 11
         });
 
-        // update hour filter when the slider is dragged
-        document.getElementById('slider').addEventListener('input', (event) => {
-            const hour = parseInt(event.target.value);
-            // update the map
-            filterHour = ['==', ['number', ['get', 'Hour']], hour];
-            map.setFilter('collisions', ['all', filterHour, filterDay]);
+        map.on('load', () => {
+            let filterHour = ['==', ['number', ['get', 'Hour']], 12];
 
-            // converting 0-23 hour to AMPM format
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const hour12 = hour % 12 ? hour % 12 : 12;
-
-            // update text in the UI
-            document.getElementById('active-hour').innerText = hour12 + ampm;
-        });
-
-        document
-            .getElementById('filters')
-            .addEventListener('change', (event) => {
-                const day = event.target.value;
-                // update the map filter
-                if (day === 'all') {
-                    filterDay = ['!=', ['string', ['get', 'Day']], 'placeholder'];
-                } else if (day === 'weekday') {
-                    filterDay = [
-                        'match',
-                        ['get', 'Day'],
-                        ['Sat', 'Sun'],
-                        false,
-                        true
-                    ];
-                } else if (day === 'weekend') {
-                    filterDay = [
-                        'match',
-                        ['get', 'Day'],
-                        ['Sat', 'Sun'],
-                        true,
-                        false
-                    ];
-                } else {
-                    console.error('error');
-                }
-                map.setFilter('collisions', ['all', filterHour, filterDay]);
+            map.addLayer({
+                id: 'heat',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: "{% static './info.geojson' %}" // replace this with the url of your own geojson
+                },
+                paint: {
+                    'circle-radius': [
+                        'interpolate',
+                        ['linear'],
+                        ['number', ['get', 'sevirarity']],
+                        2,
+                        4,
+                        5,
+                        24
+                    ],
+                    'circle-color': [
+                        'interpolate',
+                        ['linear'],
+                        ['number', ['get', 'sevirarity']],
+                        1,
+                        "#1C75BC",
+                        2,
+                        "#16C4FD",
+                        3,
+                        "#FFB23B",
+                        4,
+                        "#F17816",
+                        5,
+                        "#FF5722",
+                    ],
+                    'circle-opacity': 0.8
+                },
+                'filter': ['all', filterHour]
             });
-    });
-</script>
+
+            // update hour filter when the slider is dragged
+            document.getElementById('slider').addEventListener('input', (event) => {
+                const hour = parseInt(event.target.value);
+                // update the map
+                filterHour = ['==', ['number', ['get', 'Hour']], hour];
+                map.setFilter('heat', ['all', filterHour]);
+
+                // converting 0-23 hour to AMPM format
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+                const hour12 = hour % 12 ? hour % 12 : 12;
+
+                // update text in the UI
+                document.getElementById('active-hour').innerText = hour;
+                //12 + ampm;
+            });
+        });
+    </script>
 </body>
+
 </html>
