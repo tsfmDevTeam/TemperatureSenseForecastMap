@@ -4,10 +4,9 @@ import time
 from urllib import request
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from django_apscheduler.jobstores import (DjangoJobStore, register_events,
-                                          register_job)
+from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 
-from src import wbgt_util
+from . import wbgt_util
 
 from .models import point_name
 
