@@ -10,6 +10,7 @@ Django==4.0.5
 gunicorn
 idna
 matplotlib
+numpy
 pip
 psycopg2
 python-dateutil
