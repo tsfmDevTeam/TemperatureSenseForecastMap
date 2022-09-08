@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render  # type:ignore
 from django.urls import reverse
 from django.views.generic import TemplateView
 
+from .location_search import near_observatory
 from . import geo_apis, wbgt_util
 
 from .forms import LoginForm, SignupForm
@@ -64,7 +65,9 @@ class MapView(TemplateView):
 
                 Address = f"{ken}{siku}{tyouiki}"
 
-                makeUrl: str = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+                makeUrl: str = (
+                    "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+                )
                 s_quote: str = urllib.parse.quote(Address)  # type:ignore
 
                 response = requests.get(makeUrl + s_quote)
@@ -87,7 +90,9 @@ class MapView(TemplateView):
             for wbgt, time in zip(wbgt_list, time_list):
                 status = wbgt_util.wbgt_indicator(WBGT=wbgt)
 
-                wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
+                wbgt_and_status.append(
+                    {"wbgt": wbgt, "status": status, "time": time[6:]}
+                )
 
             # 周辺地域の取得
             tikaku = geo_apis.find_near(ido=ido, keido=keido)
@@ -163,8 +168,16 @@ class SetLocationName(TemplateView):
     template_name: str = "app/locationname.html"
 
     def do_save(self, name: str, ido: float, keido: float, uid: int):
-        location.objects.update_or_create(location_name=name, ido=ido, keido=keido, user_id_id=uid)
+
+        near_point_obj = near_observatory(float(ido), float(keido))
+        near_ido = near_point_obj.ido
+        near_keido = near_point_obj.keido
+
+        location.objects.update_or_create(
+            location_name=name, ido=near_ido, keido=near_keido, user_id_id=uid
+        )
         print(name, ido, keido)
+        print(near_point_obj.name, near_ido, near_keido)
 
     def post(self, request: HttpRequest) -> Any:
         if "save" in request.POST:
