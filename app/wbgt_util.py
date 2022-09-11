@@ -1,4 +1,5 @@
 import base64
+import datetime
 import json
 import os
 import pathlib
@@ -144,7 +145,7 @@ def plot_graph(time_list: list[str], wbgt_list: list[float]):
     return graph
 
 
-def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str]]:
+def location2wbgt(ido: float, keido: float, hours: int = 24) -> tuple[list[float], list[str]]:
     """wbgt温度の計算
     緯度・経度を用いて，Open-Meteo API(open-meteo.com)から，
         - 温度
@@ -171,9 +172,8 @@ def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str]]:
 
     wbgts_list: list[float] = []
     time_list: list[str] = []
-    year = "2022-"
-    str1 = "-"
-    str2 = "T"
+
+    year = datetime.datetime.now(datetime.timezone.utc).year
 
     with request.urlopen(url) as r:
         body = json.loads(r.read())
@@ -181,12 +181,12 @@ def location2wbgt(ido: float, keido: float) -> tuple[list[float], list[str]]:
         tdate = body["current_weather"]["time"]
         index_now_time = body["hourly"]["time"].index(tdate)
 
-        for index in range(index_now_time, index_now_time + 24):
+        for index in range(index_now_time, index_now_time + hours):
             time = body["hourly"]["time"][index]
 
-            time = time.replace(year, "")
-            time = time.replace(str1, "/")
-            time = time.replace(str2, "/")
+            time = time.replace(str(year), "")
+            time = time.replace("-", "/")
+            time = time.replace("T", "/")
 
             time_list.append(time)
 
