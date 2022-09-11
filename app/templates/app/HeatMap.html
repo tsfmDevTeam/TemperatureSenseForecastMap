@@ -58,18 +58,22 @@
 
         .colors {
             background: linear-gradient(to right,
-                    #1C75BC,
-                    #16C4FD,
-                    #FFB23B,
-                    #F17816,
-                    #FF5722);
+                    #1C75BC 00% 20%,
+                    #16C4FD 20% 40%,
+                    #FFB23B 40% 60%,
+                    #F17816 60% 80%,
+                    #FF5722 80% 100%);
             margin-bottom: 5px;
         }
 
         .label {
-            width: 15%;
+            width: 18%;
             display: inline-block;
             text-align: center;
+        }
+
+        .row.label {
+            letter-spacing: -.4em;
         }
     </style>
 </head>
@@ -90,18 +94,24 @@
             </div>
         </div>
         <div class="session">
-            <h2>Hour: <label id="active-hour">現在時刻</label></h2>
-            <input id="slider" class="row" type="range" min="0" max="23" step="1" value="12" />
+            <h2>Hour: <label id="active-hour">{{ time_label }}</label></h2>
+            <input id="slider" class="row" type="range" min="0" max="48" step="1" value="{{ now_hour }}" />
         </div>
     </div>
     <script>
         mapboxgl.accessToken = '{{ MAPBOX_TOKEN }}';
+        const bounds = [
+            [122, 20], // Southwest coordinates
+            [154, 46] // Northeast coordinates
+        ];
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/light-v10',
             center: [139.45, 35.415],
-            zoom: 11
+            zoom: 5,
+            maxBounds: bounds
         });
+        map.scrollZoom.disable();
 
         map.on('load', () => {
             let filterHour = ['==', ['number', ['get', 'Hour']], 12];
@@ -120,8 +130,8 @@
                         ['number', ['get', 'sevirarity']],
                         2,
                         4,
-                        5,
-                        24
+                        6,
+                        8,
                     ],
                     'circle-color': [
                         'interpolate',
