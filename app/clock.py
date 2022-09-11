@@ -6,8 +6,7 @@ from urllib import request
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
 
-from . import wbgt_util, db2geojson
-
+from . import db2geojson, wbgt_util
 from .models import point_name
 
 
@@ -22,7 +21,7 @@ def test_job():
         # print("keido", keido)
 
         try:
-            wbgts_list, time_list = wbgt_util.location2wbgt(ido, keido)
+            wbgts_list, time_list = wbgt_util.location2wbgt(ido, keido, hours=48)
 
             # global wbgt_time_dict
             wbgt_time_dict = {}
