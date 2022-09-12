@@ -1,5 +1,5 @@
 import base64
-import datetime
+from datetime import datetime, timedelta, timezone
 import json
 import os
 import pathlib
@@ -173,7 +173,7 @@ def location2wbgt(ido: float, keido: float, hours: int = 24) -> tuple[list[float
     wbgts_list: list[float] = []
     time_list: list[str] = []
 
-    year = datetime.datetime.now(datetime.timezone.utc).year
+    year: int = datetime.now(timezone(timedelta(hours=9), "JST")).year
 
     with request.urlopen(url) as r:
         body = json.loads(r.read())
