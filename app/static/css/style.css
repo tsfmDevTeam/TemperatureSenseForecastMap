@@ -7,7 +7,7 @@
 }
 /* =======================================================
 *
-* 	Template Style 
+* 	Template Style
 *
 * ======================================================= */
 body {
@@ -18,7 +18,7 @@ body {
   color: #777;
   margin: 0;
   padding: 0;
- 
+
 }
 
 #page {
@@ -106,10 +106,19 @@ h1, h2, h3, h4, h5, h6, figure {
   left: 0;
   margin: 0;
   padding: 0;
-  width: 100%;
   padding: 20px 0;
   z-index: 1001;
+
+  height: 8rem;
+  width: 100%;
+  background:
+    url('../img/sblack.png'),
+    url('../img/onndann.jpg');
+  background-size: cover;
+  position: fixed;
 }
+
+
 @media screen and (max-width: 768px) {
   .gtco-nav {
     padding: 20px 0;
@@ -1855,7 +1864,7 @@ ol.sample1 ol{
   margin: 0 0 0 ;
   width:315px;
 }
- 
+
 .sample1 a{
   position: relative;
   display: block;
@@ -1870,13 +1879,13 @@ ol.sample1 ol{
   -moz-transition: all .3s ease-out;
   -ms-transition: all .3s ease-out;
   -o-transition: all .3s ease-out;
-  transition: all .3s ease-out; 
+  transition: all .3s ease-out;
 }
- 
+
 .sample1 a:hover{
   background: #b3d5ed;
 }
- 
+
 .sample1 a:hover:before{
   left: -10px;
   -moz-transform: rotate(360deg);
@@ -1884,13 +1893,13 @@ ol.sample1 ol{
   -moz-transform: rotate(360deg);
   -ms-transform: rotate(360deg);
   -o-transform: rotate(360deg);
-  transform: rotate(360deg);    
+  transform: rotate(360deg);
 }
- 
+
 .sample1 a:before{
   content: counter(list);
   counter-increment: list;
-  position: absolute;   
+  position: absolute;
   top: 50%;
   left: -15px;
   height: 26px;
