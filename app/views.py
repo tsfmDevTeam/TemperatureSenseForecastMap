@@ -15,7 +15,7 @@ from .location_search import near_observatory
 from . import geo_apis, wbgt_util, db2geojson
 
 from .forms import LoginForm, SignupForm
-from .models import location
+from .models import location, point_name
 
 
 class BuffView(TemplateView):
