@@ -135,8 +135,12 @@ class UserPage(TemplateView):
         for query in location.objects.filter(user_id=uid):
             lid = query.id
             name = query.location_name
-            ido = query.ido
-            keido = query.keido
+            location_id = query.location_id
+            POINT = point_name.objects.filter(id=int(location_id))
+            for locate in POINT:
+                ido = locate.ido
+                keido = locate.keido
+            print(ido, keido)
             locations.append((lid, name, ido, keido))
         return locations
 
