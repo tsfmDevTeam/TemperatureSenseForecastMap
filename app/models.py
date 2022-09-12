@@ -28,8 +28,10 @@ class CustomUser(AbstractUser):
 class location(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     location_name = models.CharField(max_length=50, verbose_name="よく行く場所")
-    ido = models.FloatField(verbose_name="緯度")
-    keido = models.FloatField(verbose_name="経度")
+    # ido = models.FloatField(verbose_name="緯度")
+    # keido = models.FloatField(verbose_name="経度")
+    location_id = models.IntegerField(verbose_name="ロケーションID")
+    kansokujo_name = models.CharField(max_length=31, verbose_name="登録した観測所名")
 
     class Meta:
         verbose_name_plural = "よく行く場所"

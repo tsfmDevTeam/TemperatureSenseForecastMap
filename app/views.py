@@ -128,8 +128,12 @@ class UserPage(TemplateView):
         for query in location.objects.filter(user_id=uid):
             lid = query.id
             name = query.location_name
-            ido = query.ido
-            keido = query.keido
+            location_id = query.location_id
+            POINT = point_name.objects.filter(id=int(location_id))
+            for locate in POINT:
+                ido = locate.ido
+                keido = locate.keido
+            print(ido, keido)
             locations.append((lid, name, ido, keido))
         return locations
 
@@ -162,12 +166,21 @@ class SetLocationName(TemplateView):
     def do_save(self, name: str, ido: float, keido: float, uid: int):
 
         near_point_obj = near_observatory(float(ido), float(keido))
-        near_ido = near_point_obj.ido
-        near_keido = near_point_obj.keido
+        # near_ido = near_point_obj.ido
+        # near_keido = near_point_obj.keido
+        near_locationID = near_point_obj.id
+        kansokujo_name = near_point_obj.name
 
-        location.objects.update_or_create(location_name=name, ido=near_ido, keido=near_keido, user_id_id=uid)
+        location.objects.update_or_create(
+            # location_name=name, ido=near_ido, keido=near_keido, user_id_id=uid
+            location_name=name,
+            location_id=near_locationID,
+            kansokujo_name=kansokujo_name,
+            user_id_id=uid,
+        )
+
         print(name, ido, keido)
-        print(near_point_obj.name, near_ido, near_keido)
+        print(near_point_obj.name, kansokujo_name, near_locationID)
 
     def post(self, request: HttpRequest) -> Any:
         if "save" in request.POST:
