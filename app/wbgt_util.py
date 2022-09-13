@@ -184,7 +184,7 @@ def location2wbgt(ido: float, keido: float, hours: int = 24) -> tuple[list[float
         for index in range(index_now_time, index_now_time + hours):
             time = body["hourly"]["time"][index]
 
-            time = time.replace(str(year), "")
+            time = time.replace(f"{year}-", "")
             time = time.replace("-", "/")
             time = time.replace("T", "/")
 
