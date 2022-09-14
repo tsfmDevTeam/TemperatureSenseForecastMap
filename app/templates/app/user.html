@@ -1,54 +1,116 @@
+{% extends 'app/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ja">
+{% load widget_tweaks %}
+{% block header_fix %}
+{% endblock %}
+{% block content %}
 
-<head>
-    <style>
-        .locations {
-            display: flex;
-            flex-flow: column;
-        }
 
-        .location_columns {
-            display: flex;
-            flex-flow: row;
-        }
-    </style>
-</head>
+    <header id="gtco-header" class="gtco-cover" role="banner"
+            style="background-image: url(../../static/img/onndann.jpg);height: 1300px">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-12 col-md-offset-0 text-left">
 
-<body>
-    <main>
-        <div class="user_info">
-            <ul>
-                <li>
-                    <p>名前</p>
-                    <input type="text" id="username" value={{user_name}}>
-                </li>
-                <li>
-                    <p>メールアドレス</p>
-                    <input type="email" id="email" value={{user_email}}>
-                </li>
-                <li>
-                    <p>パスワード</p>
-                    <input type="password" id="password1">
-                </li>
-                <li>
-                    <p>パスワード(再入力）</p>
-                    <input type="password" id="password2">
-                </li>
-            </ul>
+
+                    <div class="row row-mt-15em" >
+                        <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                            <span class="intro-text-small">Temperature Sense　Forecast Map</span>
+                            <h1>User-MyPage</h1>
+                        </div>
+                        <div style="width: 100%" class="col-md-4  animate-box" data-animate-effect="fadeInRight">
+                            <div class="form-wrap">
+                                <div class="tab">
+                                    <div class="tab-content">
+                                        <div class="tab-content-inner active" data-content="signup">
+
+
+                                            <div style="width: 100%">
+                                                <ul>
+
+                                                    <label>名前</label>
+                                                    <input class="form-control" type="text" id="username"
+                                                           value={{ user_name }}>
+
+                                                    <label>メールアドレス</label>
+                                                    <input class="form-control" type="email" id="email"
+                                                           value={{ user_email }}>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                             style="text-align: center; margin-top: 10px">
+                                                            <input type="submit" class="btn btn-info"
+                                                                   value="個人情報を編集">
+                                                        </div>
+                                                    </div>
+                                                     <label>登録地点</label>
+                                                    <div style="display:flex">
+                                                    <input class="form-control" type="text" id="email"
+                                                           value=ひとつめ>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                             style="text-align: center; margin-left: 10px">
+                                                            <input type="submit" class="btn btn-primary"
+                                                                   value="この地点を削除">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div style="display:flex">
+                                                     <input class="form-control" type="text" id="email"
+                                                           value=ふたつめ>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                             style="text-align: center; margin-left: 10px">
+                                                            <input type="submit" class="btn btn-primary"
+                                                                   value="この地点を削除">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div style="display:flex">
+
+                                                     <input class="form-control" type="text" id="email"
+                                                           value=みっつめ>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                             style="text-align: center; margin-left: 10px">
+                                                            <input type="submit" class="btn btn-primary"
+                                                                   value="この地点を削除">
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <hr>
+                                                     <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                             style="text-align: center; margin-top: 10px;">
+                                                            <input  type="submit" class="btn btn-info"
+                                                                   value="地点を追加する">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div  id="add_location">
+                                                        <!-- <button onclick="location.href='{{ link }}'">追加</button> -->
+                                                    </div>
+
+                                                </ul>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
-        <div class="locations">
-            <p>登録地点</p>
-            <ul id="location_columns">
-            </ul>
-        </div>
-
-        <div id="add_location">
-            <!-- <button onclick="location.href='{{ link }}'">追加</button> -->
-        </div>
-
-    </main>
+    </header>
 
     <script type="text/javascript">
         const locations = JSON.parse('{{ locations|safe }}');
@@ -57,10 +119,12 @@
         for (let i = 0; i < locations.length; i++) {
             var location_elem = document.createElement("li");
             location_elem.textContent = locations[i][1];
+            location_elem.classList.add("form-control")
 
             var delete_button = document.createElement("button");
             delete_button.textContent = "この地点を削除";
             delete_button.name = locations[i][0]
+            delete_button.classList.add("btn btn-primary")
             delete_button.addEventListener("click", e => loc_delete(locations[i][0]));
 
 
@@ -97,6 +161,4 @@
             console.log("delete ", id)
         }
     </script>
-</body>
-
-</html>
+{% endblock %}
