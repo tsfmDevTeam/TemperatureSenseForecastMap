@@ -14,8 +14,8 @@
 
     <link rel="icon" href="{% static 'img/icon2.png' %}">
     <meta name="keywords"
-        content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-    <meta name="author" content="FreeHTML5.co" />
+          content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive"/>
+    <meta name="author" content="FreeHTML5.co"/>
     <!--
     //////////////////////////////////////////////////////
     FREE HTML5 TEMPLATE
@@ -27,15 +27,15 @@
     //////////////////////////////////////////////////////
      -->
     <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content="" />
-    <meta property="og:image" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="" />
-    <meta property="og:description" content="" />
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:url" content="" />
-    <meta name="twitter:card" content="" />
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 
@@ -64,122 +64,144 @@
     <!--[if lt IE 9]>
 	<script src="{% static 'js/respond.min.js' %}"></script>
 	<![endif]-->
+    {% block header_fix %}
+        <style>
+            .gtco-nav {
+
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                padding: 20px 0;
+                z-index: 1001;
+
+                height: 8rem;
+                width: 100%;
+                background: url('../../static/img/sblack.png'),
+                url('../../static/img/onndann.jpg');
+                background-size: cover;
+                position: fixed;
+            }
+        </style>
+    {% endblock %}
 </head>
 
 <body>
-    <div class="gtco-loader"></div>
+<div class="gtco-loader"></div>
 
-    <div id="page">
-        <nav class="gtco-nav" role="navigation" style="height: 8rem;">
-            <div class=" gtco-container">
-                <div class="row">
-                    <div class="col-sm-4 col-xs-12">
-                        <div id="gtco-logo"><a href="{% url 'index' %}">home <em>.</em></a></div>
+<div id="page">
+    <nav class="gtco-nav" role="navigation" style="height: 8rem;">
+        <div class=" gtco-container">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <div id="gtco-logo"><a href="{% url 'index' %}">home <em>.</em></a></div>
+                </div>
+                <div class="col-xs-8 text-right menu-1">
+                    <ul>
+                        <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
+                        <li class="active"><a href="{% url 'HeatMap' %}">HeatMap</a></li>
+                        <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
+                        <li><a href="{% url 'about' %}">ABOUT</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li class="btn-cta"><a href="{% url  'user' %}"><span>user</span></a></li>
+                            <li class="btn-cta"><a href="{% url  'logout' %}"><span>log out</span></a></li>
+                        {% else %}
+                            <li class="btn-cta"><a href="{% url 'login' %}"><span>log in</span></a></li>
+                            <li class="btn-cta"><a href="{% url 'signup' %}"><span>sign up</span></a></li>
+                            <!-- <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li> -->
+                        {% endif %}
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+    <footer id="gtco-footer" role="contentinfo">
+        <div class="gtco-container">
+            <div class="row row-p	b-md">
+
+                <div class="col-md-4">
+                    <div class="gtco-widget">
+                        <h3>About <span class="footer-logo">Site.</span></h3>
+                        <p>近年で異常気象もあってか，30度以上の気温が増え、従来より運動をした際の熱中症による健康リスクが増大。
+                            <br>当WebSiteでは暑さ指数の推移, 具体的な対策など現在自分がいる場所の熱中症のリスクを一目で確認できます。</p>
                     </div>
-                    <div class="col-xs-8 text-right menu-1">
-                        <ul>
+                </div>
+
+                <div class="col-md-4 col-md-push-1">
+                    <div class="gtco-widget">
+                        <h3>Links</h3>
+                        <ul class="gtco-footer-links">
                             <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
                             <li class="active"><a href="{% url 'HeatMap' %}">HeatMap</a></li>
                             <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
                             <li><a href="{% url 'about' %}">ABOUT</a></li>
                             {% if request.user.is_authenticated %}
-                            <li class="btn-cta"><a href="{% url  'user' %}"><span>user</span></a></li>
-                            <li class="btn-cta"><a href="{% url  'logout' %}"><span>log out</span></a></li>
+                                <li class="btn-cta"><a href="{% url  'user' %}"><span>user</span></a></li>
+                                <li class="btn-cta"><a href="{% url  'logout' %}"><span>log out</span></a></li>
                             {% else %}
-                            <li class="btn-cta"><a href="{% url 'login' %}"><span>log in</span></a></li>
-                            <li class="btn-cta"><a href="{% url 'signup' %}"><span>sign up</span></a></li>
-                            <!-- <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li> -->
+                                <li class="btn-cta"><a href="{% url 'login' %}"><span>log in</span></a></li>
+                                <li class="btn-cta"><a href="{% url 'signup' %}"><span>sign up</span></a></li>
+                                <!-- <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li> -->
                             {% endif %}
-
-
                         </ul>
                     </div>
                 </div>
-            </div>
-        </nav>
 
-        {% block content %}{% endblock %}
-        <footer id="gtco-footer" role="contentinfo">
-            <div class="gtco-container">
-                <div class="row row-p	b-md">
-
-                    <div class="col-md-4">
-                        <div class="gtco-widget">
-                            <h3>About <span class="footer-logo">Site.</span></h3>
-                            <p>近年で異常気象もあってか，30度以上の気温が増え、従来より運動をした際の熱中症による健康リスクが増大。
-                                <br>当WebSiteでは暑さ指数の推移, 具体的な対策など現在自分がいる場所の熱中症のリスクを一目で確認できます。</p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-md-push-1">
-                        <div class="gtco-widget">
-                            <h3>Links</h3>
-                            <ul class="gtco-footer-links">
-                                   <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
-                            <li class="active"><a href="{% url 'HeatMap' %}">HeatMap</a></li>
-                            <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
-                            <li><a href="{% url 'about' %}">ABOUT</a></li>
-                            {% if request.user.is_authenticated %}
-                            <li class="btn-cta"><a href="{% url  'user' %}"><span>user</span></a></li>
-                            <li class="btn-cta"><a href="{% url  'logout' %}"><span>log out</span></a></li>
-                            {% else %}
-                            <li class="btn-cta"><a href="{% url 'login' %}"><span>log in</span></a></li>
-                            <li class="btn-cta"><a href="{% url 'signup' %}"><span>sign up</span></a></li>
-                            <!-- <li class="btn-cta"><a href="#"><span>log in/sign up</span></a></li> -->
-                            {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="gtco-widget">
-                            <h3>Get In Touch</h3>
-                            <ul class="gtco-quick-contact">
-                                <li><a href="#"><i class="icon-mail2"></i> お問い合わせ</a></li>
-                                <li><a href="#"><i class="icon-github"></i> GitHub</a></li>
-                                <li><a href="#"><i class="icon-users"></i> about</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row copyright">
-                    <div class="col-md-12">
-                        <p class="pull-left">
-                            <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
-                            <small class="block">Designed by <a href="http://FreeHTML5.co/"
-                                    target="_blank">FreeHTML5.co</a> Demo Images: <a href="http://unsplash.co/"
-                                    target="_blank">Unsplash</a></small>
-                        </p>
-
+                <div class="col-md-4">
+                    <div class="gtco-widget">
+                        <h3>Get In Touch</h3>
+                        <ul class="gtco-quick-contact">
+                            <li><a href="#"><i class="icon-mail2"></i> お問い合わせ</a></li>
+                            <li><a href="#"><i class="icon-github"></i> GitHub</a></li>
+                            <li><a href="#"><i class="icon-users"></i> about</a></li>
+                        </ul>
                     </div>
                 </div>
 
             </div>
-        </footer>
 
-        <div class="gototop js-top">
-            <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+            <div class="row copyright">
+                <div class="col-md-12">
+                    <p class="pull-left">
+                        <small class="block">&copy; 2016 Free HTML5. All Rights Reserved.</small>
+                        <small class="block">Designed by <a href="http://FreeHTML5.co/"
+                                                            target="_blank">FreeHTML5.co</a> Demo Images: <a
+                                href="http://unsplash.co/"
+                                target="_blank">Unsplash</a></small>
+                    </p>
+
+                </div>
+            </div>
+
         </div>
+    </footer>
 
-        <!-- jQuery -->
-        <script src="{% static 'js/jquery.min.js' %}"></script>
-        <!-- jQuery Easing -->
-        <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-        <!-- Bootstrap -->
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <!-- Waypoints -->
-        <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-        <!-- Carousel -->
-        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-        <!-- countTo -->
-        <script src="{% static 'js/jquery.countTo.js' %}"></script>
-        <!-- Magnific Popup -->
-        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-        <script src="{% static 'js/magnific-popup-options.js' %}"></script>
-        <!-- Main -->
-        <script src="{% static 'js/main.js' %}"></script>
-
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- jQuery Easing -->
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Waypoints -->
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <!-- Carousel -->
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <!-- countTo -->
+    <script src="{% static 'js/jquery.countTo.js' %}"></script>
+    <!-- Magnific Popup -->
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+    <!-- Main -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</div>
 </body>

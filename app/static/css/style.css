@@ -111,11 +111,7 @@ h1, h2, h3, h4, h5, h6, figure {
 
   height: 8rem;
   width: 100%;
-  background:
-    url('../img/sblack.png'),
-    url('../img/onndann.jpg');
-  background-size: cover;
-  position: fixed;
+
 }
 
 
