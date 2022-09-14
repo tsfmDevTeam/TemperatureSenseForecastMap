@@ -204,31 +204,29 @@ class SetLocationName(TemplateView):
         return context
 
 
-def signup_view(request):
-    if request.method == "POST":
+class Signup(TemplateView):
+    template_name: str = "app/user_admin/signup.html"
 
+    def post(self, request: HttpRequest):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             # サインアップ成功時にsuccess_signup.htmlに遷移
-
             return HttpResponseRedirect(reverse("success_signup"))
 
-    else:
+        param = {"form": form}
+        return render(request, "app/user.html", param)
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
         form = SignupForm()
-
-    param = {"form": form}
-
-    return render(request, "app/user_admin/signup.html", param)
+        param = {"form": form}
+        return render(request, "app/user_admin/signup.html", param)
 
 
-# サインアップ成功の表示
-def success_signup(request):
-    return render(request, "app/user_admin/success_signup.html")
+class Login(TemplateView):
+    template_name: str = "app/user_admin/login.html"
 
-
-def login_view(request):
-    if request.method == "POST":
+    def post(self, request: HttpRequest):
         next = request.POST.get("next")
         form = LoginForm(request, data=request.POST)
 
@@ -244,25 +242,28 @@ def login_view(request):
                     # 既にログインしており、userページ以外にいたならそのページに飛ぶ
                     print(next)
                     return redirect(to=next)
-    else:
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
         form = LoginForm()
         next = request.GET.get("next")
+        param = {"form": form, "next": next}
 
-    param = {"form": form, "next": next}
-
-    return render(request, "app/user_admin/login.html", param)
+        return render(request, "app/user_admin/login.html", param)
 
 
-def logout_view(request):
-    logout(request)
+class Logout(TemplateView):
+    template_name: str = "app/user_admin/logout.html"
 
-    return render(request, "app/user_admin/logout.html")
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        logout(self.request)
+        return render(self.request, "app/user_admin/logout.html")
 
 
 class HeatMap_view(TemplateView):
     template_name = "app/Heatmap.html"
 
-    def get(self, request: HttpRequest) -> Any:
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
+
         db2geojson.data2geojson()
 
         now_hour: int = datetime.now(timezone(timedelta(hours=9), "JST")).hour
