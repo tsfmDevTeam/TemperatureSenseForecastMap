@@ -7,7 +7,7 @@ urlpatterns = [
     path("about/", views.AboutView.as_view(), name="about"),
     path("locationname/", views.SetLocationName.as_view(), name="userloc"),
     path("Map/", views.MapView.as_view(), name="Map"),
-    path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
+    path("Mapdetail/", views.MapDetail.as_view(), name="Mapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
     path("HeatMap/", views.HeatMap_view.as_view(), name="HeatMap"),
     # 以下ログイン関連

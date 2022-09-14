@@ -34,69 +34,10 @@ class MapView(TemplateView):
             ido: float = request.POST.get("ido")  # type: ignore
             keido: float = request.POST.get("keido")  # type: ignore
 
-            print(f"mapview ,{ido} {keido}")
             return render(
                 request=request,
                 template_name="app/locationname.html",
                 context={"ido": ido, "keido": keido},
-            )
-
-        else:  # 暑さ指数の地点選択モード
-            ido: Union[float, None] = request.POST.get("ido", None)  # type:ignore
-            keido: Union[float, None] = request.POST.get("keido", None)  # type:ignore
-            if ido is not None and keido is not None:  # Map からの遷移
-                pass
-
-            else:
-                ken: Union[str, None] = request.POST.get("geoapi-prefectures")
-                siku: Union[str, None] = request.POST.get("geoapi-cities")
-                tyouiki: Union[str, None] = request.POST.get("geoapi-towns")
-
-                Address = f"{ken}{siku}{tyouiki}"
-
-                makeUrl: str = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
-                s_quote: str = urllib.parse.quote(Address)  # type:ignore
-
-                response = requests.get(makeUrl + s_quote)
-
-                ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
-                keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
-
-            wbgt_list, time_list = wbgt_util.location2wbgt(ido=ido, keido=keido)
-            chart = wbgt_util.plot_graph(time_list, wbgt_list)
-
-            wbgt_now = wbgt_list[0]
-            wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
-
-            wbgt_max = max(wbgt_list)
-            wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
-            max_time = time_list[wbgt_list.index(wbgt_max)]
-
-            wbgt_and_status: list[dict[str, Union[str, float]]] = []
-
-            for wbgt, time in zip(wbgt_list, time_list):
-                status = wbgt_util.wbgt_indicator(WBGT=wbgt)
-
-                wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
-
-            # 周辺地域の取得
-            tikaku = geo_apis.find_near(ido=ido, keido=keido)
-
-            return render(
-                request=request,
-                template_name="app/detail.html",
-                context={
-                    "lat": ido,
-                    "lon": keido,
-                    "wbgt_now": wbgt_now,
-                    "wbgt_max": wbgt_max,
-                    "wbgt_status_now": wbgt_status_now,
-                    "wbgt_status_max": wbgt_status_max,
-                    "wbgt_and_status": wbgt_and_status,
-                    "tikaku": tikaku,
-                    "max_time": max_time,
-                    "chart": chart,
-                },
             )
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -111,6 +52,68 @@ class MapView(TemplateView):
             context["next_page"] = f"{self.request._current_scheme_host}/Mapdetail/"  # type: ignore
 
         return context
+
+
+class MapDetail(TemplateView):
+    template_name = "app/detail.html"
+
+    def post(self, request: HttpRequest):
+        ido: Union[float, None] = request.POST.get("ido", None)  # type:ignore
+        keido: Union[float, None] = request.POST.get("keido", None)  # type:ignore
+        if ido is not None and keido is not None:  # Map からの遷移
+            pass
+
+        else:
+            ken: Union[str, None] = request.POST.get("geoapi-prefectures")
+            siku: Union[str, None] = request.POST.get("geoapi-cities")
+            tyouiki: Union[str, None] = request.POST.get("geoapi-towns")
+
+            Address = f"{ken}{siku}{tyouiki}"
+
+            makeUrl: str = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+            s_quote: str = urllib.parse.quote(Address)  # type:ignore
+
+            response = requests.get(makeUrl + s_quote)
+
+            ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
+            keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
+
+        wbgt_list, time_list = wbgt_util.location2wbgt(ido=ido, keido=keido)
+        chart = wbgt_util.plot_graph(time_list, wbgt_list)
+
+        wbgt_now = wbgt_list[0]
+        wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
+
+        wbgt_max = max(wbgt_list)
+        wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
+        max_time = time_list[wbgt_list.index(wbgt_max)]
+
+        wbgt_and_status: list[dict[str, Union[str, float]]] = []
+
+        for wbgt, time in zip(wbgt_list, time_list):
+            status = wbgt_util.wbgt_indicator(WBGT=wbgt)
+
+            wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
+
+        # 周辺地域の取得
+        tikaku = geo_apis.find_near(ido=ido, keido=keido)
+
+        return render(
+            request=request,
+            template_name="app/detail.html",
+            context={
+                "lat": ido,
+                "lon": keido,
+                "wbgt_now": wbgt_now,
+                "wbgt_max": wbgt_max,
+                "wbgt_status_now": wbgt_status_now,
+                "wbgt_status_max": wbgt_status_max,
+                "wbgt_and_status": wbgt_and_status,
+                "tikaku": tikaku,
+                "max_time": max_time,
+                "chart": chart,
+            },
+        )
 
 
 class UserPage(TemplateView):
