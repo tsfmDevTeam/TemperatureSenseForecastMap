@@ -54,7 +54,7 @@
 <body>
     <form style="position: absolute;" class="" action="{{ next_page }}" method="post" enctype="multipart/form-data">{% csrf_token %}
         <input id="ido" type="hidden" name="ido" value="" /><input id="keido" type="hidden" name="keido" value="" />
-        <input class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" onclick="return checkForm();" value={{ button_message }} >
+        <input formtarget="_parent" class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" onclick="return checkForm();" value={{ button_message }}  />
     </form>
     <div class="folium-map" id="map_290f8bf58b504a9dbb050469d3255ec9" ></div>
 </body>

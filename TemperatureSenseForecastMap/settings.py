@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+#iframeの設定
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 
