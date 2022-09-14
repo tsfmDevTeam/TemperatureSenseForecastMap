@@ -18,23 +18,12 @@ from .forms import LoginForm, SignupForm
 from .models import location, point_name
 
 
-class BuffView(TemplateView):
-    template_name = "app/buff.html"
-
-
 class IndexView(TemplateView):
     template_name = "app/index.html"
 
 
 class AboutView(TemplateView):
     template_name = "app/about.html"
-
-
-class WFView(TemplateView):
-    template_name = "app/WF.html"
-
-    def post(self, request: HttpRequest):
-        pass
 
 
 class MapView(TemplateView):
@@ -285,6 +274,7 @@ class HeatMap_view(TemplateView):
         }
 
         return render(request, "app/HeatMap.html", param)
+
 
 # @login_required  # 未登録のユーザーのアクセス制限
 # def user_view(request):

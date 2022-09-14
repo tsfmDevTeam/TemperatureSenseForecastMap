@@ -5,12 +5,10 @@ from app import views
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path("about/", views.AboutView.as_view(), name="about"),
-    path("BuffView/", views.BuffView.as_view(), name="BuffView"),
     path("locationname/", views.SetLocationName.as_view(), name="userloc"),
     path("Map/", views.MapView.as_view(), name="Map"),
     path("Mapdetail/", views.MapView.as_view(), name="Mapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
-    path("WF/", views.WFView.as_view(), name="WF"),
     path("HeatMap/", views.HeatMap_view.as_view(), name="HeatMap"),
     # 以下ログイン関連
     path("signup/", views.signup_view, name="signup"),
