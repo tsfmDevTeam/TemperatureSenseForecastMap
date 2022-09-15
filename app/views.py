@@ -34,69 +34,10 @@ class MapView(TemplateView):
             ido: float = request.POST.get("ido")  # type: ignore
             keido: float = request.POST.get("keido")  # type: ignore
 
-            print(f"mapview ,{ido} {keido}")
             return render(
                 request=request,
                 template_name="app/locationname.html",
                 context={"ido": ido, "keido": keido},
-            )
-
-        else:  # 暑さ指数の地点選択モード
-            ido: Union[float, None] = request.POST.get("ido", None)  # type:ignore
-            keido: Union[float, None] = request.POST.get("keido", None)  # type:ignore
-            if ido is not None and keido is not None:  # Map からの遷移
-                pass
-
-            else:
-                ken: Union[str, None] = request.POST.get("geoapi-prefectures")
-                siku: Union[str, None] = request.POST.get("geoapi-cities")
-                tyouiki: Union[str, None] = request.POST.get("geoapi-towns")
-
-                Address = f"{ken}{siku}{tyouiki}"
-
-                makeUrl: str = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
-                s_quote: str = urllib.parse.quote(Address)  # type:ignore
-
-                response = requests.get(makeUrl + s_quote)
-
-                ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
-                keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
-
-            wbgt_list, time_list = wbgt_util.location2wbgt(ido=ido, keido=keido)
-            chart = wbgt_util.plot_graph(time_list, wbgt_list)
-
-            wbgt_now = wbgt_list[0]
-            wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
-
-            wbgt_max = max(wbgt_list)
-            wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
-            max_time = time_list[wbgt_list.index(wbgt_max)]
-
-            wbgt_and_status: list[dict[str, Union[str, float]]] = []
-
-            for wbgt, time in zip(wbgt_list, time_list):
-                status = wbgt_util.wbgt_indicator(WBGT=wbgt)
-
-                wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
-
-            # 周辺地域の取得
-            tikaku = geo_apis.find_near(ido=ido, keido=keido)
-
-            return render(
-                request=request,
-                template_name="app/detail.html",
-                context={
-                    "lat": ido,
-                    "lon": keido,
-                    "wbgt_now": wbgt_now,
-                    "wbgt_max": wbgt_max,
-                    "wbgt_status_now": wbgt_status_now,
-                    "wbgt_status_max": wbgt_status_max,
-                    "wbgt_and_status": wbgt_and_status,
-                    "tikaku": tikaku,
-                    "max_time": max_time,
-                    "chart": chart,
-                },
             )
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
@@ -111,6 +52,68 @@ class MapView(TemplateView):
             context["next_page"] = f"{self.request._current_scheme_host}/Mapdetail/"  # type: ignore
 
         return context
+
+
+class MapDetail(TemplateView):
+    template_name = "app/detail.html"
+
+    def post(self, request: HttpRequest):
+        ido: Union[float, None] = request.POST.get("ido", None)  # type:ignore
+        keido: Union[float, None] = request.POST.get("keido", None)  # type:ignore
+        if ido is not None and keido is not None:  # Map からの遷移
+            pass
+
+        else:
+            ken: Union[str, None] = request.POST.get("geoapi-prefectures")
+            siku: Union[str, None] = request.POST.get("geoapi-cities")
+            tyouiki: Union[str, None] = request.POST.get("geoapi-towns")
+
+            Address = f"{ken}{siku}{tyouiki}"
+
+            makeUrl: str = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+            s_quote: str = urllib.parse.quote(Address)  # type:ignore
+
+            response = requests.get(makeUrl + s_quote)
+
+            ido = cast(float, response.json()[0]["geometry"]["coordinates"][1])
+            keido = cast(float, response.json()[0]["geometry"]["coordinates"][0])
+
+        wbgt_list, time_list = wbgt_util.location2wbgt(ido=ido, keido=keido)
+        chart = wbgt_util.plot_graph(time_list, wbgt_list)
+
+        wbgt_now = wbgt_list[0]
+        wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
+
+        wbgt_max = max(wbgt_list)
+        wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
+        max_time = time_list[wbgt_list.index(wbgt_max)]
+
+        wbgt_and_status: list[dict[str, Union[str, float]]] = []
+
+        for wbgt, time in zip(wbgt_list, time_list):
+            status = wbgt_util.wbgt_indicator(WBGT=wbgt)
+
+            wbgt_and_status.append({"wbgt": wbgt, "status": status, "time": time[6:]})
+
+        # 周辺地域の取得
+        tikaku = geo_apis.find_near(ido=ido, keido=keido)
+
+        return render(
+            request=request,
+            template_name="app/detail.html",
+            context={
+                "lat": ido,
+                "lon": keido,
+                "wbgt_now": wbgt_now,
+                "wbgt_max": wbgt_max,
+                "wbgt_status_now": wbgt_status_now,
+                "wbgt_status_max": wbgt_status_max,
+                "wbgt_and_status": wbgt_and_status,
+                "tikaku": tikaku,
+                "max_time": max_time,
+                "chart": chart,
+            },
+        )
 
 
 class UserPage(TemplateView):
@@ -204,31 +207,29 @@ class SetLocationName(TemplateView):
         return context
 
 
-def signup_view(request):
-    if request.method == "POST":
+class Signup(TemplateView):
+    template_name: str = "app/user_admin/signup.html"
 
+    def post(self, request: HttpRequest):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             # サインアップ成功時にsuccess_signup.htmlに遷移
-
             return HttpResponseRedirect(reverse("success_signup"))
 
-    else:
+        param = {"form": form}
+        return render(request, "app/user.html", param)
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
         form = SignupForm()
-
-    param = {"form": form}
-
-    return render(request, "app/user_admin/signup.html", param)
+        param = {"form": form}
+        return render(request, "app/user_admin/signup.html", param)
 
 
-# サインアップ成功の表示
-def success_signup(request):
-    return render(request, "app/user_admin/success_signup.html")
+class Login(TemplateView):
+    template_name: str = "app/user_admin/login.html"
 
-
-def login_view(request):
-    if request.method == "POST":
+    def post(self, request: HttpRequest):
         next = request.POST.get("next")
         form = LoginForm(request, data=request.POST)
 
@@ -244,25 +245,28 @@ def login_view(request):
                     # 既にログインしており、userページ以外にいたならそのページに飛ぶ
                     print(next)
                     return redirect(to=next)
-    else:
+
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
         form = LoginForm()
         next = request.GET.get("next")
+        param = {"form": form, "next": next}
 
-    param = {"form": form, "next": next}
-
-    return render(request, "app/user_admin/login.html", param)
+        return render(request, "app/user_admin/login.html", param)
 
 
-def logout_view(request):
-    logout(request)
+class Logout(TemplateView):
+    template_name: str = "app/user_admin/logout.html"
 
-    return render(request, "app/user_admin/logout.html")
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        logout(self.request)
+        return render(self.request, "app/user_admin/logout.html")
 
 
 class HeatMap_view(TemplateView):
     template_name = "app/Heatmap.html"
 
-    def get(self, request: HttpRequest) -> Any:
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
+
         db2geojson.data2geojson()
 
         now_hour: int = datetime.now(timezone(timedelta(hours=9), "JST")).hour
