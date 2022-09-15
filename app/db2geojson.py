@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from .models import point_name
+from .wbgt_util import wbgt_status
 
 
 class wbgt_point:
@@ -47,16 +48,11 @@ def data2geojson(file_name: str = "info.geojson", force: bool = False):
                 for time, wbgt in zip(point.wbgt_time_json["time"], point.wbgt_time_json["wbgt"]):
                     month, day, hour = time.split("/")
 
-                    if wbgt > 35:
-                        sevirarity = 5
-                    elif 35 > wbgt >= 31:
-                        sevirarity = 4
-                    elif 31 > wbgt >= 28:
-                        sevirarity = 3
-                    elif 28 > wbgt >= 24:
-                        sevirarity = 2
-                    else:  # WBGT < 24:
-                        sevirarity = 1
+                    for v in wbgt_status.values():
+                        if v.min <= wbgt < v.max:
+                            sevirarity = v.level
+                    else:
+                        sevirarity = 0
 
                     g.features.append(
                         wbgt_point(

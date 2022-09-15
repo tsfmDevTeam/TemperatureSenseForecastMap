@@ -1,9 +1,10 @@
 import base64
-from datetime import datetime, timedelta, timezone
 import json
 import os
 import pathlib
 import random
+from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 from io import BytesIO
 from urllib import request
 
@@ -12,6 +13,24 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 matplotlib.use("Agg")
+
+
+@dataclass
+class wbgt_levels:
+    level: int
+    message: str
+    min: int
+    max: int
+    color: str
+
+
+wbgt_status: dict[int, wbgt_levels] = {
+    1: wbgt_levels(level=1, message="ほぼ安全（適宜水分補給）", min=-100, max=24, color="#1C75BC"),
+    2: wbgt_levels(level=2, message="注意（積極的に水分補給）", min=24, max=28, color="#16C4FD"),
+    3: wbgt_levels(level=3, message="警戒（積極的に休憩)", min=28, max=31, color="#FFB23B"),
+    4: wbgt_levels(level=4, message="厳重警戒（激しい運動は中止）", min=31, max=35, color="#F17816"),
+    5: wbgt_levels(level=5, message="運動は原則中止", min=35, max=100, color="#FF5722"),
+}
 
 
 # プロットしたグラフを画像データとして出力するための関数
@@ -28,7 +47,7 @@ def output_graph():
 
 def load_font():
     target = pathlib.Path(__file__).parent / "font.ttf"
-    url = "https://github.com/minoryorg/Noto-Sans-CJK-JP/blob/master/fonts/NotoSansCJKjp-Regular.ttf" + "?raw=true"
+    url = "https://github.com/minoryorg/Noto-Sans-CJK-JP/blob/master/fonts/NotoSansCJKjp-Regular.ttf?raw=true"
 
     if not target.exists():
         data = request.urlopen(url).read()
@@ -39,7 +58,6 @@ def load_font():
 # グラフをプロットするための関数
 def plot_graph(time_list: list[str], wbgt_list: list[float]):
     load_font()
-    colors = ["#1C75BC", "#16C4FD", "#FFB23B", "#F17816", "#FF5722"]
 
     # plt.switch_backend("AGG")  # スクリプトを出力させない
     plt.figure(figsize=(10, 5))  # グラフサイズ
@@ -49,7 +67,6 @@ def plot_graph(time_list: list[str], wbgt_list: list[float]):
     virtual_x = list(range(len(time_list)))
     plt.ylim(graph_min, graph_max)
     plt.xlim(time_list[0], time_list[-1])
-    thresholds = [24, 28, 31, 35]
 
     alpha = 0.7
     levels = [np.empty(0), np.empty(0), np.empty(0), np.empty(0), np.empty(0)]
@@ -64,66 +81,24 @@ def plot_graph(time_list: list[str], wbgt_list: list[float]):
             return a * x + b
 
         detailed_x = np.arange(x1, x2, 0.02)
-        full_detailed_x = np.append(full_detailed_x, detailed_x)
-
         detailed_wbgt = f(detailed_x)
 
-        modified_wbgt = np.where(detailed_wbgt > thresholds[0], thresholds[0], detailed_wbgt)
-        levels[0] = np.append(levels[0], modified_wbgt)
+        full_detailed_x = np.append(full_detailed_x, detailed_x)
 
-        modified_wbgt = np.where(detailed_wbgt > thresholds[1], thresholds[1], detailed_wbgt)
-        levels[1] = np.append(levels[1], modified_wbgt)
+        for i, v in enumerate(wbgt_status.values()):
+            modified_wbgt = np.where(detailed_wbgt > v.max, v.max, detailed_wbgt)
+            levels[i] = np.append(levels[i], modified_wbgt)
 
-        modified_wbgt = np.where(detailed_wbgt > thresholds[2], thresholds[2], detailed_wbgt)
-        levels[2] = np.append(levels[2], modified_wbgt)
+    for i, v in enumerate(wbgt_status.values()):
+        plt.fill_between(
+            x=full_detailed_x,
+            y1=v.min,
+            y2=levels[i],
+            where=levels[i] >= v.min,
+            color=v.color,
+            alpha=alpha,
+        )
 
-        modified_wbgt = np.where(detailed_wbgt > thresholds[3], thresholds[3], detailed_wbgt)
-        levels[3] = np.append(levels[3], modified_wbgt)
-
-        modified_wbgt = np.array(detailed_wbgt)
-        levels[4] = np.append(levels[4], modified_wbgt)
-
-    # full_detailed_times = np.arange(virtual_x[0], virtual_x[-1], 0.02)
-
-    plt.fill_between(
-        full_detailed_x,
-        graph_min,
-        levels[0],
-        color=colors[0],
-        alpha=alpha,
-    )
-    plt.fill_between(
-        full_detailed_x,
-        thresholds[0],
-        levels[1],
-        where=levels[1] >= thresholds[0],
-        color=colors[1],
-        alpha=alpha,
-    )
-    plt.fill_between(
-        full_detailed_x,
-        thresholds[1],
-        levels[2],
-        where=levels[2] >= thresholds[1],
-        color=colors[2],
-        alpha=alpha,
-    )
-    plt.fill_between(
-        full_detailed_x,
-        thresholds[2],
-        levels[3],
-        where=levels[3] >= thresholds[2],
-        color=colors[3],
-        alpha=alpha,
-    )
-    plt.fill_between(
-        full_detailed_x,
-        thresholds[3],
-        levels[4],
-        where=levels[4] >= thresholds[3],
-        color=colors[4],
-        alpha=alpha,
-    )
     plt.plot(virtual_x, wbgt_list, color="black", marker="o", lw=3)
 
     plt.grid()
@@ -218,28 +193,16 @@ def wbgt_indicator(WBGT: float) -> str:
     Returns:
         message (str): 危険度合のメッセージ
     """
-    status: list[str] = [
-        "運動は原則中止",
-        "厳重警戒（激しい運動は中止）",
-        "警戒（積極的に休憩)",
-        "注意（積極的に水分補給）",
-        "ほぼ安全（適宜水分補給）",
-    ]
 
-    if WBGT > 35:
-        return status[0]
-    elif 35 > WBGT >= 31:
-        return status[1]
-    elif 31 > WBGT >= 28:
-        return status[2]
-    elif 28 > WBGT >= 24:
-        return status[3]
-    else:  # WBGT < 24:
-        return status[4]
+    for v in wbgt_status.values():
+        if v.min <= WBGT < v.max:
+            return v.message
+    else:
+        return "None"
 
 
 if __name__ == "__main__":
     os.environ["tsfm_debug"] = "1"
     x = [i for i in range(0, 24)]
     y = [random.randint(20, 38) for _ in x]
-    Plot_Graph(x, y)
+    plot_graph(x, y)
