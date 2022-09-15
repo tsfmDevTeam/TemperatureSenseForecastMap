@@ -53,7 +53,8 @@
 
 <body>
     <form style="position: absolute;" class="" action="{{ next_page }}" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <input id="ido" type="hidden" name="ido" value="" /><input id="keido" type="hidden" name="keido" value="" />
+        <input id="ido" type="hidden" name="ido" value="" />
+        <input id="keido" type="hidden" name="keido" value="" />
         <input formtarget="_parent" class="btn btn-danger btn-lg" style=" z-index: 10000;position: relative; top: 10px; left: 50px; width: 210px" type="submit" name="button" onclick="return checkForm();" value={{ button_message }}  />
     </form>
     <div class="folium-map" id="map_290f8bf58b504a9dbb050469d3255ec9" ></div>
@@ -79,7 +80,7 @@
             });
         }
     }
-    
+
     function checkForm(id){
         if(document.getElementById('ido').value === "" || document.getElementById('keido').value === ""){
             alert("地図をclickして場所を指定してください。");
@@ -143,9 +144,9 @@
 
         document.getElementById('ido').value = clicked_ido;
         document.getElementById('keido').value = clicked_keido;
-        
+
         console.log("地点がクリックされました --- " + "緯度：" + clicked_ido + "経度：" + clicked_keido);
-        
+
     } );
 
 

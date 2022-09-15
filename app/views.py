@@ -1,20 +1,20 @@
-from datetime import datetime, timedelta, timezone
 import json
 import os
 import urllib
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Union, cast
 
 import requests
 from django.contrib.auth import login, logout
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render  # type:ignore
 from django.urls import reverse
 from django.views.generic import TemplateView
 
-from .location_search import near_observatory
-from . import geo_apis, wbgt_util, db2geojson
-
+from . import db2geojson, geo_apis, wbgt_util
 from .forms import LoginForm, SignupForm
+from .location_search import near_observatory
 from .models import location, point_name
 # 住所関連import
 import pandas as pd
@@ -48,7 +48,7 @@ class MapView(TemplateView):
 
         if self.request.GET.get("type") == "location":
             context["button_message"] = "この場所を選択する"
-            context["next_page"] = f"{self.request._current_scheme_host}/locationname/"  # type: ignore
+            context["next_page"] = f"{self.request._current_scheme_host}/user/"  # type: ignore
 
         else:
             context["button_message"] = "この場所の情報を見る"
@@ -159,30 +159,33 @@ class UserPage(TemplateView):
     def get_location_from_db(self, uid: int) -> list[Any]:
         locations: list[Any] = []
         for query in location.objects.filter(user_id=uid):
-            lid = query.id
             name = query.location_name
             location_id = query.location_id
-            POINT = point_name.objects.filter(id=int(location_id))
-            for locate in POINT:
-                ido = locate.ido
-                keido = locate.keido
-            print(ido, keido)
-            locations.append((lid, name, ido, keido))
+
+            try:
+                POINT = point_name.objects.get(id=location_id)
+                ido = POINT.ido
+                keido = POINT.keido
+            except ObjectDoesNotExist:
+                ido = 0
+                keido = 0
+            locations.append({"ido": ido, "keido": keido, "name": name})
         return locations
 
-    def post(self, request: HttpRequest):
-        loc_id = int(request.POST.get("text", "0"))
+    def _do_save(self, name: str, ido: float, keido: float, uid: int):
+        near_point_obj = near_observatory(float(ido), float(keido))
+        near_locationID = near_point_obj.id  # type:ignore
+        kansokujo_name = near_point_obj.name  # type:ignore
 
-        try:
-            if str(location.objects.filter(id=loc_id)[0].user_id) == request.user.username:  # type: ignore
-                location.objects.filter(id=loc_id).delete()
-        except IndexError:
-            pass
-        ret = redirect(f"{self.request._current_scheme_host}/user/")  # type: ignore
-        return ret
+        location.objects.update_or_create(
+            location_name=name,
+            location_id=near_locationID,
+            kansokujo_name=kansokujo_name,
+            user_id_id=uid,
+        )
 
-    def get_context_data(self, **kwargs):  # type:ignore
-        context = super().get_context_data(**kwargs)
+    def _generate_common_context(self) -> dict[str, Any]:
+        context: dict[str, Any] = {}
 
         context["user_name"] = self.request.user.username  # type: ignore
         context["user_email"] = self.request.user.email  # type: ignore
@@ -190,30 +193,58 @@ class UserPage(TemplateView):
 
         context["locations"] = json.dumps(self.get_location_from_db(uid=self.request.user.id))  # type: ignore
         context["link"] = f"{self.request._current_scheme_host}/Map/?type=location"  # type: ignore
+        context["detail"] = f"{self.request._current_scheme_host}/Mapdetail/"  # type: ignore
+
         return context
+
+    def post(self, request: HttpRequest):
+        print(request.POST)
+
+        context = self._generate_common_context()
+
+        if "delete" in request.POST.keys():
+            # 地点削除
+
+            loc_name = request.POST.get("delete", "0")
+            print(loc_name)
+            # ユーザー存在判定
+
+            try:
+                target = location.objects.get(location_name=loc_name)
+                print(target)
+                print(str(target.user_id) == str(request.user.username))  # type: ignore
+                if str(target.user_id) == str(request.user.username):  # type: ignore
+                    target.delete()
+            except ObjectDoesNotExist:
+                pass
+
+        elif "addname" not in request.POST.keys() and "keido" in request.POST.keys():
+            print("ido & keido")
+            # 地点追加コマンド
+            context["ido"] = request.POST.get("ido")
+            context["keido"] = request.POST.get("keido")
+            context["submit_link"] = f"{self.request._current_scheme_host}/user/"  # type:ignore
+            context["type"] = "addloc"
+            # loc_id = int(request.POST.get("add", "0"))
+        elif "addname" in request.POST.keys():
+            self._do_save(
+                name=request.POST.get("addname"),  # type:ignore
+                ido=request.POST.get("ido"),  # type:ignore
+                keido=request.POST.get("keido"),  # type:ignore
+                uid=request.user.id,  # type:ignore
+            )
+
+        else:
+            print("other")
+
+        return render(request=request, template_name="app/user.html", context=context)  # type: ignore
+
+    def get_context_data(self):  # type:ignore
+        return self._generate_common_context()
 
 
 class SetLocationName(TemplateView):
     template_name: str = "app/locationname.html"
-
-    def do_save(self, name: str, ido: float, keido: float, uid: int):
-
-        near_point_obj = near_observatory(float(ido), float(keido))
-        # near_ido = near_point_obj.ido
-        # near_keido = near_point_obj.keido
-        near_locationID = near_point_obj.id
-        kansokujo_name = near_point_obj.name
-
-        location.objects.update_or_create(
-            # location_name=name, ido=near_ido, keido=near_keido, user_id_id=uid
-            location_name=name,
-            location_id=near_locationID,
-            kansokujo_name=kansokujo_name,
-            user_id_id=uid,
-        )
-
-        print(name, ido, keido)
-        print(near_point_obj.name, kansokujo_name, near_locationID)
 
     def post(self, request: HttpRequest) -> Any:
         if "save" in request.POST:
@@ -280,7 +311,6 @@ class Login(TemplateView):
                     return redirect(to="/user")
                 else:
                     # 既にログインしており、userページ以外にいたならそのページに飛ぶ
-                    print(next)
                     return redirect(to=next)
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
@@ -318,6 +348,7 @@ class HeatMap_view(TemplateView):
 
 class HeatMap_framesaki_view(TemplateView):
     template_name = "app/HeatmapFrame.html"
+
 
 # @login_required  # 未登録のユーザーのアクセス制限
 # def user_view(request):
