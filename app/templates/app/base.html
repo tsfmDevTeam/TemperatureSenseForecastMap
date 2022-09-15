@@ -99,8 +99,7 @@
                 </div>
                 <div class="col-xs-8 text-right menu-1">
                     <ul>
-                        <li class="active"><a href="{% url 'Map' %}">ClickMap</a></li>
-                        <li class="active"><a href="{% url 'HeatMap' %}">HeatMap</a></li>
+                        <li class="active"><a href="{% url 'HeatMapFrame' %}">暑さ指数map</a></li>
                         <li><a href="https://www.wbgt.env.go.jp/wbgt_lp.php">環境省HP</a></li>
                         <li><a href="{% url 'about' %}">ABOUT</a></li>
                         {% if request.user.is_authenticated %}

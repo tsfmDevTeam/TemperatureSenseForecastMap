@@ -275,6 +275,8 @@ class HeatMap_view(TemplateView):
 
         return render(request, "app/HeatMap.html", param)
 
+class HeatMap_framesaki_view(TemplateView):
+    template_name = "app/HeatmapFrame.html"
 
 # @login_required  # 未登録のユーザーのアクセス制限
 # def user_view(request):
