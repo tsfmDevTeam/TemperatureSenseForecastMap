@@ -95,14 +95,14 @@
         </div>
         <div class="session">
             <h2>Hour: <label id="active-hour">{{ time_label }}</label></h2>
-            <input id="slider" class="row" type="range" min="0" max="48" step="1" value="{{ now_hour }}" />
+            <input id="slider" class="row" type="range" min="1" max="47" step="1" value="{{ now_hour }}" />
         </div>
     </div>
     <script>
         mapboxgl.accessToken = '{{ MAPBOX_TOKEN }}';
         const bounds = [
             [122, 20], // Southwest coordinates
-            [154, 46] // Northeast coordinates
+            [154, 48] // Northeast coordinates
         ];
         const map = new mapboxgl.Map({
             container: 'map',
