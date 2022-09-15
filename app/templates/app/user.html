@@ -6,159 +6,240 @@
 {% block content %}
 
 
-    <header id="gtco-header" class="gtco-cover" role="banner"
-            style="background-image: url(../../static/img/onndann.jpg);height: 1300px">
-        <div class="overlay"></div>
-        <div class="gtco-container">
-            <div class="row">
-                <div class="col-md-12 col-md-offset-0 text-left">
+<header id="gtco-header" class="gtco-cover" role="banner"
+    style="background-image: url(../../static/img/onndann.jpg);height: 1300px">
+    <div class="overlay"></div>
+    <div class="gtco-container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-left">
+                <div class="row row-mt-15em">
+                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                        <span class="intro-text-small">Temperature Sense　Forecast Map</span>
+                        <h1>User-MyPage</h1>
+                    </div>
+                    <div style="width: 100%" class="col-md-4  animate-box" data-animate-effect="fadeInRight">
+                        <div class="form-wrap">
+                            <div class="tab">
+                                <div class="tab-content">
+                                    <div class="tab-content-inner active" data-content="signup">
+                                        <div style="width: 100%">
+                                            <label>名前</label>
+                                            <input class="form-control" type="text" id="username" value={{ user_name }}>
 
+                                            <label>メールアドレス</label>
+                                            <input class="form-control" type="email" id="email" value={{ user_email }}>
 
-                    <div class="row row-mt-15em" >
-                        <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                            <span class="intro-text-small">Temperature Sense　Forecast Map</span>
-                            <h1>User-MyPage</h1>
-                        </div>
-                        <div style="width: 100%" class="col-md-4  animate-box" data-animate-effect="fadeInRight">
-                            <div class="form-wrap">
-                                <div class="tab">
-                                    <div class="tab-content">
-                                        <div class="tab-content-inner active" data-content="signup">
-
-
-                                            <div style="width: 100%">
-                                                <ul>
-
-                                                    <label>名前</label>
-                                                    <input class="form-control" type="text" id="username"
-                                                           value={{ user_name }}>
-
-                                                    <label>メールアドレス</label>
-                                                    <input class="form-control" type="email" id="email"
-                                                           value={{ user_email }}>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12 col-10"
-                                                             style="text-align: center; margin-top: 10px">
-                                                            <input type="submit" class="btn btn-info"
-                                                                   value="個人情報を編集">
-                                                        </div>
-                                                    </div>
-                                                     <label>登録地点</label>
-                                                    <div style="display:flex">
-                                                    <input class="form-control" type="text" id="email"
-                                                           value=ひとつめ>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12 col-10"
-                                                             style="text-align: center; margin-left: 10px">
-                                                            <input type="submit" class="btn btn-primary"
-                                                                   value="この地点を削除">
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    <div style="display:flex">
-                                                     <input class="form-control" type="text" id="email"
-                                                           value=ふたつめ>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12 col-10"
-                                                             style="text-align: center; margin-left: 10px">
-                                                            <input type="submit" class="btn btn-primary"
-                                                                   value="この地点を削除">
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    <div style="display:flex">
-
-                                                     <input class="form-control" type="text" id="email"
-                                                           value=みっつめ>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12 col-10"
-                                                             style="text-align: center; margin-left: 10px">
-                                                            <input type="submit" class="btn btn-primary"
-                                                                   value="この地点を削除">
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    <hr>
-                                                     <div class="row form-group">
-                                                        <div class="col-md-12 col-10"
-                                                             style="text-align: center; margin-top: 10px;">
-                                                            <input  type="submit" class="btn btn-info"
-                                                                   value="地点を追加する">
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div  id="add_location">
-                                                        <!-- <button onclick="location.href='{{ link }}'">追加</button> -->
-                                                    </div>
-
-                                                </ul>
-
+                                            <div class="row form-group">
+                                                <div class="col-md-12 col-10"
+                                                    style="text-align: center; margin-top: 10px">
+                                                    <input type="submit" class="btn btn-info" value="個人情報を編集">
+                                                </div>
                                             </div>
 
+                                            <label>登録地点</label>
 
+                                            <div style="display:flex" id="loc1">
+                                                <input id="loc1_name" class="form-control" type="button" value=ひとつめ
+                                                    onclick="view_wbgt(1)">
+                                                <div class="row form-group">
+                                                    <div class="col-md-12 col-10"
+                                                        style="text-align: center; margin-left: 10px">
+                                                        <input type="submit" class="btn btn-primary" value="この地点を削除"
+                                                            onclick="loc_delete(1)">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style="display:flex" id="loc2">
+                                                <input id="loc2_name" class="form-control" type="button" value=ふたつめ
+                                                    onclick="view_wbgt(2)">
+                                                <div class="row form-group">
+                                                    <div class="col-md-12 col-10"
+                                                        style="text-align: center; margin-left: 10px">
+                                                        <input type="submit" class="btn btn-primary" value="この地点を削除"
+                                                            onclick="loc_delete(2)">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div style="display:flex" id="loc3">
+                                                <input id="loc3_name" class="form-control" type="button" value=みっつめ
+                                                    onclick="view_wbgt(3)">
+                                                <div class="row form-group">
+                                                    <div class="col-md-12 col-10"
+                                                        style="text-align: center; margin-left: 10px">
+                                                        <input type="submit" class="btn btn-primary" value="この地点を削除"
+                                                            onclick="loc_delete(3)">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+
+                                            <div style="display:flex" id="loc_new">
+                                                    <input id="add_name" class="form-control" name="location_name" type="text"  placeholder="登録する地点名">
+                                                    <input id="add_ido" name="ido" style="display:none" value={{ ido }}>
+                                                    <input id="add_keido" name="keido" style="display:none" value={{ keido }}>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-12 col-10"
+                                                        style="text-align: center; margin-left: 10px">
+                                                            <input type="submit" class="btn btn-primary" value="この地点を登録" onclick="loc_add()">
+                                                        </div>
+                                                    </div>
+                                            </div>
+
+                                            <div id="add_location">
+                                                <div class="row form-group">
+                                                    <div class="col-md-12 col-10"
+                                                        style="text-align: center; margin-top: 10px;">
+
+                                                        <a id="addloc" class="btn btn-info"
+                                                            href={{ link }}>地点を追加する</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ul>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
-    <script type="text/javascript">
+<script type="text/javascript">
+    window.onload = function () {
         const locations = JSON.parse('{{ locations|safe }}');
-        console.log("data", locations);
 
-        for (let i = 0; i < locations.length; i++) {
-            var location_elem = document.createElement("li");
-            location_elem.textContent = locations[i][1];
-            location_elem.classList.add("form-control")
+        console.log(locations);
 
-            var delete_button = document.createElement("button");
-            delete_button.textContent = "この地点を削除";
-            delete_button.name = locations[i][0]
-            delete_button.classList.add("btn btn-primary")
-            delete_button.addEventListener("click", e => loc_delete(locations[i][0]));
+        if (locations.length == 3) {
+            document.getElementById("add_location").remove();
 
+            document.getElementById("loc3_name").value = locations[2]["name"];
+            document.getElementById("loc2_name").value = locations[1]["name"];
+            document.getElementById("loc1_name").value = locations[0]["name"];
+        } else if (locations.length == 2) {
+            document.getElementById("loc3").remove();
 
-            location_elem.appendChild(delete_button)
-            document.getElementById("location_columns").appendChild(location_elem);
+            document.getElementById("loc2_name").value = locations[1]["name"];
+            document.getElementById("loc1_name").value = locations[0]["name"];
+
+        } else if (locations.length == 1) {
+            document.getElementById("loc3").remove();
+            document.getElementById("loc2").remove();
+
+            document.getElementById("loc1_name").value = locations[0]["name"];
+            //locations[0][1]
+
+        } else if (locations.length == 0) {
+            document.getElementById("loc3").remove();
+            document.getElementById("loc2").remove();
+            document.getElementById("loc1").remove();
         }
 
-        if (locations.length < 3) {
-            add_button = document.createElement("button");
-            add_button.addEventListener("click", e => location.href = '{{ link }}');
-            add_button.textContent = "追加"
-            document.getElementById("add_location").appendChild(add_button)
+        const sendtype = '{{ type }}';
+        if (sendtype == "addloc") {
+            document.getElementById("add_location").remove()
+            if (document.getElementById("loc1") !== null) {
+                document.getElementById("loc1").remove();}
+            if (document.getElementById("loc2") !== null) {
+                document.getElementById("loc2").remove();}
+            if (document.getElementById("loc3") !== null) {
+                document.getElementById("loc3").remove();}
+        } else {
+            document.getElementById("loc_new").remove();
         }
+    };
 
-        function loc_delete(id) {
-            var form = document.createElement('form');
-            var request = document.createElement('input');
-            form.method = 'POST';
+    function view_wbgt(id) {
+        console.log(typeof(id));
+        const locations = JSON.parse('{{ locations|safe }}');
 
-            let csrf_element = document.createElement('input');
-            csrf_element.type = 'hidden';
-            csrf_element.name = 'csrfmiddlewaretoken';
-            csrf_element.value = '{{ csrf_token }}';
+        var form = document.createElement('form');
+        form.action = "{{ detail }}";
+        form.method = 'POST';
 
-            request.type = 'hidden'; //入力フォームが表示されないように
-            request.name = 'text';
-            request.value = id;
+        let csrf_element = document.createElement('input');
+        csrf_element.type = 'hidden';
+        csrf_element.name = 'csrfmiddlewaretoken';
+        csrf_element.value = '{{ csrf_token }}';
 
-            form.appendChild(csrf_element);
-            form.appendChild(request);
-            document.body.appendChild(form);
+        var ido = document.createElement('input');
+        ido.type = 'hidden';
+        ido.name = 'ido';
+        ido.value = locations[id-1]["ido"];
 
-            form.submit();
-            console.log("delete ", id)
-        }
-    </script>
+        var keido = document.createElement('input');
+        keido.type = 'hidden';
+        keido.name = 'keido';
+        keido.value = locations[id-1]["keido"];
+
+        form.appendChild(csrf_element);
+        form.appendChild(ido);
+        form.appendChild(keido);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+
+    function loc_add() {
+        var form = document.createElement('form');
+        form.method = 'POST';
+
+        let csrf_element = document.createElement('input');
+        csrf_element.type = 'hidden';
+        csrf_element.name = 'csrfmiddlewaretoken';
+        csrf_element.value = '{{ csrf_token }}';
+
+        var addname = document.createElement('input');
+        addname.type = 'hidden';
+        addname.name = 'addname';
+        addname.value = document.getElementById("add_name").value;
+
+        var ido = document.createElement('input');
+        ido.type = 'hidden';
+        ido.name = 'ido';
+        ido.value = document.getElementById("add_ido").value;
+
+        var keido = document.createElement('input');
+        keido.type = 'hidden';
+        keido.name = 'keido';
+        keido.value = document.getElementById("add_keido").value;
+
+        form.appendChild(csrf_element);
+        form.appendChild(addname);
+        form.appendChild(ido);
+        form.appendChild(keido);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+
+    function loc_delete(id) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+
+        let csrf_element = document.createElement('input');
+        csrf_element.type = 'hidden';
+        csrf_element.name = 'csrfmiddlewaretoken';
+        csrf_element.value = '{{ csrf_token }}';
+
+        var delid = document.createElement('input');
+        delid.type = 'hidden';
+        delid.name = 'delete';
+        delid.value = document.getElementById("loc" + id+ "_name").value;
+
+        form.appendChild(csrf_element);
+        form.appendChild(delid);
+        document.body.appendChild(form);
+
+        form.submit();
+        console.log("delete ", id)
+    }
+</script>
 {% endblock %}
