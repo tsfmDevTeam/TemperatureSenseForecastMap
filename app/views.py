@@ -1,6 +1,7 @@
 import json
 import os
 import urllib
+import urllib.parse
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Union, cast
 
@@ -134,23 +135,32 @@ class MapDetail(TemplateView):
         print(result2['results']['lv01Nm'])
         juusyo = ken2 + si + mati
 
+        contribution_tweets_URL = f"#技育展 #tsfm #暑さ指数\n" \
+                                  f"{ken2}の暑さ指数は{wbgt_now}です！\n" \
+                                  f"危険度は、{wbgt_status_now}\n" \
+                                  f"熱中症にお気をつけてよい一日をお過ごしください！"
+        contribution_tweets_URL = urllib.parse.quote(contribution_tweets_URL)
+        contribution_tweets_URL = "https://twitter.com/intent/tweet?text="+contribution_tweets_URL
+
+
         return render(
-            request=request,
-            template_name="app/detail.html",
-            context={
-                "juusyo": juusyo,
-                "lat": ido,
-                "lon": keido,
-                "wbgt_now": wbgt_now,
-                "wbgt_max": wbgt_max,
-                "wbgt_status_now": wbgt_status_now,
-                "wbgt_status_max": wbgt_status_max,
-                "wbgt_and_status": wbgt_and_status,
-                "tikaku": tikaku,
-                "max_time": max_time,
-                "chart": chart,
-            },
-        )
+                    request=request,
+                    template_name="app/detail.html",
+                    context={
+                        "juusyo": juusyo,
+                        "lat": ido,
+                        "lon": keido,
+                        "wbgt_now": wbgt_now,
+                        "wbgt_max": wbgt_max,
+                        "wbgt_status_now": wbgt_status_now,
+                        "wbgt_status_max": wbgt_status_max,
+                        "wbgt_and_status": wbgt_and_status,
+                        "tikaku": tikaku,
+                        "max_time": max_time,
+                        "chart": chart,
+                        "contribution_tweets_URL": contribution_tweets_URL,
+                    },
+                )
 
 
 class UserPage(TemplateView):
