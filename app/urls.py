@@ -10,6 +10,7 @@ urlpatterns = [
     path("Mapdetail/", views.MapDetail.as_view(), name="Mapdetail"),
     path("user/", views.UserPage.as_view(), name="user"),
     path("HeatMap/", views.HeatMap_view.as_view(), name="HeatMap"),
+    path("HeatMapFrame/", views.HeatMap_framesaki_view.as_view(), name="HeatMapFrame"),
     # 以下ログイン関連
     path("signup/", views.Signup.as_view(), name="signup"),
     path("login/", views.Login.as_view(), name="login"),
