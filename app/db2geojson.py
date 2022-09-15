@@ -15,12 +15,12 @@ class wbgt_point:
         month: int,
         day: int,
         hour: int,
-        sevirarity: int,
+        severity: int,
         type: str = "Feature",
     ) -> None:
         self.type: str = type
         self.geometry: dict[str, Any] = {"type": "Point", "coordinates": (keido, ido)}
-        self.properties: dict[str, Any] = {"Month": month, "Day": day, "Hour": hour, "sevirarity": sevirarity}
+        self.properties: dict[str, Any] = {"Month": month, "Day": day, "Hour": hour, "severity": severity}
 
 
 class com_geojson:
@@ -50,9 +50,10 @@ def data2geojson(file_name: str = "info.geojson", force: bool = False):
 
                     for v in wbgt_status.values():
                         if v.min <= wbgt < v.max:
-                            sevirarity = v.level
+                            severity = v.level
+                            break
                     else:
-                        sevirarity = 0
+                        severity = 0
 
                     g.features.append(
                         wbgt_point(
@@ -61,7 +62,7 @@ def data2geojson(file_name: str = "info.geojson", force: bool = False):
                             month=int(month),
                             day=int(day),
                             hour=int(hour.split(":")[0]) + 24 * (date != int(day)),
-                            sevirarity=sevirarity,
+                            severity=severity,
                         ).__dict__
                     )
             except TypeError:

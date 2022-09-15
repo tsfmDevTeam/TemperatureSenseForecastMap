@@ -85,6 +85,13 @@ class MapDetail(TemplateView):
         wbgt_now = wbgt_list[0]
         wbgt_status_now = wbgt_util.wbgt_indicator(WBGT=wbgt_now)
 
+        for v in wbgt_util.wbgt_status.values():
+            if v.min <= wbgt_now < v.max:
+                wbgt_severity_now = v.level
+                break
+        else:
+            wbgt_severity_now = 0
+
         wbgt_max = max(wbgt_list)
         wbgt_status_max = wbgt_util.wbgt_indicator(WBGT=wbgt_max)
         max_time = time_list[wbgt_list.index(wbgt_max)]
@@ -101,14 +108,11 @@ class MapDetail(TemplateView):
 
         juusyo = tikaku[0]["juusyo"]
 
-        contribution_tweets_URL = (
-            f"#技育展 #tsfm #暑さ指数\n"
-            f"{juusyo}の暑さ指数は{wbgt_now}です！\n"
-            f"危険度は、{wbgt_status_now}\n"
-            f"熱中症にお気をつけてよい一日をお過ごしください！"
+        tweet_message = (
+            f"{juusyo}の暑さ指数は{wbgt_severity_now}です！\n危険度は、{wbgt_status_now}\n熱中症にお気をつけてよい一日をお過ごしください！\n#技育展_tsfm #暑さ指数"
         )
-        contribution_tweets_URL = urllib.parse.quote(contribution_tweets_URL)
-        contribution_tweets_URL = "https://twitter.com/intent/tweet?text=" + contribution_tweets_URL
+        hashed_message = urllib.parse.quote(tweet_message)
+        contribution_tweets_URL = "https://twitter.com/intent/tweet?text=" + hashed_message
 
         return render(
             request=request,
