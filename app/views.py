@@ -16,6 +16,9 @@ from . import geo_apis, wbgt_util, db2geojson
 
 from .forms import LoginForm, SignupForm
 from .models import location, point_name
+# 住所関連import
+import pandas as pd
+import openpyxl
 
 
 class IndexView(TemplateView):
@@ -98,10 +101,44 @@ class MapDetail(TemplateView):
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=ido, keido=keido)
 
+        # 住所
+        url2 = 'https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=' + str(ido) + '&lon=' + str(
+            keido)
+        result2 = requests.get(url2).json()
+
+        try:
+            print(result2['results'])
+        except KeyError:
+            return render(request, 'app/basyodetail_error.html')
+        print(result2['results']['lv01Nm'])
+
+        code = result2['results']['muniCd']
+        mati = result2['results']['lv01Nm']
+
+        datefile = 'app/000730858 (3).xlsx'
+        X = pd.read_excel(datefile, engine='openpyxl', sheet_name='R1.5.1現在の団体', )
+
+        X = X.rename(columns={'都道府県名\n（漢字）': '都道府県名', '市区町村名\n（漢字）': '市区町村名'})
+
+        for index, r in X.iterrows():
+            if str(r.団体コード)[:-1] == str(code):
+                print(str(r.団体コード)[:-1])
+                print(str(code))
+                ken2 = r.都道府県名
+                si = r.市区町村名
+
+        try:
+            print(ken2 + si + mati)
+        except UnboundLocalError:
+            return render(request, 'app/basyodetail_error.html')
+        print(result2['results']['lv01Nm'])
+        juusyo = ken2 + si + mati
+
         return render(
             request=request,
             template_name="app/detail.html",
             context={
+                "juusyo": juusyo,
                 "lat": ido,
                 "lon": keido,
                 "wbgt_now": wbgt_now,
@@ -266,7 +303,6 @@ class HeatMap_view(TemplateView):
     template_name = "app/Heatmap.html"
 
     def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
-
         db2geojson.data2geojson()
 
         now_hour: int = datetime.now(timezone(timedelta(hours=9), "JST")).hour
@@ -278,6 +314,7 @@ class HeatMap_view(TemplateView):
         }
 
         return render(request, "app/HeatMap.html", param)
+
 
 class HeatMap_framesaki_view(TemplateView):
     template_name = "app/HeatmapFrame.html"
