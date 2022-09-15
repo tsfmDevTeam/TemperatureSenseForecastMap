@@ -24,5 +24,3 @@ urllib3
 wheel
 whitenoise
 django-widget-tweaks
-pandas
-openpyxl
