@@ -1,5 +1,6 @@
 import json
 import pathlib
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from .models import point_name
@@ -34,11 +35,14 @@ class com_geojson:
 def data2geojson(file_name: str = "info.geojson", force: bool = False):
     target = pathlib.Path(__file__).parent / "static" / file_name
 
+    date: int = datetime.now(timezone(timedelta(hours=9), "JST")).day
+
     if force or not target.exists():
+        print("Generate GeoJson")
+
         g = com_geojson()
 
         for point in point_name.objects.all():
-            print(point.id)
             try:
                 for time, wbgt in zip(point.wbgt_time_json["time"], point.wbgt_time_json["wbgt"]):
                     month, day, hour = time.split("/")
@@ -60,7 +64,7 @@ def data2geojson(file_name: str = "info.geojson", force: bool = False):
                             keido=point.keido,
                             month=int(month),
                             day=int(day),
-                            hour=int(hour.split(":")[0]),
+                            hour=int(hour.split(":")[0]) + 24 * (date != int(day)),
                             sevirarity=sevirarity,
                         ).__dict__
                     )
