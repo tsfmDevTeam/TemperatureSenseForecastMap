@@ -17,9 +17,6 @@ from . import db2geojson, geo_apis, wbgt_util
 from .forms import LoginForm, SignupForm
 from .location_search import near_observatory
 from .models import location, point_name
-# 住所関連import
-import pandas as pd
-import openpyxl
 
 
 class IndexView(TemplateView):
@@ -102,65 +99,34 @@ class MapDetail(TemplateView):
         # 周辺地域の取得
         tikaku = geo_apis.find_near(ido=ido, keido=keido)
 
-        # 住所
-        url2 = 'https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress?lat=' + str(ido) + '&lon=' + str(
-            keido)
-        result2 = requests.get(url2).json()
+        juusyo = tikaku[0]["juusyo"]
 
-        try:
-            print(result2['results'])
-        except KeyError:
-            return render(request, 'app/basyodetail_error.html')
-        print(result2['results']['lv01Nm'])
-
-        code = result2['results']['muniCd']
-        mati = result2['results']['lv01Nm']
-
-        datefile = 'app/000730858 (3).xlsx'
-        X = pd.read_excel(datefile, engine='openpyxl', sheet_name='R1.5.1現在の団体', )
-
-        X = X.rename(columns={'都道府県名\n（漢字）': '都道府県名', '市区町村名\n（漢字）': '市区町村名'})
-
-        for index, r in X.iterrows():
-            if str(r.団体コード)[:-1] == str(code):
-                print(str(r.団体コード)[:-1])
-                print(str(code))
-                ken2 = r.都道府県名
-                si = r.市区町村名
-
-        try:
-            print(ken2 + si + mati)
-        except UnboundLocalError:
-            return render(request, 'app/basyodetail_error.html')
-        print(result2['results']['lv01Nm'])
-        juusyo = ken2 + si + mati
-
-        contribution_tweets_URL = f"#技育展 #tsfm #暑さ指数\n" \
-                                  f"{ken2}の暑さ指数は{wbgt_now}です！\n" \
-                                  f"危険度は、{wbgt_status_now}\n" \
-                                  f"熱中症にお気をつけてよい一日をお過ごしください！"
+        contribution_tweets_URL = (
+            f"#技育展 #tsfm #暑さ指数\n"
+            f"{juusyo}の暑さ指数は{wbgt_now}です！\n"
+            f"危険度は、{wbgt_status_now}\n"
+            f"熱中症にお気をつけてよい一日をお過ごしください！"
+        )
         contribution_tweets_URL = urllib.parse.quote(contribution_tweets_URL)
-        contribution_tweets_URL = "https://twitter.com/intent/tweet?text="+contribution_tweets_URL
-
+        contribution_tweets_URL = "https://twitter.com/intent/tweet?text=" + contribution_tweets_URL
 
         return render(
-                    request=request,
-                    template_name="app/detail.html",
-                    context={
-                        "juusyo": juusyo,
-                        "lat": ido,
-                        "lon": keido,
-                        "wbgt_now": wbgt_now,
-                        "wbgt_max": wbgt_max,
-                        "wbgt_status_now": wbgt_status_now,
-                        "wbgt_status_max": wbgt_status_max,
-                        "wbgt_and_status": wbgt_and_status,
-                        "tikaku": tikaku,
-                        "max_time": max_time,
-                        "chart": chart,
-                        "contribution_tweets_URL": contribution_tweets_URL,
-                    },
-                )
+            request=request,
+            template_name="app/detail.html",
+            context={
+                "juusyo": juusyo,
+                "lat": ido,
+                "lon": keido,
+                "wbgt_now": wbgt_now,
+                "wbgt_max": wbgt_max,
+                "wbgt_status_now": wbgt_status_now,
+                "wbgt_status_max": wbgt_status_max,
+                "wbgt_and_status": wbgt_and_status,
+                "max_time": max_time,
+                "chart": chart,
+                "contribution_tweets_URL": contribution_tweets_URL,
+            },
+        )
 
 
 class UserPage(TemplateView):
