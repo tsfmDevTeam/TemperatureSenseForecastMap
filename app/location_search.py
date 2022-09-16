@@ -8,7 +8,7 @@ from .models import location, point_name
 
 
 def near_observatory(ido: float, keido: float) -> location:
-    """ 近接地点の検索
+    """近接地点の検索
     指定された地点に最も近い，DBに保存された地点情報を返します
     Args:
         - ido (float): 緯度
@@ -26,7 +26,7 @@ def near_observatory(ido: float, keido: float) -> location:
     target_point: Optional[location] = None
 
     for near_point in near_points:
-        distance = np.sqrt((near_point.ido-ido)**2 + (near_point.keido-keido)**2)
+        distance = np.sqrt((near_point.ido - ido) ** 2 + (near_point.keido - keido) ** 2)
         if distance <= target_distance:
             target_point = near_point
             target_distance = distance
