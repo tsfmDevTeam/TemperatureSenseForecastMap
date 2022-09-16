@@ -1,7 +1,5 @@
-import json
 import os
 import time
-from urllib import request
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job

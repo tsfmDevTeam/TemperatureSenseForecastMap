@@ -109,9 +109,10 @@
             style: 'mapbox://styles/mapbox/light-v10',
             center: [139.45, 35.415],
             zoom: 5,
+            maxZoom: 6,
+            minZoom: 3,
             maxBounds: bounds
         });
-        map.scrollZoom.disable();
 
         map.on('load', () => {
             let filterHour = ['==', ['number', ['get', 'Hour']], 12];
