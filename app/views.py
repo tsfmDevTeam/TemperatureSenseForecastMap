@@ -316,11 +316,13 @@ class HeatMap_view(TemplateView):
         db2geojson.data2geojson()
 
         now_hour: int = datetime.now(timezone(timedelta(hours=9), "JST")).hour
+        now_day: int = datetime.now(timezone(timedelta(hours=9), "JST")).day
 
         param = {
             "MAPBOX_TOKEN": os.getenv("MAPBOX_TOKEN"),
+            "now_day": now_day,
             "now_hour": now_hour,
-            "time_label": f"{now_hour}時",
+            "time_label": f"{now_day}日 {now_hour}時",
         }
 
         return render(request, "app/HeatMap.html", param)
