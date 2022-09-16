@@ -273,7 +273,6 @@ class Signup(TemplateView):
         param = {"form": form}
         return render(request, "app/user_admin/signup.html", param)
 
-
 class Login(TemplateView):
     template_name: str = "app/user_admin/login.html"
 
@@ -281,9 +280,10 @@ class Login(TemplateView):
         next = request.POST.get("next")
         form = LoginForm(request, data=request.POST)
 
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
-        db2geojson.data2geojson()
-        if user:
+        if form.is_valid():
+            user = form.get_user()
+
+            if user:
                 login(request, user)
                 if next is None:
                     # 既にログインしており、userページにいたならuserページに飛ぶ
@@ -298,6 +298,7 @@ class Login(TemplateView):
         param = {"form": form, "next": next}
 
         return render(request, "app/user_admin/login.html", param)
+
 
 
 class Logout(TemplateView):
