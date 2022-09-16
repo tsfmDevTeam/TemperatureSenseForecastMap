@@ -281,10 +281,9 @@ class Login(TemplateView):
         next = request.POST.get("next")
         form = LoginForm(request, data=request.POST)
 
-        if form.is_valid():
-            user = form.get_user()
-
-            if user:
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        db2geojson.data2geojson()
+        if user:
                 login(request, user)
                 if next is None:
                     # 既にログインしており、userページにいたならuserページに飛ぶ
