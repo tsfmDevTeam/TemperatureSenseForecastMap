@@ -1,222 +1,292 @@
 {% extends 'app/base.html' %}
 {% block content %}
-{% load static %}
+    {% load static %}
 
 
 
-<div class="page-inner">
-    <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
-        style="background-image: url(../../static/img/onndann.jpg);">
-        <div class="overlay"></div>
-        <div class="gtco-container">
-            <div class="row">
-                <div class="col-md-12 col-md-offset-0 text-left">
-                    <div class="row row-mt-15em">
-                        <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                            <span class="intro-text-small">マップの位置情報から暑さ指数、危険度などを表示します。</span>
-                            <h1>Temperature Sense<br>Forecast Map</h1>
+    <div class="page-inner">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner"
+                style="background-image: url(../../static/img/onndann.jpg);">
+            <div class="overlay"></div>
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-0 text-left">
+                        <div class="row row-mt-15em">
+                            <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                                <span class="intro-text-small">マップの位置情報から暑さ指数、危険度などを表示します。</span>
+                                <h1>Temperature Sense<br>Forecast Map</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="gtco-section">
-        <div class="gtco-container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                    <h2>page about</h2>
-                    <small>本サイトでは以下のようなclickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
-                        また、詳細画面では暑さ指数や暑さの危険度・近隣地域を確認できます。</small>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <a href="{% static 'img/graph_example.webp' %}" class="fh5co-project-item image-popup">
-                        <figure>
-                            <div class="overlay"><i class="ti-plus"></i></div>
-                            <img src="{% static 'img/graph_example.webp' %}" alt="Image" class="img-responsive">
-                        </figure>
-                        <div class="fh5co-text">
-                            <h2>暑さ指数について</h2>
-                            <p>暑さ指数（WBGT:Wet Bulb Globe Temperature:湿球黒球温度）の詳細です。</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <a href="{% static 'img/mapselect.webp' %}" class="fh5co-project-item image-popup">
-                        <figure>
-                            <div class="overlay"><i class="ti-plus"></i></div>
-                            <img src="{% static 'img/mapselect.webp' %}" alt="Image" class="img-responsive">
-                        </figure>
-                        <div class="fh5co-text">
-                            <h2>click map</h2>
-                            <p>clickした位置の暑さ状況を確認できます。
-                            </p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <a href="{% static 'img/resource_example.webp' %}" class="fh5co-project-item image-popup">
-                        <figure>
-                            <div class="overlay"><i class="ti-plus"></i></div>
-                            <img src="{% static 'img/resource_example.webp' %}" alt="Image" class="img-responsive">
-                        </figure>
-                        <div class="fh5co-text">
-                            <h2>住所検索</h2>
-                            <p>指定した住所の暑さ状況を確認できます。</p>
-                        </div>
-                    </a>
+        <div class="gtco-section">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>page about</h2>
+                        <small>本サイトでは以下のようなclickした位置の暑さ状況を確認できる機能や、指定した住所のマップに飛べる機能が利用できます。
+                            また、詳細画面では暑さ指数や暑さの危険度・近隣地域を確認できます。</small>
+                    </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div id="gtco-subscribe">
-        <div class="gtco-container">
-            <div id="clicmap" class="row animate-box">
-                <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                    <h2>暑さ指数clickmap</h2>
-                    <p>clickした位置の暑さ状況を確認できるmapに移動します。</p>
-                </div>
-            </div>
-            <div class="row animate-box">
-                <div class="col-md-8 col-md-offset-2">
-                    <form class="form-inline">
-
-                        <div class="col-md-12 col-sm-12">
-                            <a href="{% url 'Map' %}">
-
-                                <button type="button" class="btn btn-default btn-block">
-
-                                    マップに移動はこちら
-
-                                </button>
-                            </a>
-
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row animate-box">
-                <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-
-                    <br>
-                    <br>
-                    <br>
-                    <hr>
-                    <br>
-                    <br>
-                    <br>
-                    <h2>住所指定での暑さ指数検索</h2>
-                    <p>指定した住所の暑さ状況を確認できます。</p>
-                </div>
-            </div>
-            <div id="kennsaku" class="row animate-box">
-                <div class="col-md-8 col-md-offset-2">
-
-                    <form style="text-align: center;" class="" action="{% url 'Mapdetail' %}" method="post"
-                        enctype="multipart/form-data">
-                        {% csrf_token %}
-
-                        <select id="geoapi-prefectures" name="geoapi-prefectures">
-                            <option value="都道府県を選択してください">都道府県を選択してください</option>
-                        </select>
-                        <select id="geoapi-cities" name="geoapi-cities">
-                            <option value="市区町村名を選択してください">市区町村名を選択してください</option>
-                        </select>
-
-                        <select id="geoapi-towns" name="geoapi-towns">
-                            <option value="町域を選択してください">町域を選択してください</option>
-                        </select>
-                        <br>
-                        <div class="col-md-12 col-sm-12">
-                            <button type="submit" class="btn btn-default btn-block">暑さ指数を見る</button>
-                        </div>
-
-                        <br>
-
-
-                        <br>
-                        <br>
-
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="gtco-section border-bottom">
-        <div id="sisuu" class="gtco-container">
-            <div class="row">
-                <div class="col-md-8 text-left gtco-heading">
-                    <h2>- 暑さ指数 -</h2>
-                    <p>WBGT（湿球黒球温度）: Wet Bulb Globe Temperature</p>
-                    <hr>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
-                        <span class="icon">
-                            <i class="icon-check"></i>
-                        </span>
-                        <div class="feature-copy">
-                            <h3>・暑さ指数とは</h3>
-                            <p>熱中症を予防することを目的として1954年にアメリカで提案された指標です。 単位は気温と同じ摂氏度（℃）で示されますが、その値は気温とは異なります。</p>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/graph_example.webp' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/graph_example.webp' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>暑さ指数について</h2>
+                                <p>暑さ指数（WBGT:Wet Bulb Globe Temperature:湿球黒球温度）の詳細です。</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/mapselect.webp' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/mapselect.webp' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>click map</h2>
+                                <p>clickした位置の暑さ状況を確認できます。
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <a href="{% static 'img/resource_example.webp' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/resource_example.webp' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>住所検索</h2>
+                                <p>指定した住所の暑さ状況を確認できます。</p>
+                            </div>
+                        </a>
                     </div>
 
-                    <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
-                        <span class="icon">
-                            <i class="icon-check"></i>
-                        </span>
-                        <div class="feature-copy">
-                            <h3>・指標</h3>
-                            <p>暑さ指数（WBGT）は人体と外気との熱のやりとり（熱収支）に着目した指標で、人体の熱収支に与える影響の大きい下記の３つを取り入れた指標です。
-                                <br>
-                                <br>
-                                ①湿度
-                                <br>
-                                ②日射・輻射(ふくしゃ)など周辺の熱環境
-                                <br>
-                                ③気温
-                            </p>
-                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gtco-subscribe">
+            <div class="gtco-container">
+                <div id="clicmap" class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>暑さ指数clickmap</h2>
+                        <p>clickした位置の暑さ状況を確認できるmapに移動します。</p>
                     </div>
-                    <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
-                        <span class="icon">
-                            <i class="icon-check"></i>
-                        </span>
-                        <div class="feature-copy">
-                            <h3>暑さ指数の使い方</h3>
-                            <p>
-                                暑さ指数（WBGT）は労働環境や運動環境の指針として有効であると認められ、ISO等で国際的に規格化されています。<br>
-                                （公財）日本スポーツ協会では「熱中症予防運動指針」、日本生気象学会では「日常生活に関する指針」を下記のとおり公表しています。労働環境では世界的にはISO7243、国内ではJIS　Z
-                                8504　「WBGT（湿球黒球温度）指数に基づく作業者の熱ストレスの評価－暑熱環境」として規格化されています。</p>
+                </div>
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2">
+                        <form class="form-inline">
+
+                            <div class="col-md-12 col-sm-12">
+                                <a href="{% url 'Map' %}">
+
+                                    <button type="button" class="btn btn-default btn-block">
+
+                                        マップに移動はこちら
+
+                                    </button>
+                                </a>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+
+                        <br>
+                        <br>
+                        <br>
+                        <hr>
+                        <br>
+                        <br>
+                        <br>
+                        <h2>住所指定での暑さ指数検索</h2>
+                        <p>指定した住所の暑さ状況を確認できます。</p>
+                    </div>
+                </div>
+                <div id="kennsaku" class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <form style="text-align: center;" class="" action="{% url 'Mapdetail' %}" method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <select id="geoapi-prefectures" name="geoapi-prefectures">
+                                <option value="都道府県を選択してください">都道府県を選択してください</option>
+                            </select>
+                            <select id="geoapi-cities" name="geoapi-cities">
+                                <option value="市区町村名を選択してください">市区町村名を選択してください</option>
+                            </select>
+
+                            <select id="geoapi-towns" name="geoapi-towns">
+                                <option value="町域を選択してください">町域を選択してください</option>
+                            </select>
+                            <br>
+                            <div class="col-md-12 col-sm-12">
+                                <button type="submit" class="btn btn-default btn-block">暑さ指数を見る</button>
+                            </div>
 
                             <br>
-                            引用:https://www.wbgt.env.go.jp/wbgt.php
-                        </div>
+
+
+                            <br>
+                            <br>
+
+                        </form>
+
                     </div>
                 </div>
-                <div class="col-md-7 macbook-wrap animate-box" data-animate-effect="fadeInRight">
-                    <img src="{% static 'img/mockuper.png' %}" alt="Free HTML5 Bootstrap Template">
+            </div>
+        </div>
+        <div class="gtco-section">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h1><strong>license</strong></h1>
+                        <small><strong>本サイトでは以下のようなAPI・データを使用しています。</strong></small>
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: -500px">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div href="{% static 'img/openmeteo.png' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/openmeteo.png' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>open-meteo</h2>
+                                <p>暑さ指数の計算のための湿度会得等に使用<a href="https://open-meteo.com/en">https://open-meteo.com/en</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div href="{% static 'img/heartrails.png' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/heartrails.png' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>HeartRails Geo API</h2>
+                                <p>逆ジオコーディング等で使用<a href="https://geoapi.heartrails.com/api.html">https://geoapi.heartrails.com/api.html</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div href="{% static 'img/kokudo.png' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/kokudo.png' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>国土地理院API</h2>
+                                <p>ジオコーディングの際等に使用<a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html">https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div href="{% static 'img/twitter-api.jpeg' %}" class="fh5co-project-item image-popup">
+                            <figure>
+                                <div class="overlay"><i class="ti-plus"></i></div>
+                                <img src="{% static 'img/twitter-api.jpeg' %}" alt="Image" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-text">
+                                <h2>Twitter API</h2>
+                                <p>Twitterのツイート会得等に使用<a
+                                        href="https://developer.twitter.com/ja/developer-terms/agreement-and-policy">https://developer.twitter.com/ja/developer-terms/agreement-and-policy</a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="gtco-section border-bottom">
+            <div id="sisuu" class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 text-left gtco-heading">
+                        <h2>- 暑さ指数 -</h2>
+                        <p>WBGT（湿球黒球温度）: Wet Bulb Globe Temperature</p>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+                        <span class="icon">
+                            <i class="icon-check"></i>
+                        </span>
+                            <div class="feature-copy">
+                                <h3>・暑さ指数とは</h3>
+                                <p>熱中症を予防することを目的として1954年にアメリカで提案された指標です。 単位は気温と同じ摂氏度（℃）で示されますが、その値は気温とは異なります。</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+                        <span class="icon">
+                            <i class="icon-check"></i>
+                        </span>
+                            <div class="feature-copy">
+                                <h3>・指標</h3>
+                                <p>暑さ指数（WBGT）は人体と外気との熱のやりとり（熱収支）に着目した指標で、人体の熱収支に与える影響の大きい下記の３つを取り入れた指標です。
+                                    <br>
+                                    <br>
+                                    ①湿度
+                                    <br>
+                                    ②日射・輻射(ふくしゃ)など周辺の熱環境
+                                    <br>
+                                    ③気温
+                                </p>
+                            </div>
+                        </div>
+                        <div class="feature-left animate-box" data-animate-effect="fadeInLeft">
+                        <span class="icon">
+                            <i class="icon-check"></i>
+                        </span>
+                            <div class="feature-copy">
+                                <h3>暑さ指数の使い方</h3>
+                                <p>
+                                    暑さ指数（WBGT）は労働環境や運動環境の指針として有効であると認められ、ISO等で国際的に規格化されています。<br>
+                                    （公財）日本スポーツ協会では「熱中症予防運動指針」、日本生気象学会では「日常生活に関する指針」を下記のとおり公表しています。労働環境では世界的にはISO7243、国内ではJIS　Z
+                                    8504　「WBGT（湿球黒球温度）指数に基づく作業者の熱ストレスの評価－暑熱環境」として規格化されています。</p>
+
+                                <br>
+                                引用:https://www.wbgt.env.go.jp/wbgt.php
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 macbook-wrap animate-box" data-animate-effect="fadeInRight">
+                        <img src="{% static 'img/mockuper.png' %}" alt="Free HTML5 Bootstrap Template">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!--住所-->
-<!-- <script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script> -->
-<script type="text/javascript" src="{% static 'js/geoapi.js' %}"></script>
+    <!--住所-->
+    <!-- <script type="text/javascript" src="https://geoapi.heartrails.com/api/geoapi.js"></script> -->
+    <script type="text/javascript" src="{% static 'js/geoapi.js' %}"></script>
 
 
 {% endblock %}

@@ -273,7 +273,6 @@ class Signup(TemplateView):
         param = {"form": form}
         return render(request, "app/user_admin/signup.html", param)
 
-
 class Login(TemplateView):
     template_name: str = "app/user_admin/login.html"
 
@@ -299,6 +298,7 @@ class Login(TemplateView):
         param = {"form": form, "next": next}
 
         return render(request, "app/user_admin/login.html", param)
+
 
 
 class Logout(TemplateView):
